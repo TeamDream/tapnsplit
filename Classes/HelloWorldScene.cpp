@@ -93,7 +93,7 @@ void HelloWorld::createRandomRect(float  dt) {
     CCFiniteTimeAction* actionMoveDone = 
         CCCallFuncN::create( this, 
         callfuncN_selector(HelloWorld::spriteMoveFinished));
-    sprite->runAction( CCSequence::create(actionMove, 
+    new_rect->getSprite()->runAction( CCSequence::create(actionMove, 
         actionMoveDone, NULL) );
 
 	//auto move = MoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height));
@@ -101,7 +101,7 @@ void HelloWorld::createRandomRect(float  dt) {
 
 	//sprite->runAction(move);
 
-	new_rect->getSprite()->runAction(move);
+	//new_rect->getSprite()->runAction(move);
 	new_rect->tapIt();
 	// add the sprite as a child to this layer
  
