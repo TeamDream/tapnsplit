@@ -23,6 +23,7 @@ public:
 
     
 	void createRandomRect(float  dt);
+	void spriteMoveFinished(CCNode* sender);
 
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);

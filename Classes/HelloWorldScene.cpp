@@ -87,14 +87,34 @@ void HelloWorld::createRandomRect(float  dt) {
 	new_rect->getSprite()->setPosition(Vec2(start_pos_x, 0) + origin);
 	new_rect->getSprite()->setScale(0.5f);
 
-	auto move = MoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height));
+	 // Create the actions
+    CCFiniteTimeAction* actionMove = 
+        CCMoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height));
+    CCFiniteTimeAction* actionMoveDone = 
+        CCCallFuncN::create( this, 
+        callfuncN_selector(HelloWorld::spriteMoveFinished));
+    new_rect->getSprite()->runAction( CCSequence::create(actionMove, 
+        actionMoveDone, NULL) );
 
-	new_rect->getSprite()->runAction(move);
+	//auto move = MoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height));
+
+
+	//sprite->runAction(move);
+
+	//new_rect->getSprite()->runAction(move);
 	new_rect->tapIt();
 	// add the sprite as a child to this layer
  
 	this->addChild(new_rect->getSprite());
 
+}
+
+void HelloWorld::spriteMoveFinished(CCNode* sender)
+{
+  CCSprite *sprite = (CCSprite *)sender;
+  this->removeChild(sprite, true);
+
+  CCLog("Sprite move finished");
 }
 
 bool HelloWorld::clickOnRect(Vec2 clickPos)
