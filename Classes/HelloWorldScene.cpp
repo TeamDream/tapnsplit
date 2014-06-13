@@ -34,9 +34,6 @@ Scene* HelloWorld::scene()
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-	current_speed = 5.f;
-	rect_n = 4;
-	rects_per_h = 4;
     //////////////////////////////
     // 1. super init first
     if ( !Layer::init() )
@@ -93,15 +90,28 @@ bool HelloWorld::init()
  //   // add the sprite as a child to this layer
  //   this->addChild(sprite);
  //test schedule
-
-	//setCurrSpeed(1.0f);
-	//rect_n = 4;
-	//rects_per_h = 1;
 	
 	
 	this->schedule(schedule_selector(HelloWorld::updateSpeed), 1.f);
+	current_speed = 5.f;
+	rect_n = 4;
+	rects_per_h = 4;
 
     return true;
+}
+
+void HelloWorld::menuCloseCallback(Ref* sender)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+    return;
+#endif
+
+    Director::getInstance()->end();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
 }
 
 void HelloWorld::setCurrSpeed(float  speed) {
@@ -143,28 +153,12 @@ void HelloWorld::createRandomRect(float  dt) {
 
 	sprite->setPosition(Vec2(start_pos_x, -hide_h));
 
-	
+
 	auto move = MoveTo::create(current_speed, Vec2(start_pos_x, visibleSize.height + hide_h));
 
 	sprite->runAction(move);
 
-	 
+
 	// add the sprite as a child to this layer
 	this->addChild(sprite);
-
-	
-}
-
-void HelloWorld::menuCloseCallback(Ref* sender)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-    return;
-#endif
-
-    Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
 }

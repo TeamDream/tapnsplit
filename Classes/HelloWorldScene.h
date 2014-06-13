@@ -16,15 +16,14 @@ public:
     void menuCloseCallback(Ref* sender);
     
 	void createRandomRect(float  dt);
-	void updateSpeed(float  dt);
-
-	float getCurrSpeed();
-
-	void setCurrSpeed(float speed);
 
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
 	static int count;
+	void updateSpeed(float  dt);
+
+	float getCurrSpeed();
+	void setCurrSpeed(float speed);
 private:
 	float current_speed;
 	float rects_per_h;
