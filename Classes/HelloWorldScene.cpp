@@ -1,6 +1,8 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
+ 
+
 Scene* HelloWorld::scene()
 {
 	// 'scene' is an autorelease object
