@@ -1,9 +1,6 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
-USING_NS_CC;
-
-
 Scene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object
@@ -73,11 +70,34 @@ bool HelloWorld::init()
 
 	auto move = MoveTo::create(4.2f, Vec2(0, 0));
 
-	sprite->runAction(move);
+	//sprite->runAction(move);
     // add the sprite as a child to this layer
     this->addChild(sprite);
- 
+
+	//auto touchListener = EventListenerTouchOneByOne::create();
+	//touchListener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+	//touchListener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
+	//getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
+
+	//auto touchableRect = TouchableRect();
+	this->addChild(dynamic_cast<Node*>(new TouchableRect()));
+
     return true;
+}
+
+bool HelloWorld::clickOnRect(Vec2 clickPos)
+{
+	return true;
+}
+
+bool HelloWorld::onTouchBegan(Touch* touch, Event* event)
+{
+	CCLog("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
+	if (clickOnRect(touch->getLocation()))
+		;//doSomething();
+	else
+		;//doSomethingElse();
+	return true;
 }
 
 void HelloWorld::menuCloseCallback(Ref* sender)

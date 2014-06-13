@@ -2,6 +2,9 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "TouchableRect.h"
+
+using namespace cocos2d;
 
 class HelloWorld : public cocos2d::Layer
 {
@@ -14,6 +17,10 @@ public:
     
     // a selector callback
     void menuCloseCallback(Ref* sender);
+	bool onTouchBegan(Touch* touch, Event* event);
+
+	bool clickOnRect(Vec2 clickPos);
+
     
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
