@@ -1,0 +1,5 @@
+#Do now ignore  Marmalade icf files
+*.log
+*.pdb
+*.idb
+*.obj

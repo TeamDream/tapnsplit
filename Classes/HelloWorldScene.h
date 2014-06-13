@@ -22,8 +22,12 @@ public:
 	bool clickOnRect(Vec2 clickPos);
 
     
+	void createRandomRect(float  dt);
+
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
+
+
 };
 
 #endif // __HELLOWORLD_SCENE_H__
