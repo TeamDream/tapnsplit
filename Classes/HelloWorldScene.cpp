@@ -99,7 +99,8 @@ void HelloWorld::createRandomRect(float  dt) {
 	sprite->setPosition(Vec2(start_pos_x, 0) + origin);
 	sprite->setScale(0.5f);
 
-	auto move = MoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height));
+	float hide = sprite->getBoundingBox().size.height / 2;
+	auto move = MoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height + hide));
 
 	sprite->runAction(move);
 
