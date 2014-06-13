@@ -29,8 +29,8 @@ bool HelloWorld::init()
         return false;
     }
     
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto origin = Director::getInstance()->getVisibleOrigin();
+   auto visibleSize = Director::getInstance()->getVisibleSize();
+  auto origin = Director::getInstance()->getVisibleOrigin();
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -65,19 +65,49 @@ bool HelloWorld::init()
     this->addChild(label, 1);
 
     // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("RiseoftheEmpireEra_circle.png");
+ //   auto sprite = Sprite::create("RiseoftheEmpireEra_circle.png");
 
-    // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(visibleSize / 2) + origin);
+ //   // position the sprite on the center of the screen
+ //   sprite->setPosition(Vec2(visibleSize / 2) + origin);
+	//sprite->setScale(0.5f);
+
+	//auto move = MoveTo::create(4.2f, Vec2(0, 0));
+
+	//sprite->runAction(move);
+ //   // add the sprite as a child to this layer
+ //   this->addChild(sprite);
+ //test schedule
+
+
+	this->schedule(schedule_selector(HelloWorld::createRandomRect), 1.0f);
+    return true;
+}
+
+void HelloWorld::createRandomRect(float  dt) {
+	
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+
+	auto sprite = Sprite::create("RiseoftheEmpireEra_circle.png");
+
+	// position the sprite on the center of the screen
+
+	float rand_pos = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+
+	int start_pos_x = visibleSize.width * rand_pos;
+
+	sprite->setPosition(Vec2(start_pos_x, 0) + origin);
 	sprite->setScale(0.5f);
 
-	auto move = MoveTo::create(4.2f, Vec2(0, 0));
+	auto move = MoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height));
 
 	sprite->runAction(move);
-    // add the sprite as a child to this layer
-    this->addChild(sprite);
- 
-    return true;
+
+	 
+	// add the sprite as a child to this layer
+	this->addChild(sprite);
+
+	
 }
 
 void HelloWorld::menuCloseCallback(Ref* sender)

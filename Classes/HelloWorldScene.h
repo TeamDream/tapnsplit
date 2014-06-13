@@ -15,8 +15,12 @@ public:
     // a selector callback
     void menuCloseCallback(Ref* sender);
     
+	void createRandomRect(float  dt);
+
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
+
+
 };
 
 #endif // __HELLOWORLD_SCENE_H__
