@@ -74,7 +74,9 @@ void HelloWorld::createRandomRect(float  dt) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 
-	auto sprite = Sprite::create("RiseoftheEmpireEra_circle.png");
+	auto new_rect = new LonelyRect("rect_blue.png");
+	
+	//auto sprite = Sprite::create("rect_black.png");
 
 	// position the sprite on the center of the screen
 
@@ -82,15 +84,16 @@ void HelloWorld::createRandomRect(float  dt) {
 
 	int start_pos_x = visibleSize.width * rand_pos;
 
-	sprite->setPosition(Vec2(start_pos_x, 0) + origin);
-	sprite->setScale(0.5f);
+	new_rect->getSprite()->setPosition(Vec2(start_pos_x, 0) + origin);
+	new_rect->getSprite()->setScale(0.5f);
 
 	auto move = MoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height));
 
-
-	sprite->runAction(move);
+	new_rect->getSprite()->runAction(move);
+	new_rect->tapIt();
 	// add the sprite as a child to this layer
-	this->addChild(sprite);
+ 
+	this->addChild(new_rect->getSprite());
 
 }
 
