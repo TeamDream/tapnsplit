@@ -61,22 +61,9 @@ bool HelloWorld::init()
     // add the label as a child to this layer
     this->addChild(label, 1);
 
-    // add "HelloWorld" splash screen"
- //   auto sprite = Sprite::create("RiseoftheEmpireEra_circle.png");
-
- //   // position the sprite on the center of the screen
- //   sprite->setPosition(Vec2(visibleSize / 2) + origin);
-	//sprite->setScale(0.5f);
-
-	//auto move = MoveTo::create(4.2f, Vec2(0, 0));
-
-	//sprite->runAction(move);
- //   // add the sprite as a child to this layer
- //   this->addChild(sprite);
- //test schedule
-
 
 	this->schedule(schedule_selector(HelloWorld::createRandomRect), 1.0f);
+
     return true;
 }
 
@@ -99,19 +86,9 @@ void HelloWorld::createRandomRect(float  dt) {
 	auto move = MoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height));
 
 
-	//sprite->runAction(move);
+	sprite->runAction(move);
     // add the sprite as a child to this layer
     this->addChild(sprite);
-
-	//auto touchListener = EventListenerTouchOneByOne::create();
-	//touchListener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
-	//touchListener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
-	//getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
-
-	//auto touchableRect = TouchableRect();
-	this->addChild(dynamic_cast<Node*>(new TouchableRect()));
-
-    return true;
 
 }
 

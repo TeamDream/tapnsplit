@@ -4,6 +4,9 @@
 using namespace cocos2d;
 class TouchableRect : public Sprite, public TargetedAction
 {
+
+ 
+
     public:
     virtual void onEnter();
     virtual void onExit();

@@ -137,6 +137,7 @@
     <ClInclude Include="..\Classes\AppMacros.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\TouchableRect.h" />
+    <ClInclude Include="LonelyRect.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
