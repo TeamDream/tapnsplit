@@ -3,6 +3,7 @@
 
 USING_NS_CC;
 
+int HelloWorld::count = 0;
 
 Scene* HelloWorld::scene()
 {
@@ -11,8 +12,19 @@ Scene* HelloWorld::scene()
     
     // 'layer' is an autorelease object
     HelloWorld *layer = HelloWorld::create();
-
+	auto background = Sprite::create("background.png");
+	layer->setColor(cocos2d::Color3B::WHITE);
     // add layer as a child to scene
+	//float background_h = background->boundingBox().size.height;
+	//float background_w = background->boundingBox().size.width;
+
+	//float scale_h = scene->getBoundingBox().size.height / background_h;
+	//float scale_w = scene->getBoundingBox().size.width / background_w;
+
+	//float scale = scale_h > scale_w ? scale_h : scale_w;
+	float scale = 4.0f;
+	background->setScale(scale);
+	scene->addChild(background);
     scene->addChild(layer);
 
     // return the scene
@@ -22,6 +34,9 @@ Scene* HelloWorld::scene()
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
+	current_speed = 5.f;
+	rect_n = 4;
+	rects_per_h = 4;
     //////////////////////////////
     // 1. super init first
     if ( !Layer::init() )
@@ -56,6 +71,7 @@ bool HelloWorld::init()
     // create and initialize a label
     
     auto label = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
+	label->setColor(cocos2d::Color3B::BLACK);
     
     // position the label on the center of the screen
     label->setPosition(Vec2(origin.x + visibleSize.width/2,
@@ -78,29 +94,57 @@ bool HelloWorld::init()
  //   this->addChild(sprite);
  //test schedule
 
+	//setCurrSpeed(1.0f);
+	//rect_n = 4;
+	//rects_per_h = 1;
+	
+	
+	this->schedule(schedule_selector(HelloWorld::updateSpeed), 1.f);
 
-	this->schedule(schedule_selector(HelloWorld::createRandomRect), 1.0f);
     return true;
 }
 
+void HelloWorld::setCurrSpeed(float  speed) {
+	current_speed = speed;
+}
+
+float HelloWorld::getCurrSpeed() {
+	return current_speed;
+}
+
+void HelloWorld::updateSpeed(float  dt) {
+	if (count % 3 == 0) {
+		if (current_speed > 0.5f) {
+			current_speed -= 0.2;
+		}
+		this->schedule(schedule_selector(HelloWorld::createRandomRect), current_speed / rects_per_h);
+	}
+}
+
+
 void HelloWorld::createRandomRect(float  dt) {
-	
+
+	count++;
+
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	auto origin = Director::getInstance()->getVisibleOrigin();
 
-	auto sprite = Sprite::create("RiseoftheEmpireEra_circle.png");
+	auto sprite = Sprite::create("rect_black.png");
+	float sprite_w = sprite->boundingBox().size.width;
 
-	// position the sprite on the center of the screen
+	float scale_w = visibleSize.width / sprite_w / rect_n;
+	sprite->setScale(scale_w);
+	sprite_w = sprite->boundingBox().size.width;
 
-	float rand_pos = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	rects_per_h = visibleSize.height / sprite->boundingBox().size.height;
 
-	int start_pos_x = visibleSize.width * rand_pos;
+	int random = rand() % rect_n;
+	float hide_h = sprite->boundingBox().size.height / 2;
+	int start_pos_x = visibleSize.width - sprite_w * random - sprite_w / 2;
 
-	sprite->setPosition(Vec2(start_pos_x, 0) + origin);
-	sprite->setScale(0.5f);
+	sprite->setPosition(Vec2(start_pos_x, -hide_h));
 
-	float hide = sprite->getBoundingBox().size.height / 2;
-	auto move = MoveTo::create(4.2f, Vec2(start_pos_x, visibleSize.height + hide));
+	
+	auto move = MoveTo::create(current_speed, Vec2(start_pos_x, visibleSize.height + hide_h));
 
 	sprite->runAction(move);
 
