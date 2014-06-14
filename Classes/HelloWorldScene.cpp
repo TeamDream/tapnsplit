@@ -1,19 +1,14 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
 
-USING_NS_CC;
-
 int HelloWorld::count = 0;
 
 Scene* HelloWorld::scene()
 {
-    // 'scene' is an autorelease object
-    auto scene = Scene::create();
-    
-    // 'layer' is an autorelease object
-    HelloWorld *layer = HelloWorld::create();
-	auto background = Sprite::create("background.png");
-	layer->setColor(cocos2d::Color3B::WHITE);
+	// 'scene' is an autorelease object
+	auto scene = Scene::create();
+	HelloWorld * layer = HelloWorld::create();
+	
     // add layer as a child to scene
 	//float background_h = background->boundingBox().size.height;
 	//float background_w = background->boundingBox().size.width;
@@ -21,83 +16,66 @@ Scene* HelloWorld::scene()
 	//float scale_h = scene->getBoundingBox().size.height / background_h;
 	//float scale_w = scene->getBoundingBox().size.width / background_w;
 
-	//float scale = scale_h > scale_w ? scale_h : scale_w;
-	float scale = 4.0f;
-	background->setScale(scale);
-	scene->addChild(background);
-    scene->addChild(layer);
-
-    // return the scene
-    return scene;
+	// add layer as a child to scene
+	scene->addChild(layer);
+	// return the scene
+	return scene;
 }
 
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Layer::init() )
-    {
-        return false;
-    }
-    
-   auto visibleSize = Director::getInstance()->getVisibleSize();
-  auto origin = Director::getInstance()->getVisibleOrigin();
+	//////////////////////////////
+	// 1. super init first
+	if (!LayerColor::initWithColor(ccc4(200, 200, 200, 200))) //RGBA
+	{
+		return false;
+	}
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+	auto background = Sprite::create("background.png");
+	float scale = 4.0f;
+	background->setScale(scale);
+	this->addChild(background);
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                        "CloseNormal.png",
-                                        "CloseSelected.png",
-                                        CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
-    
-    closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
 
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
-    
-    /////////////////////////////
-    // 3. add your codes below...
+	/////////////////////////////
+	// 2. add a menu item with "X" image, which is clicked to quit the program
+	//    you may modify it.
 
-    // add a label shows "Hello World"
-    // create and initialize a label
-    
-    auto label = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
-	label->setColor(cocos2d::Color3B::BLACK);
-    
-    // position the label on the center of the screen
-    label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - label->getContentSize().height));
+	// add a "close" icon to exit the progress. it's an autorelease object
+	auto closeItem = MenuItemImage::create(
+		"CloseNormal.png",
+		"CloseSelected.png",
+		CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
-    // add the label as a child to this layer
-    this->addChild(label, 1);
+	closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
 
-    // add "HelloWorld" splash screen"
- //   auto sprite = Sprite::create("RiseoftheEmpireEra_circle.png");
+	// create menu, it's an autorelease object
+	auto menu = Menu::create(closeItem, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu, 1);
 
- //   // position the sprite on the center of the screen
- //   sprite->setPosition(Vec2(visibleSize / 2) + origin);
-	//sprite->setScale(0.5f);
+	/////////////////////////////
+	// 3. add your codes below...
 
-	//auto move = MoveTo::create(4.2f, Vec2(0, 0));
+	// add a label shows "Hello World"
+	// create and initialize a label
 
-	//sprite->runAction(move);
- //   // add the sprite as a child to this layer
- //   this->addChild(sprite);
- //test schedule
+	auto label = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
+
+	// position the label on the center of the screen
+	label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height - label->getContentSize().height));
 	
 	
-	this->schedule(schedule_selector(HelloWorld::updateSpeed), 1.f);
 	current_speed = 5.f;
 	rect_n = 4;
 	rects_per_h = 4;
+	this->schedule(schedule_selector(HelloWorld::updateSpeed), 0.2f);
 
-    return true;
+	return true;
 }
 
 void HelloWorld::menuCloseCallback(Ref* sender)
@@ -123,9 +101,9 @@ float HelloWorld::getCurrSpeed() {
 }
 
 void HelloWorld::updateSpeed(float  dt) {
-	if (count % 3 == 0) {
-		if (current_speed > 0.5f) {
-			current_speed -= 0.2;
+	if (count % 5 == 0) {
+		if (current_speed > 1.0f) {
+			current_speed -= 0.1;
 		}
 		this->schedule(schedule_selector(HelloWorld::createRandomRect), current_speed / rects_per_h);
 	}
@@ -138,27 +116,55 @@ void HelloWorld::createRandomRect(float  dt) {
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto sprite = Sprite::create("rect_black.png");
-	float sprite_w = sprite->boundingBox().size.width;
+	auto new_rect = new LonelyRect("rect_black.png");
+	float sprite_w = new_rect->getSprite()->boundingBox().size.width;
 
 	float scale_w = visibleSize.width / sprite_w / rect_n;
-	sprite->setScale(scale_w);
-	sprite_w = sprite->boundingBox().size.width;
+	new_rect->getSprite()->setScale(scale_w);
+	sprite_w = new_rect->getSprite()->boundingBox().size.width;
 
-	rects_per_h = visibleSize.height / sprite->boundingBox().size.height;
+	rects_per_h = visibleSize.height / new_rect->getSprite()->boundingBox().size.height;
 
 	int random = rand() % rect_n;
-	float hide_h = sprite->boundingBox().size.height / 2;
+	float hide_h = new_rect->getSprite()->boundingBox().size.height / 2;
 	int start_pos_x = visibleSize.width - sprite_w * random - sprite_w / 2;
 
-	sprite->setPosition(Vec2(start_pos_x, -hide_h));
+	new_rect->getSprite()->setPosition(Vec2(start_pos_x, -hide_h));
 
+	 // Create the actions
+    CCFiniteTimeAction* actionMove = 
+		CCMoveTo::create(current_speed, Vec2(start_pos_x, visibleSize.height + hide_h));
+    CCFiniteTimeAction* actionMoveDone = 
+        CCCallFuncN::create( this, 
+        callfuncN_selector(HelloWorld::spriteMoveFinished));
+    new_rect->getSprite()->runAction( CCSequence::create(actionMove, 
+        actionMoveDone, NULL) );
 
-	auto move = MoveTo::create(current_speed, Vec2(start_pos_x, visibleSize.height + hide_h));
+	new_rect->tapIt();
 
-	sprite->runAction(move);
+	this->addChild(new_rect->getSprite());
 
+}
 
-	// add the sprite as a child to this layer
-	this->addChild(sprite);
+void HelloWorld::spriteMoveFinished(CCNode* sender)
+{
+  CCSprite *sprite = (CCSprite *)sender;
+  this->removeChild(sprite, true);
+
+  CCLog("Sprite move finished");
+}
+
+bool HelloWorld::clickOnRect(Vec2 clickPos)
+{
+	return true;
+}
+
+bool HelloWorld::onTouchBegan(Touch* touch, Event* event)
+{
+	CCLog("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
+	if (clickOnRect(touch->getLocation()))
+		;//doSomething();
+	else
+		;//doSomethingElse();
+	return true;
 }
