@@ -11,6 +11,7 @@ public:
 	int findBoundaryRect();
 
 	Sprite *getRectSprite(int rect_i);
+	bool isRectTapped(int rect_i);
 	void deleteRect(int rect_i);
 	void addRect(LonelyRect* rect);
 	void setBoundary(int _b) { boundary = _b; }

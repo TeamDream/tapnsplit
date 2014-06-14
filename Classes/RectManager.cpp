@@ -1,12 +1,14 @@
 #include "RectManager.h"
+#include "SessionController.h"
 
 void RectManager::processClick(Vec2 point)
 {
 	std::vector<LonelyRect*>::iterator it = rectPool.begin();
 	for (; it != rectPool.end(); it++)
 	{
-		if ((*it)->containsPoint(point)) { //make it public 
+		if ((*it)->containsPoint(point) && !(*it)->isTapped()) { //make it public 
 			(*it)->tapIt();//
+			SessionController::addScore();
 		}
 	}
 }
@@ -25,6 +27,10 @@ int RectManager::findBoundaryRect() {
 
 Sprite *RectManager::getRectSprite(int rect_i) {
 	return rectPool.at(rect_i)->getSprite();
+}
+
+bool RectManager::isRectTapped(int rect_i) {
+	return rectPool.at(rect_i)->isTapped();
 }
 
 void RectManager::deleteRect(int rect_i) {

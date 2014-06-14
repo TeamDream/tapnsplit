@@ -1,5 +1,4 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#pragma once
 
 #include "cocos2d.h"
 #include "LonelyRect.h"
@@ -32,6 +31,9 @@ public:
 
 	float getCurrSpeed();
 	void setCurrSpeed(float speed);
+
+	LabelTTF* score_label;
+
 private:
 	float current_speed;
 	float rects_per_h;
@@ -41,4 +43,3 @@ private:
 
 };
 
-#endif // __HELLOWORLD_SCENE_H__
