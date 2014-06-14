@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../class/RetryScene.h"
+
 //controlls current game session - lifes count and riched score
 class SessionController{
 
@@ -11,6 +13,10 @@ public:
 
 	static void damage() {
 		--current_lifes;
+		if(isDead()){
+			Scene *s = RetryScene::scene();
+			Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
+		}
 	}
 
 	static bool isDead() { return current_lifes <= 0; }

@@ -15,6 +15,7 @@ Scene* HelloWorld::scene()
 
 	// add layer as a child to scene
 	scene->addChild(layer);
+	
 	// return the scene
 	return scene;
 }
@@ -28,6 +29,8 @@ bool HelloWorld::init()
 	{
 		return false;
 	}
+
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onGameStart), GAME_START, NULL);
 
 	auto background = Sprite::create("background.png");
 	float scale = 4.0f;
@@ -75,12 +78,26 @@ bool HelloWorld::init()
 	current_speed = 5.f;
 	rect_n = 4;
 	rects_per_h = 4;
-	this->schedule(schedule_selector(HelloWorld::updateSpeed), 0.2f);
-	this->schedule(schedule_selector(HelloWorld::checkRectPositions), 0.033f);
+	startSchedule();
 
 	rects.setBoundary(visibleSize.height);
 
 	return true;
+}
+
+//Handling event
+void HelloWorld::onGameStart(CCObject* obj)
+{
+    //TODO call startSchedule();
+
+	CCLog("Start game. Need start schedules");
+
+}
+
+void HelloWorld::startSchedule()
+{
+	this->schedule(schedule_selector(HelloWorld::updateSpeed), 0.2f);
+	this->schedule(schedule_selector(HelloWorld::checkRectPositions), 0.033f);
 }
 
 void HelloWorld::menuCloseCallback(Ref* sender)
@@ -127,17 +144,12 @@ void HelloWorld::checkRectPositions(float  dt) {
 		CCSprite *sprite = (CCSprite *)rects.getRectSprite(lost_rect);
 		this->removeChild(sprite, true);
 		rects.deleteRect(lost_rect);
-
-
 	}
-
 }
 
 
 void HelloWorld::createRandomRect(float  dt) {
-
 	count++;
-
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
 	auto new_rect = new LonelyRect("rect_black.png");
@@ -163,7 +175,6 @@ void HelloWorld::createRandomRect(float  dt) {
 	rects.addRect(new_rect);
 
 	this->addChild(new_rect->getSprite());
-
 }
 
 bool HelloWorld::onTouchBegan(Touch* touch, Event* event)

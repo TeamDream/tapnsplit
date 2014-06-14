@@ -4,6 +4,8 @@
 #include "LonelyRect.h"
 #include "RectManager.h"
 
+#define GAME_START "Game Start"
+
 using namespace cocos2d;
 
 class HelloWorld : public cocos2d::LayerColor
@@ -28,6 +30,7 @@ public:
 
 	void updateSpeed(float  dt);
 	void checkRectPositions(float  dt);
+	void onGameStart(CCObject* obj);
 
 	float getCurrSpeed();
 	void setCurrSpeed(float speed);
@@ -35,6 +38,8 @@ public:
 	LabelTTF* score_label;
 
 private:
+	void startSchedule();
+
 	float current_speed;
 	float rects_per_h;
 	int rect_n;

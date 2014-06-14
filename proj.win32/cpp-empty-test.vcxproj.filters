@@ -50,7 +50,7 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\class\RetryScene.h">
-      <Filter>win32</Filter>
+      <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

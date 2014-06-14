@@ -1,4 +1,5 @@
 #include "RetryScene.h"
+#include "HelloWorldScene.h"
 
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool RetryScene::init() {
@@ -23,7 +24,7 @@ bool RetryScene::init() {
 		"CloseSelected.png",
 		CC_CALLBACK_1(RetryScene::menuRetryCallback, this));
 
-	retryItem->setPosition(origin + Vec2(visibleSize) - Vec2(retryItem->getContentSize() / 2));
+	retryItem->setPosition(origin + Vec2(visibleSize) / 2 - Vec2(retryItem->getContentSize() / 2));
 
 	// create menu, it's an autorelease object
 	auto menu = Menu::create(retryItem, NULL);
@@ -49,4 +50,8 @@ cocos2d::Scene* RetryScene::scene() {
 // a selector callback
 void RetryScene::menuRetryCallback(Ref* sender) {
 	//somehow switch to HelloWorld scene
+	Scene *s = HelloWorld::scene();
+	Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
+
+	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
 }
