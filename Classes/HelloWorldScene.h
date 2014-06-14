@@ -1,8 +1,8 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#pragma once
 
 #include "cocos2d.h"
 #include "LonelyRect.h"
+#include "RectManager.h"
 
 using namespace cocos2d;
 
@@ -19,24 +19,27 @@ public:
     void menuCloseCallback(Ref* sender);
 	bool onTouchBegan(Touch* touch, Event* event);
 
-	bool clickOnRect(Vec2 clickPos);
-
-    
 	void createRandomRect(float  dt);
 	void spriteMoveFinished(CCNode* sender);
 
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
 	static int count;
+
 	void updateSpeed(float  dt);
+	void checkRectPositions(float  dt);
 
 	float getCurrSpeed();
 	void setCurrSpeed(float speed);
+
+	LabelTTF* score_label;
+
 private:
 	float current_speed;
 	float rects_per_h;
 	int rect_n;
 
+	RectManager rects;
+
 };
 
-#endif // __HELLOWORLD_SCENE_H__

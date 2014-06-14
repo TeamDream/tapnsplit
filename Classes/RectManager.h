@@ -6,14 +6,17 @@ using namespace cocos2d;
 class RectManager
 {
 public:
-	RectManager(int rectNum);
+	RectManager() {};
 	void processClick(Vec2 point);
+	int findBoundaryRect();
 
+	Sprite *getRectSprite(int rect_i);
+	bool isRectTapped(int rect_i);
+	void deleteRect(int rect_i);
+	void addRect(LonelyRect* rect);
+	void setBoundary(int _b) { boundary = _b; }
 private:
-	void istantiateRect();
-	void deleteRect();
-
-private:
-	std::vector<LonelyRect> rectPool;
+	int boundary;
+	std::vector<LonelyRect*> rectPool;
 };
 

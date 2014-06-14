@@ -3,12 +3,13 @@
 
 using namespace cocos2d;
 
-#define NON_ACTIVE_RECT "rect_black.png"
+#define NON_ACTIVE_RECT "rect_blue.png"
 
 class LonelyRect {
 public:
 	LonelyRect(const char *file1) {
 		curr_sprite = Sprite::create(file1);
+		tapped = false;
 	}
 
 	inline bool isTapped() { return tapped; }
@@ -16,6 +17,7 @@ public:
 	
 	void tapIt() { //just switch 2 sprites
 		curr_sprite->setTexture(CCTextureCache::sharedTextureCache()->addImage(NON_ACTIVE_RECT));
+		tapped = true;
 	}; 
 
 	bool containsPoint(Vec2 point){ return curr_sprite->getBoundingBox().containsPoint(point); }
