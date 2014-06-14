@@ -23,13 +23,14 @@ Scene* HelloWorld::scene()
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
+	
 	//////////////////////////////
 	// 1. super init first
 	if (!LayerColor::initWithColor(ccc4(50, 50, 50, 200))) //RGBA
 	{
 		return false;
 	}
-
+	CCLog("HelloWorld::init()");
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onGameStart), GAME_START, NULL);
 
 	auto background = Sprite::create("background.png");
@@ -89,13 +90,15 @@ bool HelloWorld::init()
 void HelloWorld::onGameStart(CCObject* obj)
 {
     //TODO call startSchedule();
-
+	SessionController::init();
+	count = 0;
 	CCLog("Start game. Need start schedules");
 
 }
 
 void HelloWorld::startSchedule()
 {
+	CCLog("SHEDULES!");
 	this->schedule(schedule_selector(HelloWorld::updateSpeed), 0.2f);
 	this->schedule(schedule_selector(HelloWorld::checkRectPositions), 0.033f);
 }
@@ -123,17 +126,21 @@ float HelloWorld::getCurrSpeed() {
 }
 
 void HelloWorld::updateSpeed(float  dt) {
+
+	
 	if (count % 5 == 0) {
 		if (current_speed > 1.0f) {
 			current_speed -= 0.1;
 		}
+		CCLog("createRandomRect updated!");
 		this->schedule(schedule_selector(HelloWorld::createRandomRect), current_speed / rects_per_h);
+
 	}
 }
 
 void HelloWorld::checkRectPositions(float  dt) {
 	int lost_rect = rects.findBoundaryRect();
-
+	
 	if (lost_rect >= 0) {
 		if (!rects.isRectTapped(lost_rect)) {
 			SessionController::damage();
@@ -149,6 +156,8 @@ void HelloWorld::checkRectPositions(float  dt) {
 
 
 void HelloWorld::createRandomRect(float  dt) {
+
+	
 	count++;
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -179,7 +188,6 @@ void HelloWorld::createRandomRect(float  dt) {
 
 bool HelloWorld::onTouchBegan(Touch* touch, Event* event)
 {
-	CCLog("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
 	rects.processClick(touch->getLocation());
 	return true;
 }

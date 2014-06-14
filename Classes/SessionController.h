@@ -7,6 +7,11 @@ class SessionController{
 
 public:
 
+	static void init() {
+		current_score = 0;
+		current_lifes = 3;
+	}
+
 	static void addScore() {
 		++current_score;
 	}
