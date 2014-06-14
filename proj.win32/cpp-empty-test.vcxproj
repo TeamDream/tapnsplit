@@ -130,6 +130,7 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\RectManager.cpp" />
+    <ClCompile Include="..\class\RetryScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +140,7 @@
     <ClInclude Include="..\Classes\LonelyRect.h" />
     <ClInclude Include="..\Classes\RectManager.h" />
     <ClInclude Include="..\Classes\SessionController.h" />
+    <ClInclude Include="..\class\RetryScene.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
