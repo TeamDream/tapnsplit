@@ -3,7 +3,7 @@
 
 using namespace cocos2d;
 
-#define NON_ACTIVE_RECT "rect_black.png"
+#define NON_ACTIVE_RECT "rect_blue.png"
 
 class LonelyRect {
 public:

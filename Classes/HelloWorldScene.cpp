@@ -159,16 +159,14 @@ void HelloWorld::createRandomRect(float  dt) {
 	new_rect->getSprite()->runAction(actionMove);
 
 	rects.addRect(new_rect);
-
+	
 	this->addChild(new_rect->getSprite());
-
+	
 }
-
-
 
 bool HelloWorld::onTouchBegan(Touch* touch, Event* event)
 {
 	CCLog("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
-
+	rects.processClick(touch->getLocation());
 	return true;
 }
