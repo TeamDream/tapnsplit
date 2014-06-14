@@ -1,37 +1,37 @@
-#include "HelloWorldScene.h"
+#include "GameScene.h"
 #include "AppMacros.h"
 #include "SessionController.h"
 
-int HelloWorld::count = 0;
+int GameScene::count = 0;
 
 int SessionController::current_score = 0;
 int SessionController::current_lifes = 3;
 
-Scene* HelloWorld::scene()
+Scene* GameScene::scene()
 {
 	// 'scene' is an autorelease object
 	auto scene = Scene::create();
-	HelloWorld * layer = HelloWorld::create();
+	GameScene * layer = GameScene::create();
 
 	// add layer as a child to scene
 	scene->addChild(layer);
-	
+
 	// return the scene
 	return scene;
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool GameScene::init()
 {
-	
+
 	//////////////////////////////
 	// 1. super init first
 	if (!LayerColor::initWithColor(ccc4(50, 50, 50, 200))) //RGBA
 	{
 		return false;
 	}
-	CCLog("HelloWorld::init()");
-	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HelloWorld::onGameStart), GAME_START, NULL);
+	CCLog("GameScene::init()");
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameStart), GAME_START, NULL);
 
 	auto background = Sprite::create("background.png");
 	float scale = 4.0f;
@@ -49,14 +49,13 @@ bool HelloWorld::init()
 	auto closeItem = MenuItemImage::create(
 		"CloseNormal.png",
 		"CloseSelected.png",
-		CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+		CC_CALLBACK_1(GameScene::menuCloseCallback, this));
 
 	closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
 
 	auto touchListener = EventListenerTouchOneByOne::create();
-	touchListener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+	touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
 	Director::sharedDirector()->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
-
 
 	// create menu, it's an autorelease object
 	auto menu = Menu::create(closeItem, NULL);
@@ -87,23 +86,28 @@ bool HelloWorld::init()
 }
 
 //Handling event
-void HelloWorld::onGameStart(CCObject* obj)
+void GameScene::onGameStart(CCObject* obj)
 {
-    //TODO call startSchedule();
 	SessionController::init();
 	count = 0;
-	CCLog("Start game. Need start schedules");
+
+	for (int i = 0; i < rects.getRectCount(); ++i) {
+		CCSprite *sprite = (CCSprite *)rects.getRectSprite(i);
+		this->removeChild(sprite, true);
+	}
+
+	rects.clearAll();
+	current_speed = 5.f;
 
 }
 
-void HelloWorld::startSchedule()
+void GameScene::startSchedule()
 {
-	CCLog("SHEDULES!");
-	this->schedule(schedule_selector(HelloWorld::updateSpeed), 0.2f);
-	this->schedule(schedule_selector(HelloWorld::checkRectPositions), 0.033f);
+	this->schedule(schedule_selector(GameScene::updateSpeed), 0.2f);
+	this->schedule(schedule_selector(GameScene::checkRectPositions), 0.033f);
 }
 
-void HelloWorld::menuCloseCallback(Ref* sender)
+void GameScene::menuCloseCallback(Ref* sender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
@@ -117,36 +121,36 @@ void HelloWorld::menuCloseCallback(Ref* sender)
 #endif
 }
 
-void HelloWorld::setCurrSpeed(float  speed) {
+void GameScene::setCurrSpeed(float  speed) {
 	current_speed = speed;
 }
 
-float HelloWorld::getCurrSpeed() {
+float GameScene::getCurrSpeed() {
 	return current_speed;
 }
 
-void HelloWorld::updateSpeed(float  dt) {
+void GameScene::updateSpeed(float  dt) {
 
-	
+
 	if (count % 5 == 0) {
 		if (current_speed > 1.0f) {
 			current_speed -= 0.1;
 		}
 		CCLog("createRandomRect updated!");
-		this->schedule(schedule_selector(HelloWorld::createRandomRect), current_speed / rects_per_h);
+		this->schedule(schedule_selector(GameScene::createRandomRect), current_speed / rects_per_h);
 
 	}
 }
 
-void HelloWorld::checkRectPositions(float  dt) {
+void GameScene::checkRectPositions(float  dt) {
 	int lost_rect = rects.findBoundaryRect();
-	
+
 	if (lost_rect >= 0) {
 		if (!rects.isRectTapped(lost_rect)) {
 			SessionController::damage();
 		}
 
-		score_label ->setString(SessionController::getStatus());
+		score_label->setString(SessionController::getStatus());
 
 		CCSprite *sprite = (CCSprite *)rects.getRectSprite(lost_rect);
 		this->removeChild(sprite, true);
@@ -155,9 +159,9 @@ void HelloWorld::checkRectPositions(float  dt) {
 }
 
 
-void HelloWorld::createRandomRect(float  dt) {
+void GameScene::createRandomRect(float  dt) {
 
-	
+
 	count++;
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -186,7 +190,7 @@ void HelloWorld::createRandomRect(float  dt) {
 	this->addChild(new_rect->getSprite());
 }
 
-bool HelloWorld::onTouchBegan(Touch* touch, Event* event)
+bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
 	rects.processClick(touch->getLocation());
 	return true;

@@ -3,7 +3,7 @@
 #include "../class/RetryScene.h"
 
 //controlls current game session - lifes count and riched score
-class SessionController{
+class SessionController {
 
 public:
 
@@ -19,8 +19,10 @@ public:
 	static void damage() {
 		--current_lifes;
 		if(isDead()){
+
 			Scene *s = RetryScene::scene();
-			Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
+			Director::getInstance()->pushScene(CCTransitionFade::create(0.5,s));
+			 
 		}
 	}
 
@@ -32,7 +34,11 @@ public:
 		return std::string(s);
 	
 	}
+
+
 private:
 	static int current_score;
 	static int current_lifes;
+
+	
 };

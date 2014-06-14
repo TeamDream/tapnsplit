@@ -15,6 +15,8 @@ public:
 	void deleteRect(int rect_i);
 	void addRect(LonelyRect* rect);
 	void setBoundary(int _b) { boundary = _b; }
+	void clearAll();
+	int getRectCount();
 private:
 	int boundary;
 	std::vector<LonelyRect*> rectPool;

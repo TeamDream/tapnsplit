@@ -1,5 +1,6 @@
 #include "RetryScene.h"
-#include "HelloWorldScene.h"
+#include "GameScene.h"
+#include "SessionController.h"
 
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool RetryScene::init() {
@@ -49,9 +50,9 @@ cocos2d::Scene* RetryScene::scene() {
 
 // a selector callback
 void RetryScene::menuRetryCallback(Ref* sender) {
-	//somehow switch to HelloWorld scene
-	Scene *s = HelloWorld::scene();
-	Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
-
+	//somehow switch to GameScene scene
+//	Scene *s = GameScene::scene();
+	//Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
+	Director::getInstance()->popScene();
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
 }

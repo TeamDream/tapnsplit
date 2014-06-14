@@ -128,7 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\GameScene.cpp" />
     <ClCompile Include="..\Classes\RectManager.cpp" />
     <ClCompile Include="..\class\RetryScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -136,7 +136,7 @@
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\AppMacros.h" />
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\GameScene.h" />
     <ClInclude Include="..\Classes\LonelyRect.h" />
     <ClInclude Include="..\Classes\RectManager.h" />
     <ClInclude Include="..\Classes\SessionController.h" />

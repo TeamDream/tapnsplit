@@ -12,6 +12,10 @@ public:
 		tapped = false;
 	}
 
+	~LonelyRect() {
+		curr_sprite->release();
+	}
+
 	inline bool isTapped() { return tapped; }
 	Sprite *getSprite() { return curr_sprite; }
 	

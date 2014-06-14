@@ -8,7 +8,7 @@
 
 using namespace cocos2d;
 
-class HelloWorld : public cocos2d::LayerColor
+class GameScene : public cocos2d::LayerColor
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -25,7 +25,7 @@ public:
 	void spriteMoveFinished(CCNode* sender);
 
     // implement the "static node()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(GameScene);
 	static int count;
 
 	void updateSpeed(float  dt);

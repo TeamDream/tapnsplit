@@ -40,3 +40,11 @@ void RectManager::deleteRect(int rect_i) {
 void RectManager::addRect(LonelyRect* rect) {
 	rectPool.push_back(rect);
 }
+
+int RectManager::getRectCount() {
+	return rectPool.size();
+}
+
+void RectManager::clearAll() {
+	rectPool.clear();
+}
