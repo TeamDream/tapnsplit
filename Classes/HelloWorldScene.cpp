@@ -125,6 +125,8 @@ void HelloWorld::createRandomRect(float  dt) {
 
 	float hide_h = new_rect->getSprite()->boundingBox().size.height / 2;
 
+	rects_per_h = visibleSize.height / new_rect->getSprite()->boundingBox().size.height;
+
 	int random = rand() % rect_n;
 
 	int start_pos_x = /*visibleSize.width -*/ sprite_w * random + sprite_w / 2;
@@ -143,8 +145,6 @@ void HelloWorld::createRandomRect(float  dt) {
 	new_rect->tapIt();
 
 	this->addChild(new_rect->getSprite());
-	rects_per_h = visibleSize.height / new_rect->getSprite()->boundingBox().size.height;
-
 }
 
 void HelloWorld::spriteMoveFinished(CCNode* sender)
