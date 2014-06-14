@@ -37,10 +37,10 @@
     <ClInclude Include="..\Classes\AppMacros.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\LonelyRect.h">
+    <ClInclude Include="..\Classes\RectManager.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\RectManager.h">
+    <ClInclude Include="..\Classes\LonelyRect.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
