@@ -73,7 +73,7 @@ bool HelloWorld::init()
 	current_speed = 5.f;
 	rect_n = 4;
 	rects_per_h = 4;
-	this->schedule(schedule_selector(HelloWorld::updateSpeed), 0.2f);
+	this->schedule(schedule_selector(HelloWorld::updateSpeed), 0.1f);
 
 	return true;
 }
@@ -102,8 +102,8 @@ float HelloWorld::getCurrSpeed() {
 
 void HelloWorld::updateSpeed(float  dt) {
 	if (count % 5 == 0) {
-		if (current_speed > 1.0f) {
-			current_speed -= 0.1;
+		if (current_speed > 0.9f) {
+			current_speed -= 0.05;
 		}
 		this->schedule(schedule_selector(HelloWorld::createRandomRect), current_speed / rects_per_h);
 	}
@@ -123,17 +123,17 @@ void HelloWorld::createRandomRect(float  dt) {
 	new_rect->getSprite()->setScale(scale_w);
 	sprite_w = new_rect->getSprite()->boundingBox().size.width;
 
-	rects_per_h = visibleSize.height / new_rect->getSprite()->boundingBox().size.height;
+	float hide_h = new_rect->getSprite()->boundingBox().size.height / 2;
 
 	int random = rand() % rect_n;
-	float hide_h = new_rect->getSprite()->boundingBox().size.height / 2;
-	int start_pos_x = visibleSize.width - sprite_w * random - sprite_w / 2;
 
-	new_rect->getSprite()->setPosition(Vec2(start_pos_x, -hide_h));
+	int start_pos_x = /*visibleSize.width -*/ sprite_w * random + sprite_w / 2;
+
+	new_rect->getSprite()->setPosition(Vec2(start_pos_x, visibleSize.width + hide_h));
 
 	 // Create the actions
     CCFiniteTimeAction* actionMove = 
-		CCMoveTo::create(current_speed, Vec2(start_pos_x, visibleSize.height + hide_h));
+		CCMoveTo::create(current_speed, Vec2(start_pos_x, -hide_h));
     CCFiniteTimeAction* actionMoveDone = 
         CCCallFuncN::create( this, 
         callfuncN_selector(HelloWorld::spriteMoveFinished));
@@ -143,6 +143,7 @@ void HelloWorld::createRandomRect(float  dt) {
 	new_rect->tapIt();
 
 	this->addChild(new_rect->getSprite());
+	rects_per_h = visibleSize.height / new_rect->getSprite()->boundingBox().size.height;
 
 }
 
