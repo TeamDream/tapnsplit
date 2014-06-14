@@ -8,8 +8,8 @@ Scene* HelloWorld::scene()
 	// 'scene' is an autorelease object
 	auto scene = Scene::create();
 	HelloWorld * layer = HelloWorld::create();
-	
-    // add layer as a child to scene
+
+	// add layer as a child to scene
 	//float background_h = background->boundingBox().size.height;
 	//float background_w = background->boundingBox().size.width;
 
@@ -52,6 +52,11 @@ bool HelloWorld::init()
 
 	closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
 
+	auto touchListener = EventListenerTouchOneByOne::create();
+	touchListener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+	Director::sharedDirector()->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
+
+
 	// create menu, it's an autorelease object
 	auto menu = Menu::create(closeItem, NULL);
 	menu->setPosition(Vec2::ZERO);
@@ -68,12 +73,15 @@ bool HelloWorld::init()
 	// position the label on the center of the screen
 	label->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height - label->getContentSize().height));
-	
-	
+
+
 	current_speed = 5.f;
 	rect_n = 4;
 	rects_per_h = 4;
 	this->schedule(schedule_selector(HelloWorld::updateSpeed), 0.2f);
+	this->schedule(schedule_selector(HelloWorld::checkRectPositions), 0.033f);
+
+	rects.setBoundary(visibleSize.height);
 
 	return true;
 }
@@ -81,14 +89,14 @@ bool HelloWorld::init()
 void HelloWorld::menuCloseCallback(Ref* sender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-    return;
+	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
+	return;
 #endif
 
-    Director::getInstance()->end();
+	Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+	exit(0);
 #endif
 }
 
@@ -107,6 +115,20 @@ void HelloWorld::updateSpeed(float  dt) {
 		}
 		this->schedule(schedule_selector(HelloWorld::createRandomRect), current_speed / rects_per_h);
 	}
+}
+
+void HelloWorld::checkRectPositions(float  dt) {
+	int lost_rect = rects.findBoundaryRect();
+
+	if (lost_rect >= 0) {
+
+		CCSprite *sprite = (CCSprite *)rects.getRectSprite(lost_rect);
+		this->removeChild(sprite, true);
+		rects.deleteRect(lost_rect);
+
+		CCLog("Sprite move finished");
+	}
+
 }
 
 
@@ -131,40 +153,22 @@ void HelloWorld::createRandomRect(float  dt) {
 
 	new_rect->getSprite()->setPosition(Vec2(start_pos_x, -hide_h));
 
-	 // Create the actions
-    CCFiniteTimeAction* actionMove = 
+	// Create the actions
+	CCFiniteTimeAction* actionMove =
 		CCMoveTo::create(current_speed, Vec2(start_pos_x, visibleSize.height + hide_h));
-    CCFiniteTimeAction* actionMoveDone = 
-        CCCallFuncN::create( this, 
-        callfuncN_selector(HelloWorld::spriteMoveFinished));
-    new_rect->getSprite()->runAction( CCSequence::create(actionMove, 
-        actionMoveDone, NULL) );
+	new_rect->getSprite()->runAction(actionMove);
 
-	new_rect->tapIt();
+	rects.addRect(new_rect);
 
 	this->addChild(new_rect->getSprite());
 
 }
 
-void HelloWorld::spriteMoveFinished(CCNode* sender)
-{
-  CCSprite *sprite = (CCSprite *)sender;
-  this->removeChild(sprite, true);
 
-  CCLog("Sprite move finished");
-}
-
-bool HelloWorld::clickOnRect(Vec2 clickPos)
-{
-	return true;
-}
 
 bool HelloWorld::onTouchBegan(Touch* touch, Event* event)
 {
 	CCLog("onTouchBegan x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
-	if (clickOnRect(touch->getLocation()))
-		;//doSomething();
-	else
-		;//doSomethingElse();
+
 	return true;
 }
