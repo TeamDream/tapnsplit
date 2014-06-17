@@ -40,9 +40,6 @@
     <ClInclude Include="..\Classes\RectManager.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\LonelyRect.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\SessionController.h">
       <Filter>Classes</Filter>
     </ClInclude>
@@ -50,6 +47,9 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TouchableRect.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

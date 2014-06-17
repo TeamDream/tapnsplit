@@ -3,7 +3,7 @@
 
 void RectManager::processClick(Vec2 point)
 {
-	std::vector<LonelyRect*>::iterator it = rectPool.begin();
+	std::vector<TouchableRect*>::iterator it = rectPool.begin();
 	for (; it != rectPool.end(); it++)
 	{
 		if ((*it)->containsPoint(point) && !(*it)->isTapped()) { //make it public 
@@ -14,10 +14,10 @@ void RectManager::processClick(Vec2 point)
 }
 
 int RectManager::findBoundaryRect() {
-	std::vector<LonelyRect*>::iterator it = rectPool.begin();
+	std::vector<TouchableRect*>::iterator it = rectPool.begin();
 	for (; it != rectPool.end(); it++)
 	{
-		if ((*it)->getSprite()->getPositionY() >= boundary) {
+		if ((*it)->getSprite()->getPositionY() + (*it)->getSprite()->getBoundingBox().size.height/2 <= boundary) {
 			return static_cast<int>(std::distance(rectPool.begin(), it));
 		}
 	}
@@ -37,7 +37,7 @@ void RectManager::deleteRect(int rect_i) {
 	rectPool.erase(rectPool.begin() + rect_i);
 }
 
-void RectManager::addRect(LonelyRect* rect) {
+void RectManager::addRect(TouchableRect* rect) {
 	rectPool.push_back(rect);
 }
 

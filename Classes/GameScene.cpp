@@ -36,7 +36,7 @@ bool GameScene::init()
 	auto background = Sprite::create("background.png");
 	float scale = 4.0f;
 	background->setScale(scale);
-	//this->addChild(background);
+//	this->addChild(background);
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
@@ -74,13 +74,15 @@ bool GameScene::init()
 	score_label->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height - score_label->getContentSize().height));
 	score_label->setString(SessionController::getStatus());
+	score_label->setZOrder(UIElementsOrder);
 	this->addChild(score_label);
+ 
 	current_speed = 5.f;
 	rect_n = 4;
 	rects_per_h = 4;
 	startSchedule();
 
-	rects.setBoundary(visibleSize.height);
+	rects.setBoundary(0);
 
 	return true;
 }
@@ -98,7 +100,6 @@ void GameScene::onGameStart(CCObject* obj)
 
 	rects.clearAll();
 	current_speed = 5.f;
-
 }
 
 void GameScene::startSchedule()
@@ -165,7 +166,8 @@ void GameScene::createRandomRect(float  dt) {
 	count++;
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto new_rect = new LonelyRect("rect_black.png");
+	auto new_rect = new TouchableRect("rect_black.png");
+	new_rect->getSprite()->setZOrder(GameElementsOrder);
 	float sprite_w = new_rect->getSprite()->boundingBox().size.width;
 
 	float scale_w = visibleSize.width / sprite_w / rect_n;
@@ -178,11 +180,11 @@ void GameScene::createRandomRect(float  dt) {
 	float hide_h = new_rect->getSprite()->boundingBox().size.height / 2;
 	int start_pos_x = visibleSize.width - sprite_w * random - sprite_w / 2;
 
-	new_rect->getSprite()->setPosition(Vec2(start_pos_x, -hide_h));
+	new_rect->getSprite()->setPosition(Vec2(start_pos_x, visibleSize.height + hide_h ));
 
 	// Create the actions
 	CCFiniteTimeAction* actionMove =
-		CCMoveTo::create(current_speed, Vec2(start_pos_x, visibleSize.height + hide_h));
+		CCMoveTo::create(current_speed, Vec2(start_pos_x, -hide_h));
 	new_rect->getSprite()->runAction(actionMove);
 
 	rects.addRect(new_rect);

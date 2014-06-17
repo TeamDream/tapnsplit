@@ -1,12 +1,18 @@
 #pragma once
 
 #include "cocos2d.h"
-#include "LonelyRect.h"
+#include "TouchableRect.h"
 #include "RectManager.h"
 
 #define GAME_START "Game Start"
 
 using namespace cocos2d;
+
+enum DrawOrder
+{
+	GameElementsOrder = 0,
+	UIElementsOrder
+};
 
 class GameScene : public cocos2d::LayerColor
 {

@@ -5,14 +5,14 @@ using namespace cocos2d;
 
 #define NON_ACTIVE_RECT "rect_blue.png"
 
-class LonelyRect {
+class TouchableRect {
 public:
-	LonelyRect(const char *file1) {
+	TouchableRect(const char *file1) {
 		curr_sprite = Sprite::create(file1);
 		tapped = false;
 	}
 
-	~LonelyRect() {
+	~TouchableRect() {
 		curr_sprite->release();
 	}
 
@@ -27,7 +27,7 @@ public:
 	bool containsPoint(Vec2 point){ return curr_sprite->getBoundingBox().containsPoint(point); }
 
 private:
-	LonelyRect();
+	TouchableRect();
 
 	Sprite * curr_sprite;
  
