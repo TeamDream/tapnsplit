@@ -5,8 +5,6 @@
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool RetryScene::init() {
 
-	//////////////////////////////
-	// 1. super init first
 	if (!LayerColor::initWithColor(ccc4(50, 50, 50, 200))) //RGBA
 	{
 		return false;
@@ -15,22 +13,27 @@ bool RetryScene::init() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 
-	/////////////////////////////
-	// 2. add a menu item with "X" image, which is clicked to quit the program
-	//    you may modify it.
-
-	// add a "close" icon to exit the progress. it's an autorelease object
 	auto retryItem = MenuItemImage::create(
-		"CloseNormal.png",
-		"CloseSelected.png",
+		"Retry.png",
+		"RetrySelected.png",
 		CC_CALLBACK_1(RetryScene::menuRetryCallback, this));
+	auto closeItem = MenuItemImage::create(
+		"Exit.png",
+		"ExitSelected.png",
+		CC_CALLBACK_1(RetryScene::menuCloseCallback, this));
 
-	retryItem->setPosition(origin + Vec2(visibleSize) / 2 - Vec2(retryItem->getContentSize() / 2));
+	retryItem->setPosition(origin + Vec2(visibleSize) / 2 + Vec2(0, 50));
+	closeItem->setPosition(origin + Vec2(visibleSize) / 2 - Vec2(0, retryItem->getContentSize().height / 2));
 
 	// create menu, it's an autorelease object
-	auto menu = Menu::create(retryItem, NULL);
-	menu->setPosition(Vec2::ZERO);
-	this->addChild(menu, 1);
+	auto menu_retry = Menu::create(retryItem, NULL);
+	auto menu_close = Menu::create(closeItem, NULL);
+
+	menu_retry->setPosition(Vec2::ZERO);
+	menu_close->setPosition(Vec2::ZERO);
+
+	this->addChild(menu_retry, UIElementsOrder);
+	this->addChild(menu_close, UIElementsOrder);
 
 	return true;
 
@@ -55,4 +58,18 @@ void RetryScene::menuRetryCallback(Ref* sender) {
 	//Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
 	Director::getInstance()->popScene();
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
+}
+
+void RetryScene::menuCloseCallback(Ref* sender)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
+	return;
+#endif
+
+	Director::getInstance()->end();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	exit(0);
+#endif
 }

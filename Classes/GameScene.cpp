@@ -124,7 +124,6 @@ float GameScene::getCurrSpeed() {
 
 void GameScene::updateSpeed(float  dt) {
 
-
 	if (count % 5 == 0) {
 		if (current_speed > 1.0f) {
 			//current_speed -= 0.1;

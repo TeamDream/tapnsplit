@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../class/RetryScene.h"
+#include "RetryScene.h"
 
 //controlls current game session - lifes count and riched score
 class SessionController {

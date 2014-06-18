@@ -14,6 +14,7 @@ public:
 
 	// a selector callback
 	void menuRetryCallback(Ref* sender);
+	void menuCloseCallback(Ref* sender);
 
 	// implement the "static node()" method manually
 	CREATE_FUNC(RetryScene);
