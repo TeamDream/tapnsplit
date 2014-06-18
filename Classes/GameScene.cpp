@@ -45,51 +45,10 @@ bool GameScene::init()
 	Director::sharedDirector()->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
 
 	current_speed = 5.f;
-	rect_n = 4;
-	rects_per_h = 4;
+	
 	startSchedule();
 
 	rects.setBoundary(0);
-
-
-
-
-
-
-
-
-	////test
-
-	//auto visibleSize = Director::getInstance()->getVisibleSize();
-
-	//auto new_rect = new TouchableRect("rect_black.png");
-	//new_rect->getSprite()->setZOrder(GameElementsOrder);
-	//float sprite_w = new_rect->getSprite()->boundingBox().size.width;
-
-	//float scale_w = visibleSize.width / sprite_w / rect_n;
-	//new_rect->getSprite()->setScale(scale_w);
-	//sprite_w = new_rect->getSprite()->boundingBox().size.width;
-
-	//rects_per_h = visibleSize.height / new_rect->getSprite()->boundingBox().size.height;
-
-	//float hide_h = new_rect->getSprite()->boundingBox().size.height / 2;
-	//
-
-	//new_rect->getSprite()->setPosition(Vec2(80,150));
-
-	//this->addChild(new_rect->getSprite());
-
-
-	//auto other_rect = new TouchableRect("rect_blue.png");
-	//other_rect->getSprite()->setZOrder(GameElementsOrder);
-	//sprite_w = other_rect->getSprite()->boundingBox().size.width;
-
-	// scale_w = visibleSize.width / sprite_w / rect_n;
-	// other_rect->getSprite()->setScale(scale_w);
-
-	// other_rect->getSprite()->setPosition(Vec2(100, 150 + 2*hide_h));
-
-	// this->addChild(other_rect->getSprite());
 
 	return true;
 }
@@ -171,18 +130,10 @@ void GameScene::updateSpeed(float  dt) {
 			//current_speed -= 0.1;
 		}
 		CCLog("createRandomRect updated!");
-
-		//to delete:
-		auto temp_rect = Sprite::create("rect_black.png");
+		
 		auto visibleSize = Director::getInstance()->getVisibleSize();
 
-		float sprite_w = temp_rect->boundingBox().size.width;
-		float scale_w = visibleSize.width / sprite_w / rect_n;
-		temp_rect->setScale(scale_w);
-
-		float hide_h = temp_rect->boundingBox().size.height;
-
-		float create_rect_speed = (hide_h*current_speed) / (visibleSize.height + hide_h);
+		float create_rect_speed = (rectFabrik.hide_h*current_speed) / (visibleSize.height + rectFabrik.hide_h);
 
 		this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
 	}
@@ -207,33 +158,17 @@ void GameScene::checkRectPositions(float  dt) {
 
 void GameScene::createRandomRect(float  dt) {
 
-
 	count++;
-	auto visibleSize = Director::getInstance()->getVisibleSize();
 
-	auto new_rect = new TouchableRect("rect_black.png");
+	auto new_rect = rectFabrik.createRect();
+
 	new_rect->getSprite()->setZOrder(GameElementsOrder);
-	float sprite_w = new_rect->getSprite()->boundingBox().size.width;
-
-	float scale_w = visibleSize.width / sprite_w / rect_n;
-	new_rect->getSprite()->setScale(scale_w);
-	sprite_w = new_rect->getSprite()->boundingBox().size.width;
-
-	rects_per_h = visibleSize.height / new_rect->getSprite()->boundingBox().size.height;
-
-	int random = rand() % rect_n;
-	float hide_h = new_rect->getSprite()->boundingBox().size.height / 2;
-	int start_pos_x = visibleSize.width - sprite_w * random - sprite_w / 2;
-
-	new_rect->getSprite()->setPosition(Vec2(start_pos_x, visibleSize.height + hide_h));
-
 	// Create the actions
 	CCFiniteTimeAction* actionMove =
-		CCMoveTo::create(current_speed, Vec2(start_pos_x, -hide_h));
+		CCMoveTo::create(current_speed, Vec2(new_rect->getSprite()->getPositionX(), -rectFabrik.hide_h/2));
 	new_rect->getSprite()->runAction(actionMove);
-
+	
 	rects.addRect(new_rect);
-
 	this->addChild(new_rect->getSprite());
 }
 

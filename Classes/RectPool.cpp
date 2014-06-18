@@ -1,7 +1,7 @@
-#include "RectManager.h"
+#include "RectPool.h"
 #include "SessionController.h"
 
-void RectManager::processClick(Vec2 point)
+void RectPool::processClick(Vec2 point)
 {
 	std::vector<TouchableRect*>::iterator it = rectPool.begin();
 	for (; it != rectPool.end(); it++)
@@ -13,7 +13,7 @@ void RectManager::processClick(Vec2 point)
 	}
 }
 
-int RectManager::findBoundaryRect() {
+int RectPool::findBoundaryRect() {
 	std::vector<TouchableRect*>::iterator it = rectPool.begin();
 	for (; it != rectPool.end(); it++)
 	{
@@ -25,26 +25,26 @@ int RectManager::findBoundaryRect() {
 	return -1;
 }
 
-Sprite *RectManager::getRectSprite(int rect_i) {
+Sprite *RectPool::getRectSprite(int rect_i) {
 	return rectPool.at(rect_i)->getSprite();
 }
 
-bool RectManager::isRectTapped(int rect_i) {
+bool RectPool::isRectTapped(int rect_i) {
 	return rectPool.at(rect_i)->isTapped();
 }
 
-void RectManager::deleteRect(int rect_i) {
+void RectPool::deleteRect(int rect_i) {
 	rectPool.erase(rectPool.begin() + rect_i);
 }
 
-void RectManager::addRect(TouchableRect* rect) {
+void RectPool::addRect(TouchableRect* rect) {
 	rectPool.push_back(rect);
 }
 
-int RectManager::getRectCount() {
+int RectPool::getRectCount() {
 	return rectPool.size();
 }
 
-void RectManager::clearAll() {
+void RectPool::clearAll() {
 	rectPool.clear();
 }

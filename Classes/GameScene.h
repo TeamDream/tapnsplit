@@ -2,7 +2,8 @@
 
 #include "cocos2d.h"
 #include "TouchableRect.h"
-#include "RectManager.h"
+#include "RectPool.h"
+#include "SimpleRectFabrik.h"
 
 #define GAME_START "Game Start"
 
@@ -49,10 +50,9 @@ private:
 
 
 	float current_speed;
-	float rects_per_h;
-	int rect_n;
 
-	RectManager rects;
+	RectPool rects;
+	SimpleRectFarik rectFabrik;
 
 };
 

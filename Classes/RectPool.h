@@ -3,10 +3,10 @@
 #include "TouchableRect.h"
 
 using namespace cocos2d;
-class RectManager
+class RectPool
 {
 public:
-	RectManager() {};
+	RectPool() {};
 	void processClick(Vec2 point);
 	int findBoundaryRect();
 
