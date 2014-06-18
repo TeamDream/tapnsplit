@@ -45,6 +45,8 @@ public:
 
 private:
 	void startSchedule();
+	void setUpUI();
+
 
 	float current_speed;
 	float rects_per_h;

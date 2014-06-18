@@ -36,47 +36,14 @@ bool GameScene::init()
 	auto background = Sprite::create("background.png");
 	float scale = 4.0f;
 	background->setScale(scale);
-//	this->addChild(background);
+	//	this->addChild(background);
 
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	auto origin = Director::getInstance()->getVisibleOrigin();
-
-	/////////////////////////////
-	// 2. add a menu item with "X" image, which is clicked to quit the program
-	//    you may modify it.
-
-	// add a "close" icon to exit the progress. it's an autorelease object
-	auto closeItem = MenuItemImage::create(
-		"CloseNormal.png",
-		"CloseSelected.png",
-		CC_CALLBACK_1(GameScene::menuCloseCallback, this));
-
-	closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
+	setUpUI();
 
 	auto touchListener = EventListenerTouchOneByOne::create();
 	touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
 	Director::sharedDirector()->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
 
-	// create menu, it's an autorelease object
-	auto menu = Menu::create(closeItem, NULL);
-	menu->setPosition(Vec2::ZERO);
-	this->addChild(menu, 1);
-
-	/////////////////////////////
-	// 3. add your codes below...
-
-	// add a label shows "Hello World"
-	// create and initialize a label
-
-	score_label = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
-
-	// position the label on the center of the screen
-	score_label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height - score_label->getContentSize().height));
-	score_label->setString(SessionController::getStatus());
-	score_label->setZOrder(UIElementsOrder);
-	this->addChild(score_label);
- 
 	current_speed = 5.f;
 	rect_n = 4;
 	rects_per_h = 4;
@@ -84,7 +51,73 @@ bool GameScene::init()
 
 	rects.setBoundary(0);
 
+
+
+
+
+
+
+
+	////test
+
+	//auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	//auto new_rect = new TouchableRect("rect_black.png");
+	//new_rect->getSprite()->setZOrder(GameElementsOrder);
+	//float sprite_w = new_rect->getSprite()->boundingBox().size.width;
+
+	//float scale_w = visibleSize.width / sprite_w / rect_n;
+	//new_rect->getSprite()->setScale(scale_w);
+	//sprite_w = new_rect->getSprite()->boundingBox().size.width;
+
+	//rects_per_h = visibleSize.height / new_rect->getSprite()->boundingBox().size.height;
+
+	//float hide_h = new_rect->getSprite()->boundingBox().size.height / 2;
+	//
+
+	//new_rect->getSprite()->setPosition(Vec2(80,150));
+
+	//this->addChild(new_rect->getSprite());
+
+
+	//auto other_rect = new TouchableRect("rect_blue.png");
+	//other_rect->getSprite()->setZOrder(GameElementsOrder);
+	//sprite_w = other_rect->getSprite()->boundingBox().size.width;
+
+	// scale_w = visibleSize.width / sprite_w / rect_n;
+	// other_rect->getSprite()->setScale(scale_w);
+
+	// other_rect->getSprite()->setPosition(Vec2(100, 150 + 2*hide_h));
+
+	// this->addChild(other_rect->getSprite());
+
 	return true;
+}
+
+void GameScene::setUpUI() {
+
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+
+	// add a "close" icon to exit the progress. it's an autorelease object
+	auto closeItem = MenuItemImage::create(
+		"CloseNormal.png",
+		"CloseSelected.png",
+		CC_CALLBACK_1(GameScene::menuCloseCallback, this));
+	closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
+
+	// create menu, it's an autorelease object
+	auto menu = Menu::create(closeItem, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu, 1);
+
+	// create and initialize a label "Score Label"
+	score_label = LabelTTF::create("Score Label", "Arial", TITLE_FONT_SIZE);
+	score_label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height - score_label->getContentSize().height));
+	score_label->setString(SessionController::getStatus());
+	score_label->setZOrder(UIElementsOrder);
+	this->addChild(score_label);
 }
 
 //Handling event
@@ -135,11 +168,23 @@ void GameScene::updateSpeed(float  dt) {
 
 	if (count % 5 == 0) {
 		if (current_speed > 1.0f) {
-			current_speed -= 0.1;
+			//current_speed -= 0.1;
 		}
 		CCLog("createRandomRect updated!");
-		this->schedule(schedule_selector(GameScene::createRandomRect), current_speed / rects_per_h);
 
+		//to delete:
+		auto temp_rect = Sprite::create("rect_black.png");
+		auto visibleSize = Director::getInstance()->getVisibleSize();
+
+		float sprite_w = temp_rect->boundingBox().size.width;
+		float scale_w = visibleSize.width / sprite_w / rect_n;
+		temp_rect->setScale(scale_w);
+
+		float hide_h = temp_rect->boundingBox().size.height;
+
+		float create_rect_speed = (hide_h*current_speed) / (visibleSize.height + hide_h);
+
+		this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
 	}
 }
 
@@ -180,7 +225,7 @@ void GameScene::createRandomRect(float  dt) {
 	float hide_h = new_rect->getSprite()->boundingBox().size.height / 2;
 	int start_pos_x = visibleSize.width - sprite_w * random - sprite_w / 2;
 
-	new_rect->getSprite()->setPosition(Vec2(start_pos_x, visibleSize.height + hide_h ));
+	new_rect->getSprite()->setPosition(Vec2(start_pos_x, visibleSize.height + hide_h));
 
 	// Create the actions
 	CCFiniteTimeAction* actionMove =
