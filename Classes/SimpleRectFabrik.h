@@ -17,8 +17,6 @@ public:
 		auto visibleSize = Director::getInstance()->getVisibleSize();
 		auto new_rect = new TouchableRect(RECT_SPRITE_FILE);
 		
-		
-
 		sprite_w = new_rect->getSprite()->boundingBox().size.width;
 		scale_w = visibleSize.width / sprite_w / rect_n;
 		new_rect->getSprite()->setScale(scale_w);

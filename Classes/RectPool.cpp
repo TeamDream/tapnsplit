@@ -15,9 +15,11 @@ void RectPool::processClick(Vec2 point)
 
 int RectPool::findBoundaryRect() {
 	std::vector<TouchableRect*>::iterator it = rectPool.begin();
+ 
 	for (; it != rectPool.end(); it++)
 	{
-		if ((*it)->getSprite()->getPositionY() + (*it)->getSprite()->getBoundingBox().size.height/2 <= boundary) {
+		int side_pos = (*it)->getSprite()->getPositionY() + (*it)->getSprite()->getBoundingBox().size.height / 2;
+		if (side_pos <= boundary) {
 			return static_cast<int>(std::distance(rectPool.begin(), it));
 		}
 	}

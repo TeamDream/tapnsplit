@@ -80,6 +80,7 @@ void GameScene::setUpUI() {
 	score_label->setString(SessionController::getStatus());
 	score_label->setZOrder(UIElementsOrder);
 	this->addChild(score_label);
+
 }
 
 //Handling event
@@ -128,7 +129,7 @@ void GameScene::menuCloseCallback(Ref* sender)
 
 	Director::getInstance()->end();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)||(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	exit(0);
 #endif
 }
@@ -203,6 +204,7 @@ void GameScene::createRandomRect(float  dt) {
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
 	rects.processClick(touch->getLocation());
+
 	return true;
 }
 

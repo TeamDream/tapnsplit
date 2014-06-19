@@ -44,6 +44,7 @@ private:
 	void onGameEnd(CCObject* obj);
 
 	LabelTTF* score_label;
+
 	void setUpUI();
 
 	//time from the onGameStart()

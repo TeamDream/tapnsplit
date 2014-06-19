@@ -15,6 +15,7 @@ public:
 	void deleteRect(int rect_i);
 	void addRect(TouchableRect* rect);
 	void setBoundary(int _b) { boundary = _b; }
+	int getBoundary() { return boundary; }
 	void clearAll();
 	int getRectCount();
 private:
