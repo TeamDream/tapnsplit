@@ -3,8 +3,7 @@
 #include <vector>
 #include <string>
 
-#include "GameScene.h"
-#include "RetryScene.h"
+#include "MenuScene.h"
 
 #include "AppMacros.h"
 
@@ -79,7 +78,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-	auto scene = GameScene::scene();
+	auto scene = MenuScene::scene();
 
     // run
     director->runWithScene(scene);
