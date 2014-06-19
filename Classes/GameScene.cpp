@@ -45,10 +45,12 @@ bool GameScene::init()
 	Director::sharedDirector()->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
 
 	current_speed = 5.f;
-	
+
 	startSchedule();
 
 	rects.setBoundary(0);
+
+	speed_changed = true;
 
 	return true;
 }
@@ -114,27 +116,34 @@ void GameScene::menuCloseCallback(Ref* sender)
 #endif
 }
 
-void GameScene::setCurrSpeed(float  speed) {
-	current_speed = speed;
-}
-
-float GameScene::getCurrSpeed() {
-	return current_speed;
-}
-
 void GameScene::updateSpeed(float  dt) {
 
-	if (count % 5 == 0) {
-		if (current_speed > 1.0f) {
-			//current_speed -= 0.1;
+	if (speed_changed) {
+	
+		if (rects.getRectCount() != 0) { //wait for old rects to disapeare
+			return;
+		} else {
+
+			speed_changed = false;
+			
+			auto visibleSize = Director::getInstance()->getVisibleSize();
+
+			float create_rect_speed = (rectFabrik.hide_h*current_speed) / (visibleSize.height + rectFabrik.hide_h);
+
+			this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
+			count++;
 		}
-		CCLog("createRandomRect updated!");
-		
-		auto visibleSize = Director::getInstance()->getVisibleSize();
 
-		float create_rect_speed = (rectFabrik.hide_h*current_speed) / (visibleSize.height + rectFabrik.hide_h);
+	}
 
-		this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
+	if (count % 6 == 0) {
+
+		if (current_speed > 1.0f && count != 0 && !speed_changed) {
+			current_speed -= 1;
+			speed_changed = true;
+			this->unschedule(schedule_selector(GameScene::createRandomRect));
+			return;
+		}
 	}
 }
 
@@ -146,12 +155,12 @@ void GameScene::checkRectPositions(float  dt) {
 			SessionController::damage();
 		}
 
-		score_label->setString(SessionController::getStatus());
-
 		CCSprite *sprite = (CCSprite *)rects.getRectSprite(lost_rect);
 		this->removeChild(sprite, true);
 		rects.deleteRect(lost_rect);
 	}
+
+	score_label->setString(SessionController::getStatus());
 }
 
 
@@ -164,9 +173,10 @@ void GameScene::createRandomRect(float  dt) {
 	new_rect->getSprite()->setZOrder(GameElementsOrder);
 	// Create the actions
 	CCFiniteTimeAction* actionMove =
-		CCMoveTo::create(current_speed, Vec2(new_rect->getSprite()->getPositionX(), -rectFabrik.hide_h/2));
+		CCMoveTo::create(current_speed, Vec2(new_rect->getSprite()->getPositionX(), -rectFabrik.hide_h / 2));
+	actionMove->setTag(0);
 	new_rect->getSprite()->runAction(actionMove);
-	
+
 	rects.addRect(new_rect);
 	this->addChild(new_rect->getSprite());
 }

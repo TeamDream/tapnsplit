@@ -39,9 +39,6 @@ public:
 	void checkRectPositions(float  dt);
 	void onGameStart(CCObject* obj);
 
-	float getCurrSpeed();
-	void setCurrSpeed(float speed);
-
 	LabelTTF* score_label;
 
 private:
@@ -50,6 +47,9 @@ private:
 
 
 	float current_speed;
+	float prev_speed;
+
+	bool speed_changed;
 
 	RectPool rects;
 	SimpleRectFarik rectFabrik;
