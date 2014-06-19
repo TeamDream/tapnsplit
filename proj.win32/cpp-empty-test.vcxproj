@@ -73,7 +73,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Classes;C:\Users\Spirit\Desktop\cocos2d-x-3.1.1\cocos2d-x-3.1.1\cocos\audio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -86,11 +86,11 @@
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);C:\Users\Spirit\Desktop\cocos2d-x-3.1.1\cocos2d-x-3.1.1\build\Debug.win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>libcocos2d.lib;libchipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcocos2d.lib;libchipmunk.lib;libAudio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -150,6 +150,9 @@
     <ProjectReference Include="..\..\..\cocos\2d\cocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\cocos\audio\proj.win32\CocosDenshion.vcxproj">
+      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\external\chipmunk\proj.win32\chipmunk.vcxproj">
       <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>

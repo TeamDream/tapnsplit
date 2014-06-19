@@ -59,6 +59,7 @@ void RetryScene::menuRetryCallback(Ref* sender) {
 	Director::getInstance()->popScene();
 
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
+	SessionController::init();
 }
 
 void RetryScene::menuCloseCallback(Ref* sender)
