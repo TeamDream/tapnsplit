@@ -96,6 +96,9 @@ void GameScene::onGameStart(CCObject* obj)
 	rects.clearAll();
 	current_speed = 4.f;
 	speed_changed = true;
+	time_sec = 0;
+	stage_duration = 6;
+
 	startSchedule();
 }
 
@@ -106,12 +109,14 @@ void GameScene::onGameEnd(CCObject* obj)
 	this->unschedule(schedule_selector(GameScene::updateSpeed));
 	this->unschedule(schedule_selector(GameScene::checkRectPositions));
 	this->unschedule(schedule_selector(GameScene::createRandomRect));
+	this->unschedule(schedule_selector(GameScene::updateTimer));
 }
 
 void GameScene::startSchedule()
 {
 	this->schedule(schedule_selector(GameScene::updateSpeed), 0.2f);
 	this->schedule(schedule_selector(GameScene::checkRectPositions), 0.033f);
+	this->schedule(schedule_selector(GameScene::updateTimer), 1.f);
 }
 
 void GameScene::menuCloseCallback(Ref* sender)
@@ -131,29 +136,32 @@ void GameScene::menuCloseCallback(Ref* sender)
 void GameScene::updateSpeed(float  dt) {
 
 	if (speed_changed) {
-	
+
 		if (rects.getRectCount() != 0) { //wait for old rects to disapeare
 			return;
-		} else {
+		}
+		else {
 
 			speed_changed = false;
-			
+
 			auto visibleSize = Director::getInstance()->getVisibleSize();
 
 			float create_rect_speed = (rectFabrik.hide_h*current_speed) / (visibleSize.height + rectFabrik.hide_h);
 
 			this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
-			count++;
+			this->schedule(schedule_selector(GameScene::updateTimer), 1.0f);
+			time_sec++;
 		}
 
 	}
 
-	if (count % 6 == 0) {
+	if (time_sec % stage_duration == 0 && time_sec != 0) {
 
 		if (current_speed > 1.0f && count != 0 && !speed_changed) {
 			current_speed -= 1;
 			speed_changed = true;
 			this->unschedule(schedule_selector(GameScene::createRandomRect));
+			this->unschedule(schedule_selector(GameScene::updateTimer));
 			return;
 		}
 	}
@@ -181,7 +189,6 @@ void GameScene::createRandomRect(float  dt) {
 	count++;
 
 	auto new_rect = rectFabrik.createRect();
-
 	new_rect->getSprite()->setZOrder(GameElementsOrder);
 	// Create the actions
 	CCFiniteTimeAction* actionMove =
@@ -197,4 +204,8 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
 	rects.processClick(touch->getLocation());
 	return true;
+}
+
+void GameScene::updateTimer(float dt) {
+	time_sec++;
 }
