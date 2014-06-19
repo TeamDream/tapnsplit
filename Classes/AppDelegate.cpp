@@ -4,6 +4,7 @@
 #include <string>
 
 #include "MenuScene.h"
+#include "GameScene.h"
 
 #include "AppMacros.h"
 

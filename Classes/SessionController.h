@@ -2,6 +2,9 @@
 
 #include "RetryScene.h"
 
+#define GAME_START "Game Start"
+#define GAME_END "Game End"
+
 //controlls current game session - lifes count and riched score
 class SessionController {
 
@@ -20,6 +23,7 @@ public:
 		--current_lifes;
 		if(isDead()){
 
+			CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_END, NULL);
 			Scene *s = RetryScene::scene();
 			Director::getInstance()->pushScene(CCTransitionFade::create(0.5,s));
 			 
