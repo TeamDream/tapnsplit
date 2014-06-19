@@ -9,41 +9,62 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Classes\CoreApp">
+      <UniqueIdentifier>{a3d33e86-ffaf-4fe3-a157-38ef10ccbee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Rectangle">
+      <UniqueIdentifier>{f146f5ab-b7d2-4a2f-a156-512a102670ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\RectManager.cpp">
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes\CoreApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RectPool.cpp">
+      <Filter>Classes\Rectangle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RetryScene.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MenuScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AppMacros.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\RectManager.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\LonelyRect.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\SessionController.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes\CoreApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppMacros.h">
+      <Filter>Classes\CoreApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SimpleRectFabrik.h">
+      <Filter>Classes\Rectangle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TouchableRect.h">
+      <Filter>Classes\Rectangle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RectPool.h">
+      <Filter>Classes\Rectangle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RetryScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MenuScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

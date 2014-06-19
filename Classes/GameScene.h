@@ -1,12 +1,21 @@
 #pragma once
 
 #include "cocos2d.h"
-#include "LonelyRect.h"
-#include "RectManager.h"
+#include "TouchableRect.h"
+#include "RectPool.h"
+#include "SimpleRectFabrik.h"
+
+#define GAME_START "Game Start"
 
 using namespace cocos2d;
 
-class HelloWorld : public cocos2d::LayerColor
+enum DrawOrder
+{
+	GameElementsOrder = 0,
+	UIElementsOrder
+};
+
+class GameScene : public cocos2d::LayerColor
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -23,23 +32,27 @@ public:
 	void spriteMoveFinished(CCNode* sender);
 
     // implement the "static node()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(GameScene);
 	static int count;
 
 	void updateSpeed(float  dt);
 	void checkRectPositions(float  dt);
-
-	float getCurrSpeed();
-	void setCurrSpeed(float speed);
+	void onGameStart(CCObject* obj);
 
 	LabelTTF* score_label;
 
 private:
-	float current_speed;
-	float rects_per_h;
-	int rect_n;
+	void startSchedule();
+	void setUpUI();
 
-	RectManager rects;
+
+	float current_speed;
+	float prev_speed;
+
+	bool speed_changed;
+
+	RectPool rects;
+	SimpleRectFarik rectFabrik;
 
 };
 
