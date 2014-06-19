@@ -57,6 +57,8 @@ cocos2d::Scene* MenuScene::scene() {
 // a selector callback
 void MenuScene::menuStartGameCallback(Ref* sender) {
 	
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
+		"press.wav");
 	Scene *s = GameScene::scene();
 	Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
 	

@@ -2,8 +2,42 @@
 #include "GameScene.h"
 #include "SessionController.h"
 
+char* RetryScene::getTrack() {
+	int sounds_n = 6;
+	int random = rand() % sounds_n;
+	char* music;
+
+	switch (random) {
+	case 0:
+		music = "tiger.mp3";
+		break;
+	case 1:
+		music = "1.mp3";
+		break;
+	case 2:
+		music = "background-musiñ.mp3";
+		break;
+	case 3:
+		music = "stronger.mp3";
+		break;
+	case 4:
+		music = "lucky.mp3";
+		break;
+	case 5:
+		music = "throne.mp3";
+		break;
+	}
+	return music;
+}
+
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool RetryScene::init() {
+
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
+		"gameover.mp3");
+	char * music = getTrack();
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
+		music, true);
 
 	if (!LayerColor::initWithColor(ccc4(50, 50, 50, 200))) //RGBA
 	{
@@ -59,6 +93,8 @@ void RetryScene::menuRetryCallback(Ref* sender) {
 	Director::getInstance()->popScene();
 
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
+		"press.wav");
 	SessionController::init();
 }
 
