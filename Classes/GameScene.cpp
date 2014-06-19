@@ -32,6 +32,7 @@ bool GameScene::init()
 	}
 	CCLog("GameScene::init()");
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameStart), GAME_START, NULL);
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameEnd), GAME_END, NULL);
 
 	auto background = Sprite::create("background.png");
 	float scale = 4.0f;
@@ -44,7 +45,7 @@ bool GameScene::init()
 	touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
 	Director::sharedDirector()->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
 
-	current_speed = 5.f;
+	current_speed = 4.f;
 
 	startSchedule();
 
@@ -93,7 +94,18 @@ void GameScene::onGameStart(CCObject* obj)
 	}
 
 	rects.clearAll();
-	current_speed = 5.f;
+	current_speed = 4.f;
+	speed_changed = true;
+	startSchedule();
+}
+
+//Handling event
+void GameScene::onGameEnd(CCObject* obj)
+{
+	//unshedule all
+	this->unschedule(schedule_selector(GameScene::updateSpeed));
+	this->unschedule(schedule_selector(GameScene::checkRectPositions));
+	this->unschedule(schedule_selector(GameScene::createRandomRect));
 }
 
 void GameScene::startSchedule()

@@ -46,5 +46,10 @@ int RectPool::getRectCount() {
 }
 
 void RectPool::clearAll() {
+
+	for(int i = 0; i < rectPool.size(); ++i) {
+		delete rectPool.at(i);
+	}
+
 	rectPool.clear();
 }

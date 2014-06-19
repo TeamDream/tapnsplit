@@ -5,7 +5,7 @@
 #include "RectPool.h"
 #include "SimpleRectFabrik.h"
 
-#define GAME_START "Game Start"
+
 
 using namespace cocos2d;
 
@@ -38,6 +38,7 @@ public:
 	void updateSpeed(float  dt);
 	void checkRectPositions(float  dt);
 	void onGameStart(CCObject* obj);
+	void onGameEnd(CCObject* obj);
 
 	LabelTTF* score_label;
 
