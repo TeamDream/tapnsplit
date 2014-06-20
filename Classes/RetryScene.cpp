@@ -15,7 +15,7 @@ char* RetryScene::getTrack() {
 		music = "1.mp3";
 		break;
 	case 2:
-		music = "background-musiñ.mp3";
+		music = "background_m.mp3";
 		break;
 	case 3:
 		music = "stronger.mp3";
@@ -27,6 +27,7 @@ char* RetryScene::getTrack() {
 		music = "throne.mp3";
 		break;
 	}
+
 	return music;
 }
 

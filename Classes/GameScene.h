@@ -4,9 +4,7 @@
 #include "TouchableRect.h"
 #include "RectPool.h"
 #include "SimpleRectFabrik.h"
-
-
-
+ 
 using namespace cocos2d;
 
 enum DrawOrder

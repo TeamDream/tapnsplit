@@ -11,7 +11,7 @@ bool MenuScene::init() {
 	}
 
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-		"background-musiñ.mp3", true);
+		"background_m.mp3", true);
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
