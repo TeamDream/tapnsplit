@@ -1,6 +1,7 @@
 #include "RetryScene.h"
 #include "GameScene.h"
 #include "SessionController.h"
+#include "AppMacros.h"
 
 char* RetryScene::getTrack() {
 	int sounds_n = 6;
@@ -69,6 +70,33 @@ bool RetryScene::init() {
 
 	this->addChild(menu_retry, UIElementsOrder);
 	this->addChild(menu_close, UIElementsOrder);
+
+	// create and initialize a label "Score Label"
+	LabelTTF *max_score_label = LabelTTF::create("Max Score Label", "Arial", TITLE_FONT_SIZE);
+	max_score_label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height - max_score_label->getContentSize().height));
+	max_score_label->setZOrder(UIElementsOrder);
+	
+	//2DO: not a good place for score logic, replace it later
+	CCUserDefault *def = CCUserDefault::sharedUserDefault();
+	int highest_scrore =  def->getIntegerForKey(HIGHEST_SCORE);
+	int curr_score = SessionController::getScore();
+
+	if (highest_scrore < curr_score) {
+		highest_scrore = curr_score;
+		def->setIntegerForKey(HIGHEST_SCORE, highest_scrore);
+		def->flush();
+	}
+	std::stringstream ss;
+	ss << "Highest score: " << highest_scrore << std::endl << "Current score: " << curr_score;
+	max_score_label->setString(ss.str());
+	this->addChild(max_score_label);
+
+	auto credits = LabelTTF::create("Maded by CoCoCoTEAM", "Arial", TITLE_FONT_SIZE);
+	credits->setPosition(Vec2(origin.x + visibleSize.width / (1.5),
+		origin.y + credits->getContentSize().height));
+	credits->setZOrder(UIElementsOrder);
+	this->addChild(credits);
 
 	return true;
 

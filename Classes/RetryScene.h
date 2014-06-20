@@ -17,6 +17,7 @@ public:
 	void menuRetryCallback(Ref* sender);
 	void menuCloseCallback(Ref* sender);
 
+	LabelTTF *max_score_label;
 	// implement the "static node()" method manually
 	CREATE_FUNC(RetryScene);
 };

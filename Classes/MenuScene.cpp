@@ -1,6 +1,7 @@
 #include "MenuScene.h"
 #include "GameScene.h"
 #include "SessionController.h"
+#include "AppMacros.h"
 
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool MenuScene::init() {
@@ -37,6 +38,21 @@ bool MenuScene::init() {
 
 	this->addChild(menu_start_game, UIElementsOrder);
 	this->addChild(menu_close, UIElementsOrder);
+
+
+	// create and initialize a label "Score Label"
+	LabelTTF *game_name_label = LabelTTF::create("THE GAME", "Arial", TITLE_FONT_SIZE);
+	game_name_label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height - game_name_label->getContentSize().height));
+	game_name_label->setZOrder(UIElementsOrder);
+	this->addChild(game_name_label);
+
+	// create and initialize a label "Score Label"
+	auto credits = LabelTTF::create("Maded by CoCoCoTEAM", "Arial", TITLE_FONT_SIZE);
+	credits->setPosition(Vec2(origin.x + visibleSize.width / (1.5),
+		origin.y + credits->getContentSize().height)); 
+	credits->setZOrder(UIElementsOrder);
+	this->addChild(credits);
 
 	return true;
 

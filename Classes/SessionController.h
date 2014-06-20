@@ -5,6 +5,8 @@
 #define GAME_START "Game Start"
 #define GAME_END "Game End"
 
+#define HIGHEST_SCORE "score_key"
+
 //controlls current game session - lifes count and riched score
 class SessionController {
 
@@ -38,6 +40,8 @@ public:
 		return std::string(s);
 	
 	}
+
+	static int getScore() { return current_score; }
 
 
 private:

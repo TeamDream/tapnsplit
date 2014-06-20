@@ -75,7 +75,7 @@ void GameScene::setUpUI() {
 
 	// create and initialize a label "Score Label"
 	score_label = LabelTTF::create("Score Label", "Arial", TITLE_FONT_SIZE);
-	score_label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+	score_label->setPosition(Vec2(origin.x + visibleSize.width / 8,
 		origin.y + visibleSize.height - score_label->getContentSize().height));
 	score_label->setString(SessionController::getStatus());
 	score_label->setZOrder(UIElementsOrder);
