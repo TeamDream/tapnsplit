@@ -116,9 +116,7 @@ cocos2d::Scene* RetryScene::scene() {
 
 // a selector callback
 void RetryScene::menuRetryCallback(Ref* sender) {
-	//somehow switch to GameScene scene
-//	Scene *s = GameScene::scene();
-	//Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
+	
 	Director::getInstance()->popScene();
 
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
