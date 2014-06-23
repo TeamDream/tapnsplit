@@ -95,7 +95,7 @@ bool RetryScene::init() {
 	max_score_label->setString(ss.str());
 	this->addChild(max_score_label);
 
-	auto credits = LabelTTF::create("Maded by CoCoCoTEAM", "Arial", TITLE_FONT_SIZE);
+	auto credits = LabelTTF::create("Made by CoCoCoTEAM", "Arial", TITLE_FONT_SIZE);
 	credits->setPosition(Vec2(origin.x + visibleSize.width / (1.5),
 		origin.y + credits->getContentSize().height));
 	credits->setZOrder(UIElementsOrder);
