@@ -73,5 +73,8 @@
     <ClInclude Include="..\Classes\LevelScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\RectTrajectory.h">
+      <Filter>Classes\Rectangle</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

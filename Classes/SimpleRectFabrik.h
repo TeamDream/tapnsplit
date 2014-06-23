@@ -1,6 +1,7 @@
 
 #include "cocos2d.h"
 #include "TouchableRect.h"
+#include "RectTrajectory.h"
 
 using namespace cocos2d;
 
@@ -9,7 +10,7 @@ using namespace cocos2d;
 enum FabrikMode {
 	RANDOM = 0,
 	CROSS,
-	DOUBLE_MODE
+	CHESS
 };
 
 
@@ -33,6 +34,13 @@ public:
 	 
 		mode = RANDOM;
 		curr_cross_position = 0;
+
+		trajectory.resize(3);
+
+		trajectory.at(RANDOM) = new RandTrajectory(rect_n);
+		trajectory.at(CROSS) = new CrossTrajectory(rect_n);
+		trajectory.at(CHESS) = new ChessTrajectory(rect_n);
+
 	}
 
 
@@ -65,13 +73,10 @@ public:
 private:
 
 	int calcXPosWithMode() {
-		switch (mode) {
-		case RANDOM:
-			return rand() % rect_n;
-		case CROSS: //2IMPLEMENT:
-			return (curr_cross_position++) % rect_n;
-		}
+		return trajectory.at(mode)->calcPosition();
 	}
+
+	std::vector<RectTrajectory *>  trajectory;
 
 	FabrikMode mode;
 	int curr_cross_position;

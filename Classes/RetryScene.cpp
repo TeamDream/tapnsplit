@@ -36,11 +36,11 @@ char* RetryScene::getTrack() {
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool RetryScene::init() {
 
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
-		"gameover.mp3");
-	char * music = getTrack();
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-		music, true);
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
+	//	"gameover.mp3");
+	//char * music = getTrack();
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
+	//	music, true);
 
 	if (!LayerColor::initWithColor(ccc4(50, 50, 50, 200))) //RGBA
 	{

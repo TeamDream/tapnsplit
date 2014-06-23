@@ -22,7 +22,7 @@ public:
 	}
 
 	static void damage() {
-		--current_lifes;
+		//--current_lifes;
 		if(isDead()){
 
 			CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_END, NULL);
