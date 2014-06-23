@@ -13,8 +13,6 @@ public:
 };
 
 class RandTrajectory :public RectTrajectory{
-protected:
-	int rects_n;
 public:
 	RandTrajectory(int _row_width) :RectTrajectory(_row_width) {};
 	int calcPosition() { return rand() % rects_n; }

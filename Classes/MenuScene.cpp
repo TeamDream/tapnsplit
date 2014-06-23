@@ -11,8 +11,8 @@ bool MenuScene::init() {
 		return false;
 	}
 
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-	//	"background_m.mp3", true);
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
+		"background_m.mp3", true);
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();

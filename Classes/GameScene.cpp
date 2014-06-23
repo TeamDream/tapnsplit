@@ -102,18 +102,17 @@ void GameScene::onGameEnd(CCObject* obj)
 	//unshedule all
 	this->unschedule(schedule_selector(GameScene::checkRectPositions));
 	this->unschedule(schedule_selector(GameScene::createRandomRect));
-	//this->unschedule(schedule_selector(GameScene::updateTimer));
+	this->unschedule(schedule_selector(GameScene::updateTimer));
 }
 
 void GameScene::startSchedule()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	float create_rect_speed = (rectFabrik.hide_h*current_speed) / (visibleSize.height + rectFabrik.hide_h);
-	this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
-
-	this->schedule(schedule_selector(GameScene::checkRectPositions), 0.033f);
 	
-	//	this->schedule(schedule_selector(GameScene::updateTimer), 1.f);
+	this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
+	this->schedule(schedule_selector(GameScene::checkRectPositions), 0.033f);	
+	this->schedule(schedule_selector(GameScene::updateTimer), 1.f);
 }
 
 void GameScene::menuCloseCallback(Ref* sender)
@@ -150,6 +149,11 @@ void GameScene::checkRectPositions(float  dt) {
 void GameScene::createRandomRect(float  dt) {
 
 	count++;
+
+	if (time_sec % 5 == 0) { //chage rectangle trajectory each 5 sec
+		FabrikMode new_mode = static_cast<FabrikMode> (rand() % 3);
+		rectFabrik.setMode(new_mode);
+	}
 
 	auto new_rect = rectFabrik.createRect();
 	new_rect->getSprite()->setZOrder(GameElementsOrder);
