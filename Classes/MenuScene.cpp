@@ -1,6 +1,6 @@
 #include "MenuScene.h"
 #include "GameScene.h"
-#include "SessionController.h"
+#include "LevelScene.h"
 #include "AppMacros.h"
 
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -48,7 +48,7 @@ bool MenuScene::init() {
 	this->addChild(game_name_label);
 
 	// create and initialize a label "Score Label"
-	auto credits = LabelTTF::create("Maded by CoCoCoTEAM", "Arial", TITLE_FONT_SIZE);
+	auto credits = LabelTTF::create("Made by CoCoCoTEAM", "Arial", TITLE_FONT_SIZE);
 	credits->setPosition(Vec2(origin.x + visibleSize.width / (1.5),
 		origin.y + credits->getContentSize().height)); 
 	credits->setZOrder(UIElementsOrder);
@@ -75,10 +75,9 @@ void MenuScene::menuStartGameCallback(Ref* sender) {
 	
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
 		"press.wav");
-	Scene *s = GameScene::scene();
+	Scene *s = LevelScene::scene();
 	Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
 	
-	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
 }
 
 void MenuScene::menuCloseCallback(Ref* sender)

@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "SessionController.h"
 #include "AppMacros.h"
+#include "LevelScene.h"
 
 char* RetryScene::getTrack() {
 	int sounds_n = 6;
@@ -53,23 +54,25 @@ bool RetryScene::init() {
 		"Retry.png",
 		"RetrySelected.png",
 		CC_CALLBACK_1(RetryScene::menuRetryCallback, this));
+	auto levelsItem = MenuItemImage::create(
+		"OtherLevel.png",
+		"OtherLevelSelected.png",
+		CC_CALLBACK_1(RetryScene::menuOtherLevelCallback, this));
 	auto closeItem = MenuItemImage::create(
 		"Exit.png",
 		"ExitSelected.png",
 		CC_CALLBACK_1(RetryScene::menuCloseCallback, this));
 
 	retryItem->setPosition(origin + Vec2(visibleSize) / 2 + Vec2(0, 50));
-	closeItem->setPosition(origin + Vec2(visibleSize) / 2 - Vec2(0, retryItem->getContentSize().height / 2));
+	levelsItem->setPosition(origin + Vec2(visibleSize) / 2);
+	closeItem->setPosition(origin + Vec2(visibleSize) / 2 + Vec2(0, -50));
 
 	// create menu, it's an autorelease object
-	auto menu_retry = Menu::create(retryItem, NULL);
-	auto menu_close = Menu::create(closeItem, NULL);
+	auto menu_retry = Menu::create(retryItem, levelsItem, closeItem, NULL);
 
 	menu_retry->setPosition(Vec2::ZERO);
-	menu_close->setPosition(Vec2::ZERO);
 
 	this->addChild(menu_retry, UIElementsOrder);
-	this->addChild(menu_close, UIElementsOrder);
 
 	// create and initialize a label "Score Label"
 	LabelTTF *max_score_label = LabelTTF::create("Max Score Label", "Arial", TITLE_FONT_SIZE);
@@ -123,6 +126,16 @@ void RetryScene::menuRetryCallback(Ref* sender) {
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
 		"press.wav");
 	SessionController::init();
+}
+ 
+// a selector callback
+void RetryScene::menuOtherLevelCallback(Ref* sender) {
+
+	Director::getInstance()->popScene();
+
+	auto level_choose = LevelScene::scene();
+	Director::getInstance()->pushScene(level_choose);
+ 
 }
 
 void RetryScene::menuCloseCallback(Ref* sender)

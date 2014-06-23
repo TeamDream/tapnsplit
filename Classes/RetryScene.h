@@ -15,6 +15,7 @@ public:
 
 	// a selector callback
 	void menuRetryCallback(Ref* sender);
+	void menuOtherLevelCallback(Ref* sender);
 	void menuCloseCallback(Ref* sender);
 
 	LabelTTF *max_score_label;

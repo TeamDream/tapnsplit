@@ -6,6 +6,7 @@ int GameScene::count = 0;
 
 int SessionController::current_score = 0;
 int SessionController::current_lifes = 3;
+float SessionController::level_speed = 4.0f;
 
 Scene* GameScene::scene()
 {
@@ -45,13 +46,7 @@ bool GameScene::init()
 	touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
 	Director::sharedDirector()->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
 
-	current_speed = 4.f;
-
-	startSchedule();
-
 	rects.setBoundary(0);
-
-	speed_changed = true;
 
 	return true;
 }
@@ -95,10 +90,8 @@ void GameScene::onGameStart(CCObject* obj)
 	}
 
 	rects.clearAll();
-	current_speed = 4.f;
-	speed_changed = true;
+	current_speed = SessionController::getSpeed();
 	time_sec = 0;
-	stage_duration = 6;
 
 	startSchedule();
 }
@@ -107,17 +100,20 @@ void GameScene::onGameStart(CCObject* obj)
 void GameScene::onGameEnd(CCObject* obj)
 {
 	//unshedule all
-	this->unschedule(schedule_selector(GameScene::updateSpeed));
 	this->unschedule(schedule_selector(GameScene::checkRectPositions));
 	this->unschedule(schedule_selector(GameScene::createRandomRect));
-	this->unschedule(schedule_selector(GameScene::updateTimer));
+	//this->unschedule(schedule_selector(GameScene::updateTimer));
 }
 
 void GameScene::startSchedule()
 {
-	this->schedule(schedule_selector(GameScene::updateSpeed), 0.2f);
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	float create_rect_speed = (rectFabrik.hide_h*current_speed) / (visibleSize.height + rectFabrik.hide_h);
+	this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
+
 	this->schedule(schedule_selector(GameScene::checkRectPositions), 0.033f);
-	this->schedule(schedule_selector(GameScene::updateTimer), 1.f);
+	
+	//	this->schedule(schedule_selector(GameScene::updateTimer), 1.f);
 }
 
 void GameScene::menuCloseCallback(Ref* sender)
@@ -132,40 +128,6 @@ void GameScene::menuCloseCallback(Ref* sender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)||(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	exit(0);
 #endif
-}
-
-void GameScene::updateSpeed(float  dt) {
-
-	if (speed_changed) {
-
-		if (rects.getRectCount() != 0) { //wait for old rects to disapeare
-			return;
-		}
-		else {
-
-			speed_changed = false;
-
-			auto visibleSize = Director::getInstance()->getVisibleSize();
-
-			float create_rect_speed = (rectFabrik.hide_h*current_speed) / (visibleSize.height + rectFabrik.hide_h);
-
-			this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
-			this->schedule(schedule_selector(GameScene::updateTimer), 1.0f);
-			time_sec++;
-		}
-
-	}
-
-	if (time_sec % stage_duration == 0 && time_sec != 0) {
-
-		if (current_speed > 1.0f && count != 0 && !speed_changed) {
-			current_speed -= 1;
-			speed_changed = true;
-			this->unschedule(schedule_selector(GameScene::createRandomRect));
-			this->unschedule(schedule_selector(GameScene::updateTimer));
-			return;
-		}
-	}
 }
 
 void GameScene::checkRectPositions(float  dt) {

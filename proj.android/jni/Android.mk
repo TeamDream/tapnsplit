@@ -11,7 +11,8 @@ LOCAL_SRC_FILES := main.cpp \
                    ../../Classes/GameScene.cpp \
 				   ../../Classes/MenuScene.cpp \
 				   ../../Classes/RectPool.cpp \
-				   ../../Classes/RetryScene.cpp
+				   ../../Classes/RetryScene.cpp \
+				   ../../Classes/LevelScene.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

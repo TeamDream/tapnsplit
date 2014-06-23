@@ -43,10 +43,15 @@ public:
 
 	static int getScore() { return current_score; }
 
-
+	static void setSpeed(float _level_speed) {
+		level_speed = _level_speed;
+	}
+	static float getSpeed() {
+		return level_speed;
+	}
 private:
 	static int current_score;
 	static int current_lifes;
 
-	
+	static float level_speed;
 };
