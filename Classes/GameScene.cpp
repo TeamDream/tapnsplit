@@ -7,6 +7,7 @@ int GameScene::count = 0;
 int SessionController::current_score = 0;
 int SessionController::current_lifes = 3;
 float SessionController::level_speed = 4.0f;
+bool SessionController::speed_challenge = false;
 
 Scene* GameScene::scene()
 {
@@ -158,12 +159,16 @@ void GameScene::createRandomRect(float  dt) {
 	auto new_rect = rectFabrik.createRect();
 	new_rect->getSprite()->setZOrder(GameElementsOrder);
 	// Create the actions
-	CCFiniteTimeAction* actionMove =
-		CCMoveTo::create(current_speed, Vec2(new_rect->getSprite()->getPositionX(), -rectFabrik.hide_h / 2));
-	actionMove->setTag(0);
-	new_rect->getSprite()->runAction(actionMove);
+	FiniteTimeAction* actionMove =
+		MoveTo::create(current_speed, Vec2(new_rect->getSprite()->getPositionX(), -rectFabrik.hide_h / 2));
+	//actionMove->setTag(0);
 
+	auto speed_act = Speed::create(dynamic_cast<ActionInterval *>(actionMove), 1.0f);
+	speed_act->setTag(0);
+	new_rect->getSprite()->runAction(speed_act);
+	
 	rects.addRect(new_rect);
+	//speeds.push_back(speed_act);
 	this->addChild(new_rect->getSprite());
 }
 
@@ -176,4 +181,27 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event)
 
 void GameScene::updateTimer(float dt) {
 	time_sec++;
+
+	if (SessionController::getSpeedChallenge()) {
+
+		if (time_sec % 5 == 0 && current_speed > 0.9f) {
+
+			current_speed /= 1.5f;
+
+			for (int i = 0; i < rects.getRectCount(); i++) {
+				auto p = rects.getRectSprite(i);
+				auto act = dynamic_cast<Speed *>(p->getActionByTag(0));
+				act->setSpeed(1.5);
+			}
+
+			auto visibleSize = Director::getInstance()->getVisibleSize();
+			float create_rect_speed = (rectFabrik.hide_h*current_speed) / (visibleSize.height + rectFabrik.hide_h);
+
+			this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
+
+
+
+		}
+	}
+
 }
