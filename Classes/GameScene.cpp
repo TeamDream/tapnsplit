@@ -150,7 +150,7 @@ void GameScene::createRandomRect(float  dt) {
 
 	count++;
 
-	if (time_sec % 5 == 0) { //chage rectangle trajectory each 5 sec
+	if (time_sec % 3 == 0) { //chage rectangle trajectory each 3 sec
 		FabrikMode new_mode = static_cast<FabrikMode> (rand() % 3);
 		rectFabrik.setMode(new_mode);
 	}

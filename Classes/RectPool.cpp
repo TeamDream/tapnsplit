@@ -4,12 +4,20 @@
 void RectPool::processClick(Vec2 point)
 {
 	std::vector<TouchableRect*>::iterator it = rectPool.begin();
+	bool tapped = false;
+
 	for (; it != rectPool.end(); it++)
 	{
 		if ((*it)->containsPoint(point) && !(*it)->isTapped()) { //make it public 
 			(*it)->tapIt();//
 			SessionController::addScore();
+			tapped = true;
+			break;
 		}
+	}
+
+	if (!tapped) {
+		SessionController::damage();
 	}
 }
 

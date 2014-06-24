@@ -71,13 +71,13 @@ void LevelScene::menuStartGameCallback(Ref* sender, int level_i) {
 	Director::getInstance()->popScene();
 	switch (level_i) {
 		case 3:
-			SessionController::setSpeed(1.0f);
+			SessionController::setSpeed(0.95f);
 			break;
 		case 2:
-			SessionController::setSpeed(2.0f);
+			SessionController::setSpeed(1.0f);
 			break;
 		default:
-			SessionController::setSpeed(3.0f);
+			SessionController::setSpeed(2.0f);
 			break;
 	}
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
