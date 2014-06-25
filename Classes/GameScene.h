@@ -32,12 +32,13 @@ private:
 	void createRandomRect(float  dt);
 	void updateTimer(float dt);
 	void checkRectPositions(float  dt);
-
+	void updateLabels();
 	//game notofications
 	void onGameStart(CCObject* obj);
 	void onGameEnd(CCObject* obj);
 
 	LabelTTF* score_label;
+	LabelTTF* time_label;
 
 	void setUpUI();
 
@@ -52,6 +53,8 @@ private:
 	// implement the "static node()" method manually
 	CREATE_FUNC(GameScene);
 	static int count;
+
+	bool is_playing;
 	
 };
 

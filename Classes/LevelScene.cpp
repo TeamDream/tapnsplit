@@ -30,20 +30,49 @@ bool LevelScene::init() {
 		"2remove/SpeedChallenge.png",
 		"2remove/SpeedChallenge.png",
 		CC_CALLBACK_1(LevelScene::menuStartGameCallback, this, 4));
+	// add a "close" icon to exit the progress. it's an autorelease object
+	auto closeItem = MenuItemImage::create(
+		"CloseNormal.png",
+		"CloseSelected.png",
+		CC_CALLBACK_1(LevelScene::menuCloseCallback, this));
+	
 
 
 	startLevel1->setPosition(origin + Vec2(visibleSize) / 2 + Vec2(0, 50));
 	startLevel2->setPosition(origin + Vec2(visibleSize) / 2 + Vec2(0, 0));
 	startLevel3->setPosition(origin + Vec2(visibleSize) / 2 + Vec2(0, -50));
 	startLevel4->setPosition(origin + Vec2(visibleSize) / 2 + Vec2(0, -100));
-
+	
+	closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
+	
 
 	// create menu, it's an autorelease object
-	auto menu_start_game = Menu::create(startLevel1, startLevel2, startLevel3, startLevel4, NULL);
+	auto menu_start_game = Menu::create(startLevel1, startLevel2, startLevel3, startLevel4, closeItem, NULL);
 
 	menu_start_game->setPosition(Vec2::ZERO);
 
 	this->addChild(menu_start_game, UIElementsOrder);
+
+	//--------------------------------------------
+	//2D0 remove it later, just for testing:
+	if (!SessionController::isLevelUnlocked(2)) {
+		// create and initialize a label "Score Label"
+		auto lock_label = LabelTTF::create("Lock", "Arial", TITLE_FONT_SIZE);
+		lock_label->setPosition(origin + Vec2(visibleSize) / 2 + Vec2(0, 0));
+		lock_label->setZOrder(UIElementsOrder);
+		lock_label->setString("Locked");
+		this->addChild(lock_label);
+	}
+	
+	if (!SessionController::isLevelUnlocked(3)) {
+		// create and initialize a label "Score Label"
+		auto lock_label = LabelTTF::create("Lock", "Arial", TITLE_FONT_SIZE);
+		lock_label->setPosition(origin + Vec2(visibleSize) / 2 + Vec2(0, -50));
+		lock_label->setZOrder(UIElementsOrder);
+		lock_label->setString("Locked");
+		this->addChild(lock_label);
+	}
+	//--------------------------------------------
 
 	// create and initialize a label "Score Label"
 	LabelTTF *game_name_label = LabelTTF::create("Choose your level", "Arial", TITLE_FONT_SIZE);
@@ -51,6 +80,8 @@ bool LevelScene::init() {
 		origin.y + visibleSize.height - game_name_label->getContentSize().height));
 	game_name_label->setZOrder(UIElementsOrder);
 	this->addChild(game_name_label);
+
+	SessionController::init();
 
 	return true;
 
@@ -73,6 +104,10 @@ void LevelScene::menuStartGameCallback(Ref* sender, int level_i) {
 
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
 		"press.wav");
+
+	if (!SessionController::isLevelUnlocked(level_i)) {
+		return;
+	}
 
 	Director::getInstance()->popScene();
 	switch (level_i) {

@@ -133,6 +133,7 @@
     <ClCompile Include="..\Classes\MenuScene.cpp" />
     <ClCompile Include="..\Classes\RectPool.cpp" />
     <ClCompile Include="..\Classes\RetryScene.cpp" />
+    <ClCompile Include="..\Classes\SessionController.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

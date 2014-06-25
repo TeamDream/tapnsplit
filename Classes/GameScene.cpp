@@ -25,21 +25,15 @@ Scene* GameScene::scene()
 // on "init" you need to initialize your instance
 bool GameScene::init()
 {
-
-	//////////////////////////////
-	// 1. super init first
+	
 	if (!LayerColor::initWithColor(ccc4(50, 50, 50, 200))) //RGBA
 	{
 		return false;
 	}
+
 	CCLog("GameScene::init()");
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameStart), GAME_START, NULL);
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameEnd), GAME_END, NULL);
-
-	auto background = Sprite::create("background.png");
-	float scale = 4.0f;
-	background->setScale(scale);
-	//	this->addChild(background);
 
 	setUpUI();
 
@@ -48,7 +42,7 @@ bool GameScene::init()
 	Director::sharedDirector()->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
 
 	rects.setBoundary(0);
-
+	is_playing = false;
 	return true;
 }
 
@@ -73,10 +67,16 @@ void GameScene::setUpUI() {
 	score_label = LabelTTF::create("Score Label", "Arial", TITLE_FONT_SIZE);
 	score_label->setPosition(Vec2(origin.x + visibleSize.width / 8,
 		origin.y + visibleSize.height - score_label->getContentSize().height));
-	score_label->setString(SessionController::getStatus());
 	score_label->setZOrder(UIElementsOrder);
 	this->addChild(score_label);
 
+
+	// create and initialize a label "Score Label"
+	time_label = LabelTTF::create("TimeLabel", "Arial", TITLE_FONT_SIZE);
+	time_label->setPosition(Vec2(origin.x + 0.85* visibleSize.width ,
+		origin.y + 0.1*visibleSize.height));
+	time_label->setZOrder(UIElementsOrder);
+	this->addChild(time_label);
 }
 
 //Handling event
@@ -95,6 +95,9 @@ void GameScene::onGameStart(CCObject* obj)
 	time_sec = 0;
 
 	startSchedule();
+	updateLabels();
+
+	is_playing = true;
 }
 
 //Handling event
@@ -104,6 +107,8 @@ void GameScene::onGameEnd(CCObject* obj)
 	this->unschedule(schedule_selector(GameScene::checkRectPositions));
 	this->unschedule(schedule_selector(GameScene::createRandomRect));
 	this->unschedule(schedule_selector(GameScene::updateTimer));
+
+	is_playing = false;
 }
 
 void GameScene::startSchedule()
@@ -143,7 +148,7 @@ void GameScene::checkRectPositions(float  dt) {
 		rects.deleteRect(lost_rect);
 	}
 
-	score_label->setString(SessionController::getStatus());
+	
 }
 
 
@@ -158,29 +163,32 @@ void GameScene::createRandomRect(float  dt) {
 
 	auto new_rect = rectFabrik.createRect();
 	new_rect->getSprite()->setZOrder(GameElementsOrder);
-	// Create the actions
+	// Create the action
 	FiniteTimeAction* actionMove =
 		MoveTo::create(current_speed, Vec2(new_rect->getSprite()->getPositionX(), -rectFabrik.hide_h / 2));
-	//actionMove->setTag(0);
-
+	//Wrap it to speed action
 	auto speed_act = Speed::create(dynamic_cast<ActionInterval *>(actionMove), 1.0f);
 	speed_act->setTag(0);
 	new_rect->getSprite()->runAction(speed_act);
 	
 	rects.addRect(new_rect);
-	//speeds.push_back(speed_act);
 	this->addChild(new_rect->getSprite());
 }
 
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
-	rects.processClick(touch->getLocation());
+	if (is_playing) {
+		rects.processClick(touch->getLocation());
+	}
 
 	return true;
 }
 
 void GameScene::updateTimer(float dt) {
+
 	time_sec++;
+
+	updateLabels();
 
 	if (SessionController::getSpeedChallenge()) {
 
@@ -198,10 +206,25 @@ void GameScene::updateTimer(float dt) {
 			float create_rect_speed = (rectFabrik.hide_h*current_speed) / (visibleSize.height + rectFabrik.hide_h);
 
 			this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
-
-
-
 		}
 	}
 
+	if (time_sec == 60) {
+		SessionController::setLevelUnlocked();
+	}
+
+	if (time_sec > 60) {
+		char s[50];
+		sprintf(s, "time: %d\n Completed!", time_sec);
+		time_label->setString(s);
+	}
+ 
+}
+
+void GameScene::updateLabels() {
+	char s[50];
+	sprintf(s, "time: %d", time_sec);
+
+	time_label->setString(s);
+	score_label->setString(SessionController::getStatus());
 }

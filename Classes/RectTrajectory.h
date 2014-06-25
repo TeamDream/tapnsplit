@@ -18,6 +18,17 @@ public:
 	int calcPosition() { return rand() % rects_n; }
 };
 
+
+/*
+Something like this:
+X
+	X	
+		X
+			X
+		X
+	X
+X
+*/
 class CrossTrajectory : public RectTrajectory {
 public:
 	CrossTrajectory(int _row_width) : RectTrajectory(_row_width),
@@ -38,6 +49,13 @@ private:
 	int rect_count;
 };
 
+/*
+X
+	X
+X
+	X
+X
+*/
 class ChessTrajectory : public RectTrajectory {
 public:
 	ChessTrajectory(int _row_width) : RectTrajectory(_row_width),

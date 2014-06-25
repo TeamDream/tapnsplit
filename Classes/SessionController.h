@@ -12,49 +12,23 @@ class SessionController {
 
 public:
 
-	static void init() {
-		current_score = 0;
-		current_lifes = 3;
-	}
+	static void init();
 
-	static void addScore() {
-		++current_score;
-	}
+	static void addScore();
+	static void damage();
+	static bool isDead();
+	static std::string getStatus();
 
-	static void damage() {
-		--current_lifes;
-		if(isDead()){
-
-			CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_END, NULL);
-			Scene *s = RetryScene::scene();
-			Director::getInstance()->pushScene(CCTransitionFade::create(0.5,s));
-			 
-		}
-	}
-
-	static bool isDead() { return current_lifes <= 0; }
-	static std::string getStatus() {
-		char s[50];
-		sprintf(s, "Score: %d\n Lifes: %d", current_score, current_lifes);
-
-		return std::string(s);
+	static int getScore();
 	
-	}
+	//level progress info
+	static bool isLevelUnlocked(int level_i);
+	static void setLevelUnlocked(int level_i = curr_level + 1);
 
-	static int getScore() { return current_score; }
-	
 	//2D0: need some refactor here
-	static void setSpeed(float _level_speed, bool _speed_challenge = false) {
-		level_speed = _level_speed;
-		speed_challenge = _speed_challenge;
-	}
-
-	static float getSpeed() {
-		return level_speed;
-	}
-	static bool getSpeedChallenge() {
-		return speed_challenge;
-	}
+	static void setSpeed(float _level_speed, bool _speed_challenge = false);
+	static float getSpeed();
+	static bool getSpeedChallenge();
 
 private:
 	static int current_score;
@@ -62,4 +36,5 @@ private:
 
 	static float level_speed;
 	static bool speed_challenge;
+	static int curr_level;
 };
