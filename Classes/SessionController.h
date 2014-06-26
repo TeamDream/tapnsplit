@@ -30,11 +30,13 @@ public:
 	static float getSpeed();
 	static bool getSpeedChallenge();
 
+	static int curr_level;
+
 private:
 	static int current_score;
 	static int current_lifes;
 
 	static float level_speed;
 	static bool speed_challenge;
-	static int curr_level;
+
 };

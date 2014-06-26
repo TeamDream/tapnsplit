@@ -9,7 +9,8 @@ using namespace cocos2d;
 
 enum DrawOrder
 {
-	GameElementsOrder = 0,
+	BackgroundOrder = -1,
+	GameElementsOrder,
 	UIElementsOrder
 };
 
