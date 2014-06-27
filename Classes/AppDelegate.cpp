@@ -51,22 +51,22 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	if (frameSize.height > mediumResource.size.height)
 	{
         searchPath.push_back(largeResource.directory);
-
-        director->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
+		glview->setDesignResolutionSize(largeResource.size.width, largeResource.size.height, ResolutionPolicy::NO_BORDER);
+       // director->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
 	}
     // if the frame's height is larger than the height of small resource size, select medium resource.
     else if (frameSize.height > smallResource.size.height)
     {
         searchPath.push_back(mediumResource.directory);
-        
-        director->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
+		glview->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height, ResolutionPolicy::NO_BORDER);
+      //  director->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
     }
     // if the frame's height is smaller than the height of medium resource size, select small resource.
 	else
     {
         searchPath.push_back(smallResource.directory);
-
-        director->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
+		glview->setDesignResolutionSize(smallResource.size.width, smallResource.size.height, ResolutionPolicy::NO_BORDER);
+     //   director->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
     }
     
     // set searching path

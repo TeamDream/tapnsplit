@@ -4,4 +4,8 @@
     <Project>LevelScene</Project>
     <GuidesList />
   </GuidesProject>
+  <GuidesProject>
+    <Project>LevelScene_high_res</Project>
+    <GuidesList />
+  </GuidesProject>
 </ArrayOfGuidesProject>
