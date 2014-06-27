@@ -68,4 +68,25 @@ void SessionController::setLevelUnlocked(int level_i) {
 
 	CCUserDefault *def = CCUserDefault::sharedUserDefault();
 	def->setBoolForKey(s, true);
+	def->flush();
+}
+
+
+void SessionController::setHighScore(int score) {
+	char s[50];
+	sprintf(s, "LEVEL_%d_SCORE", curr_level);
+
+	CCUserDefault *def = CCUserDefault::sharedUserDefault();
+	def->setIntegerForKey(s, score);
+	def->flush();
+}
+
+int SessionController::getHighScore() {
+	char s[50];
+	sprintf(s, "LEVEL_%d_SCORE", curr_level);
+
+	CCUserDefault *def = CCUserDefault::sharedUserDefault();
+	int curr_level_score = def->getIntegerForKey(s);
+
+	return curr_level_score;
 }

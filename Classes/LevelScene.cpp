@@ -1,5 +1,6 @@
 #include "LevelScene.h"
 #include "GameScene.h"
+#include "MenuScene.h"
 #include "SessionController.h"
 #include "AppMacros.h"
 #include "cocostudio/WidgetReader/WidgetReader.h"
@@ -28,7 +29,6 @@ void LevelScene::loadLevelInfo() {
 	curr.label->retain();
 
 	level_info[1] = curr;
-
 
 	// create and initialize a label "Score Label"
 	curr.label = LabelTTF::create("Level Label", "Arial", TITLE_FONT_SIZE);
@@ -78,7 +78,7 @@ void LevelScene::loadLevelInfo() {
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool LevelScene::init() {
 
-	if (!LayerColor::initWithColor(ccc4(50, 50, 50, 200))) //RGBA
+	if (!Layer::init()) //RGBA
 	{
 		return false;
 	}
@@ -91,14 +91,6 @@ bool LevelScene::init() {
 	this->addChild(level_info[SessionController::curr_level].background);
 	this->addChild(level_info[SessionController::curr_level].label);
 
-	// add a "close" icon to exit the progress. it's an autorelease object
-	auto closeItem = MenuItemImage::create(
-		"CloseNormal.png",
-		"CloseSelected.png",
-		CC_CALLBACK_1(LevelScene::menuCloseCallback, this));
-
-	closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
-
 	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("LevelScene/LevelScene.json"));
 	this->addChild(m_pLayout);
 
@@ -108,6 +100,12 @@ bool LevelScene::init() {
 	move_left->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelLeft, this));
 	Button* move_right = dynamic_cast<Button*>(m_pLayout->getChildByName("MoveRight"));
 	move_right->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelRight, this));
+	Button* to_main_menu = dynamic_cast<Button*>(m_pLayout->getChildByName("Menu"));
+	to_main_menu->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuReturnToMainCallback, this));
+
+	best_level_score = dynamic_cast<Text*>(m_pLayout->getChildByName("Score"));
+	
+	updateScoreLabel();
 
 	return true;
 
@@ -158,18 +156,14 @@ void LevelScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type)
 	}
 }
 
-void LevelScene::menuCloseCallback(Ref* sender)
+void LevelScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
-	return;
-#endif
+	if (type == Widget::TouchEventType::ENDED) {
+		Director::getInstance()->popScene();
 
-	Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
-#endif
+		auto main_menu = MenuScene::scene();
+		Director::getInstance()->pushScene(main_menu);
+	}
 }
 
 void LevelScene::menuChangeLevelLeft(Ref* sender, Widget::TouchEventType type) {
@@ -187,6 +181,8 @@ void LevelScene::menuChangeLevelLeft(Ref* sender, Widget::TouchEventType type) {
 
 		this->addChild(level_info[SessionController::curr_level].background);
 		this->addChild(level_info[SessionController::curr_level].label);
+
+		updateScoreLabel();
 	}
 }
 
@@ -203,5 +199,13 @@ void LevelScene::menuChangeLevelRight(Ref* sender, Widget::TouchEventType type) 
 
 		this->addChild(level_info[SessionController::curr_level].background);
 		this->addChild(level_info[SessionController::curr_level].label);
+
+		updateScoreLabel();
 	}
+}
+
+void LevelScene::updateScoreLabel() {
+	char s[30];
+	sprintf(s, "SCORE: %d", SessionController::getHighScore());
+	best_level_score->setString(std::string(s));
 }

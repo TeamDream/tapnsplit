@@ -82,14 +82,13 @@ bool RetryScene::init() {
 	
 	//2DO: not a good place for score logic, replace it later
 	CCUserDefault *def = CCUserDefault::sharedUserDefault();
-	int highest_scrore =  def->getIntegerForKey(HIGHEST_SCORE);
+	int highest_scrore = SessionController::getHighScore();// def->getIntegerForKey(HIGHEST_SCORE);
 	int curr_score = SessionController::getScore();
 
 	if (highest_scrore < curr_score) {
-		highest_scrore = curr_score;
-		def->setIntegerForKey(HIGHEST_SCORE, highest_scrore);
-		def->flush();
+		SessionController::setHighScore(curr_score);
 	}
+
 	std::stringstream ss;
 	ss << "Highest score: " << highest_scrore << std::endl << "Current score: " << curr_score;
 	max_score_label->setString(ss.str());

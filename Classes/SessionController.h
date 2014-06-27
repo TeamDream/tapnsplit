@@ -25,6 +25,9 @@ public:
 	static bool isLevelUnlocked(int level_i);
 	static void setLevelUnlocked(int level_i = curr_level + 1);
 
+	static void setHighScore(int score);
+	static int getHighScore();
+
 	//2D0: need some refactor here
 	static void setSpeed(float _level_speed, bool _speed_challenge = false);
 	static float getSpeed();

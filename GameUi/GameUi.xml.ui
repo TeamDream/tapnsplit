@@ -24,6 +24,13 @@
     <string>PlayPressed.png</string>
     <string>MoveLeftUnpressed.png</string>
     <string>MoveLeftPressed.png</string>
+    <string>MenuUnpressed.png</string>
+    <string>MenuPressed.png</string>
+    <string>infoUnpressed.png</string>
+    <string>infoPressed.png</string>
+    <string>AudioEnabled.png</string>
+    <string>AudioPressed.png</string>
+    <string>AudioDisabled.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
   <CurrentUIJson>LevelScene_high_res.json</CurrentUIJson>

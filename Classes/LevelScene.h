@@ -21,7 +21,7 @@ struct LevelInfo {
 };
 
 
-class LevelScene : public cocos2d::LayerColor{
+class LevelScene : public cocos2d::Layer{
 public:
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();
@@ -33,13 +33,14 @@ public:
 	void menuChangeLevelLeft(Ref* sender, Widget::TouchEventType type);
 	void menuChangeLevelRight(Ref* sender, Widget::TouchEventType type);
 	void menuStartGameCallback(Ref* sender, Widget::TouchEventType type);
-	void menuCloseCallback(Ref* sender);
-
+	void menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type);
 
 	void loadLevelInfo();
 
 	std::map<int, LevelInfo> level_info;
-
+	
+	Text* best_level_score;
+	inline void updateScoreLabel();
 	// implement the "static node()" method manually
 	CREATE_FUNC(LevelScene);
 	 
