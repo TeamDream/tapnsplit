@@ -16,4 +16,8 @@
     <Project>StartScene</Project>
     <GuidesList />
   </GuidesProject>
+  <GuidesProject>
+    <Project>RetryScene</Project>
+    <GuidesList />
+  </GuidesProject>
 </ArrayOfGuidesProject>

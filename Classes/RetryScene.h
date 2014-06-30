@@ -1,10 +1,11 @@
 #pragma once
 
 #include "cocos2d.h"
- 
+#include "CocosGUI.h"
+
 using namespace cocos2d;
 
-class RetryScene : public cocos2d::LayerColor{
+class RetryScene : public cocos2d::Layer{
 public:
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();
@@ -14,9 +15,11 @@ public:
 	static cocos2d::Scene* scene();
 
 	// a selector callback
-	void menuRetryCallback(Ref* sender);
-	void menuOtherLevelCallback(Ref* sender);
-	void menuCloseCallback(Ref* sender);
+	void setUpUI();
+	void menuRetryCallback(Ref* sender, ui::Widget::TouchEventType type);
+	void menuOtherLevelCallback(Ref* sender, ui::Widget::TouchEventType type);
+	void menuCloseCallback(Ref* sender, ui::Widget::TouchEventType type);
+	void menuReturnToMainCallback(Ref* sender, ui::Widget::TouchEventType type);
 
 	LabelTTF *max_score_label;
 	// implement the "static node()" method manually
