@@ -15,8 +15,9 @@ struct LevelInfo {
 	LabelTTF *label;
 
 	LevelInfo() {
-		Sprite * background = NULL;
-		LabelTTF *label = NULL;
+		background = NULL;
+		//2D0: replace it by sprite label later
+		label = NULL;
 	}
 
 	~LevelInfo() {
