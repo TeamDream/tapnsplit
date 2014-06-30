@@ -10,13 +10,7 @@
   "designHeight": 320,
   "designWidth": 480,
   "textures": [],
-  "texturesPng": [
-    "LevelSceneImage.png",
-    "PlayUnpressed.png",
-    "PlayPressed.png",
-    "MoveLeftUnpressed.png",
-    "MoveLeftPressed.png"
-  ],
+  "texturesPng": [],
   "version": "1.4.0.1",
   "widgetTree": {
     "classname": "Panel",
@@ -301,7 +295,7 @@
       "classname": "Panel",
       "name": "Panel_2",
       "ZOrder": 0,
-      "actiontag": 2,
+      "actiontag": -1,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",

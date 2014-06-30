@@ -12,4 +12,8 @@
     <Project>GameplayScene</Project>
     <GuidesList />
   </GuidesProject>
+  <GuidesProject>
+    <Project>StartScene</Project>
+    <GuidesList />
+  </GuidesProject>
 </ArrayOfGuidesProject>

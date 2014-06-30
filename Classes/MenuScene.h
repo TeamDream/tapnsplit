@@ -2,6 +2,7 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
+#include "CocosGUI.h"
 
 using namespace cocos2d;
 
@@ -14,9 +15,9 @@ public:
 	static cocos2d::Scene* scene();
 
 	// a selector callback
-	void menuStartGameCallback(Ref* sender);
-	void menuCloseCallback(Ref* sender);
-
+	void menuStartGameCallback(Ref* sender,  ui::Widget::TouchEventType type);
+	void menuCloseCallback(Ref* sender, ui::Widget::TouchEventType type);
+	void setUpUI();
 	// implement the "static node()" method manually
 	CREATE_FUNC(MenuScene);
 };

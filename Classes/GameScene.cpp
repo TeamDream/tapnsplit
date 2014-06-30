@@ -136,20 +136,6 @@ void GameScene::startSchedule()
 	this->schedule(schedule_selector(GameScene::updateTimer), 1.f);
 }
 
-void GameScene::menuCloseCallback(Ref* sender)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
-	return;
-#endif
-
-	Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)||(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	exit(0);
-#endif
-}
-
 void GameScene::checkRectPositions(float  dt) {
 	int lost_rect = rects.findBoundaryRect();
 
@@ -162,8 +148,6 @@ void GameScene::checkRectPositions(float  dt) {
 		this->removeChild(sprite, true);
 		rects.deleteRect(lost_rect);
 	}
-
-	
 }
 
 

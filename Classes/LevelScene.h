@@ -10,9 +10,14 @@ using namespace ui;
 #define LEVEL_COUNT 4
 
 struct LevelInfo {
-	Sprite * background = NULL;
+	Sprite * background;
 	//2D0: replace it by sprite label later
-	LabelTTF *label = NULL;
+	LabelTTF *label;
+
+	LevelInfo() {
+		Sprite * background = NULL;
+		LabelTTF *label = NULL;
+	}
 
 	~LevelInfo() {
 		//if (background) background->release();

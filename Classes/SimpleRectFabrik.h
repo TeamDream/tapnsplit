@@ -5,7 +5,7 @@
 
 using namespace cocos2d;
 
-#define RECT_SPRITE_FILE "rect_black.png"
+#define RECT_SPRITE_FILE "RectAnimation/RectAnimation1.png"
 
 enum FabrikMode {
 	RANDOM = 0,

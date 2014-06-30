@@ -10,6 +10,7 @@
     <string>LevelScene.json</string>
     <string>LevelScene_high_res.json</string>
     <string>GameplayScene.json</string>
+    <string>StartScene.json</string>
   </JsonList>
   <CanvasSize>
     <Width>1024</Width>
@@ -20,11 +21,17 @@
   <ResRelativePath />
   <imageFileList />
   <imagePngList>
-    <string>MenuUnpressed.png</string>
-    <string>MenuPressed.png</string>
-    <string>ScoreCurrent_logo.png</string>
-    <string>Lifes_logo.png</string>
+    <string>tapIt_mainScreen_background.png</string>
+    <string>StartUnpressed.png</string>
+    <string>StartPressed.png</string>
+    <string>ExitUnpressed.png</string>
+    <string>ExitPressed.png</string>
+    <string>infoUnpressed.png</string>
+    <string>infoPressed.png</string>
+    <string>AudioEnabled.png</string>
+    <string>AudioPressed.png</string>
+    <string>AudioDisabled.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>GameplayScene.json</CurrentUIJson>
+  <CurrentUIJson>StartScene.json</CurrentUIJson>
 </UIProject>

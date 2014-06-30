@@ -25,10 +25,8 @@ public:
 
 private:
 	// a selector callbacks
-	void menuCloseCallback(Ref* sender);
 	void menuReturnToMainCallback(Ref* sender, ui::Widget::TouchEventType type);
 	bool onTouchBegan(Touch *touch, Event *unused_event);
-	//bool onTouchBegan(Touch* touch, Event* event);
 
 	//sñhedulers:
 	void startSchedule();
