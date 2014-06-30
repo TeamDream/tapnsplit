@@ -27,9 +27,17 @@ void SessionController::damage() {
 bool SessionController::isDead() { 
 	return current_lifes <= 0; 
 }
-std::string SessionController::getStatus() {
+std::string SessionController::getLifeStatus() {
 	char s[50];
-	sprintf(s, "Score: %d\n Lifes: %d", current_score, current_lifes);
+	sprintf(s, "LIFES: %d", current_lifes);
+
+	return std::string(s);
+
+}
+
+std::string SessionController::getScoreStatus() {
+	char s[50];
+	sprintf(s, "SCORE: %d", current_score);
 
 	return std::string(s);
 

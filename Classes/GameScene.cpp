@@ -1,6 +1,11 @@
 #include "GameScene.h"
 #include "AppMacros.h"
 #include "SessionController.h"
+#include "cocostudio/WidgetReader/WidgetReader.h"
+
+#include "MenuScene.h"
+
+using namespace ui;
 
 int GameScene::count = 0;
 
@@ -14,10 +19,10 @@ Scene* GameScene::scene()
 	// 'scene' is an autorelease object
 	auto scene = Scene::create();
 	GameScene * layer = GameScene::create();
-
+ 
 	// add layer as a child to scene
-	scene->addChild(layer);
-
+	scene->addChild(layer,100);
+	
 	// return the scene
 	return scene;
 }
@@ -26,7 +31,7 @@ Scene* GameScene::scene()
 bool GameScene::init()
 {
 	
-	if (!LayerColor::initWithColor(ccc4(50, 50, 50, 200))) //RGBA
+	if (!Layer::init()) //RGBA
 	{
 		return false;
 	}
@@ -35,42 +40,52 @@ bool GameScene::init()
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameStart), GAME_START, NULL);
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameEnd), GAME_END, NULL);
 
+	setUpBackground();
 	setUpUI();
-
-	auto touchListener = EventListenerTouchOneByOne::create();
-	touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
-	Director::sharedDirector()->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 100);
 
 	rects.setBoundary(0);
 	is_playing = false;
+
+	
+
+	auto touchListener = EventListenerTouchOneByOne::create();
+
+	touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
+	this->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 5000);
 	return true;
 }
 
 void GameScene::setUpUI() {
+	//WTF??? can't add it as child to 'this' because of event overlapping 
+	auto m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("GameplayScene/GameplayScene.json"));
+
+	//cant find best solution:
+	auto to_main_menu = dynamic_cast<Button*>((m_pLayout->getChildByName("Menu"))->clone());
+	to_main_menu->addTouchEventListener(CC_CALLBACK_2(GameScene::menuReturnToMainCallback, this));
+	this->addChild(to_main_menu);
+	
+	auto life_logo = dynamic_cast<ImageView*>((m_pLayout->getChildByName("LifesLogo"))->clone());
+	this->addChild(life_logo);
+	
+	auto score_logo = dynamic_cast<ImageView*>((m_pLayout->getChildByName("ScoreLogo"))->clone());
+	this->addChild(score_logo);
+	
+	life_label = dynamic_cast<Text*>((m_pLayout->getChildByName("LifesLabel"))->clone());
+	this->addChild(life_label);
+	
+	score_label = dynamic_cast<Text*>((m_pLayout->getChildByName("ScoreLabel"))->clone());
+	this->addChild(score_label);
+}
+
+void GameScene::setUpBackground() {
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 
-	// add a "close" icon to exit the progress. it's an autorelease object
-	auto closeItem = MenuItemImage::create(
-		"CloseNormal.png",
-		"CloseSelected.png",
-		CC_CALLBACK_1(GameScene::menuCloseCallback, this));
-	closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
-
-	// create menu, it's an autorelease object
-	auto menu = Menu::create(closeItem, NULL);
-	menu->setPosition(Vec2::ZERO);
-	this->addChild(menu, 1);
-
-	// create and initialize a label "Score Label"
-	score_label = LabelTTF::create("Score Label", "Arial", TITLE_FONT_SIZE);
-	score_label->setPosition(Vec2(origin.x + visibleSize.width / 8,
-		origin.y + visibleSize.height - score_label->getContentSize().height));
-	score_label->setZOrder(UIElementsOrder);
-	this->addChild(score_label);
-
-
+	auto background = Sprite::create("GameplayScene/tapIt_gameplayScreen_1_background.png");
+	background->setPosition(Vec2(origin + visibleSize / 2));
+	background->setZOrder(BackgroundOrder);
+	this->addChild(background);
 	// create and initialize a label "Score Label"
 	time_label = LabelTTF::create("TimeLabel", "Arial", TITLE_FONT_SIZE);
 	time_label->setPosition(Vec2(origin.x + 0.85* visibleSize.width ,
@@ -226,5 +241,17 @@ void GameScene::updateLabels() {
 	sprintf(s, "time: %d", time_sec);
 
 	time_label->setString(s);
-	score_label->setString(SessionController::getStatus());
+
+	score_label->setString(SessionController::getScoreStatus());
+	life_label->setString(SessionController::getLifeStatus());
+}
+
+void GameScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type)
+{
+	if (type == Widget::TouchEventType::ENDED) {
+
+		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_END, NULL);
+		auto main_menu = MenuScene::scene();
+		Director::getInstance()->pushScene(CCTransitionFade::create(0.5, main_menu));
+	}
 }

@@ -17,7 +17,8 @@ public:
 	static void addScore();
 	static void damage();
 	static bool isDead();
-	static std::string getStatus();
+	static std::string getScoreStatus();
+	static std::string getLifeStatus();
 
 	static int getScore();
 	

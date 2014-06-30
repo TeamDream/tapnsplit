@@ -21,12 +21,13 @@ void LevelScene::loadLevelInfo() {
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setString("Level 1");
 	curr.label->setZOrder(UIElementsOrder);
+	curr.label->retain();
 
 	curr.background = Sprite::create("NewSprites/tapIt_levelsScreen_1_background.png");
 	curr.background->setPosition(Vec2(origin + visibleSize / 2));
 	curr.background->setZOrder(BackgroundOrder);
 	curr.background->retain();
-	curr.label->retain();
+	
 
 	level_info[1] = curr;
 

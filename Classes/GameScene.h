@@ -4,6 +4,7 @@
 #include "TouchableRect.h"
 #include "RectPool.h"
 #include "SimpleRectFabrik.h"
+#include "CocosGUI.h"
 
 using namespace cocos2d;
 
@@ -14,7 +15,7 @@ enum DrawOrder
 	UIElementsOrder
 };
 
-class GameScene : public cocos2d::LayerColor
+class GameScene : public cocos2d::Layer
 {
 public:
 	virtual bool init();
@@ -25,7 +26,9 @@ public:
 private:
 	// a selector callbacks
 	void menuCloseCallback(Ref* sender);
-	bool onTouchBegan(Touch* touch, Event* event);
+	void menuReturnToMainCallback(Ref* sender, ui::Widget::TouchEventType type);
+	bool onTouchBegan(Touch *touch, Event *unused_event);
+	//bool onTouchBegan(Touch* touch, Event* event);
 
 	//sñhedulers:
 	void startSchedule();
@@ -38,11 +41,14 @@ private:
 	void onGameStart(CCObject* obj);
 	void onGameEnd(CCObject* obj);
 
-	LabelTTF* score_label;
+	//LabelTTF* score_label;
 	LabelTTF* time_label;
 
-	void setUpUI();
+	ui::Text* score_label;
+	ui::Text* life_label;
 
+	void setUpBackground();
+	void setUpUI();
 	//time from the onGameStart()
 	int time_sec;
 

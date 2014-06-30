@@ -8,4 +8,8 @@
     <Project>LevelScene_high_res</Project>
     <GuidesList />
   </GuidesProject>
+  <GuidesProject>
+    <Project>GameplayScene</Project>
+    <GuidesList />
+  </GuidesProject>
 </ArrayOfGuidesProject>
