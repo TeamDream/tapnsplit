@@ -5,10 +5,6 @@
     <GuidesList />
   </GuidesProject>
   <GuidesProject>
-    <Project>LevelScene_high_res</Project>
-    <GuidesList />
-  </GuidesProject>
-  <GuidesProject>
     <Project>GameplayScene</Project>
     <GuidesList />
   </GuidesProject>
@@ -18,6 +14,22 @@
   </GuidesProject>
   <GuidesProject>
     <Project>RetryScene</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>LevelScene_0</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>GameplayScene_0</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>StartScene_0</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>RetryScene_0</Project>
     <GuidesList />
   </GuidesProject>
 </ArrayOfGuidesProject>

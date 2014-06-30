@@ -41,11 +41,11 @@ char* RetryScene::getTrack() {
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool RetryScene::init() {
 
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
-	//	"gameover.mp3");
-	//char * music = getTrack();
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-	//	music, true);
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
+		"gameover.mp3");
+	char * music = getTrack();
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
+		music, true);
 
 	if (!Layer::init()) //RGBA
 	{
@@ -93,12 +93,12 @@ void RetryScene::setUpUI() {
 
 	auto highest_score = dynamic_cast<Text*>(m_pLayout->getChildByName("HighestScoreLabel"));
 	std::stringstream ss;
-	ss << "      Highest Score: " << SessionController::getHighScore();
+	ss << "Highest Score: " << SessionController::getHighScore();
 	highest_score->setText(ss.str());
 
 	auto current_score = dynamic_cast<Text*>(m_pLayout->getChildByName("ScoreLabel"));
 	std::stringstream ss2;
-	ss2 << "      Current Score: " << SessionController::getScore();
+	ss2 << "Current Score: " << SessionController::getScore();
 	current_score->setText(ss2.str());
 }
 

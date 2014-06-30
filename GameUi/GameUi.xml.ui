@@ -8,37 +8,28 @@
   <JsonFolder>E:\dev\cocos2d-x-3.1.1\tests\cococogame\GameUi\Json</JsonFolder>
   <JsonList>
     <string>LevelScene.json</string>
-    <string>LevelScene_high_res.json</string>
     <string>GameplayScene.json</string>
     <string>StartScene.json</string>
     <string>RetryScene.json</string>
+    <string>LevelScene_0.json</string>
+    <string>GameplayScene_0.json</string>
+    <string>StartScene_0.json</string>
+    <string>RetryScene_0.json</string>
   </JsonList>
   <CanvasSize>
-    <Width>1024</Width>
-    <Height>768</Height>
+    <Width>480</Width>
+    <Height>320</Height>
   </CanvasSize>
   <filePath>E:\dev\cocos2d-x-3.1.1\tests\cococogame\GameUi\GameUi.xml.ui</filePath>
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath />
   <imageFileList />
   <imagePngList>
-    <string>tapIt_afterGameScreen_background.png</string>
-    <string>RetryUnpressed.png</string>
-    <string>RetryPressed.png</string>
-    <string>ChangeLevelUnpressed.png</string>
-    <string>ChangeLevelPressed.png</string>
-    <string>ExitUnpressed.png</string>
-    <string>ExitPressed.png</string>
-    <string>infoUnpressed.png</string>
-    <string>infoPressed.png</string>
-    <string>AudioEnabled.png</string>
-    <string>AudioPressed.png</string>
-    <string>AudioDisabled.png</string>
     <string>MenuUnpressed.png</string>
     <string>MenuPressed.png</string>
     <string>ScoreCurrent_logo.png</string>
-    <string>ScoreHighest_logo.png</string>
+    <string>Lifes_logo.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>LevelScene_high_res.json</CurrentUIJson>
+  <CurrentUIJson>LevelScene_0.json</CurrentUIJson>
 </UIProject>

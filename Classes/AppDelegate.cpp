@@ -25,7 +25,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
         glview = GLView::create("Cpp Empty Test");
-	
+	//	glview->setFrameSize(480, 320);
         director->setOpenGLView(glview);
     }
 
