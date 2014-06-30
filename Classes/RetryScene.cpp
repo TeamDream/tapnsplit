@@ -112,6 +112,10 @@ void RetryScene::setUpUI() {
 // a selector callback
 void RetryScene::menuRetryCallback(Ref* sender, Widget::TouchEventType type) {
 	
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
 	Director::getInstance()->popScene();
 
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
@@ -122,6 +126,10 @@ void RetryScene::menuRetryCallback(Ref* sender, Widget::TouchEventType type) {
  
 // a selector callback
 void RetryScene::menuOtherLevelCallback(Ref* sender, Widget::TouchEventType type) {
+	
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
 
 	Director::getInstance()->popScene();
 
@@ -132,16 +140,22 @@ void RetryScene::menuOtherLevelCallback(Ref* sender, Widget::TouchEventType type
 
 void RetryScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type)
 {
-	if (type == Widget::TouchEventType::ENDED) {
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
 		Director::getInstance()->popScene();
 
 		auto main_menu = MenuScene::scene();
 		Director::getInstance()->pushScene(main_menu);
-	}
+
 }
 
 void RetryScene::menuCloseCallback(Ref* sender, Widget::TouchEventType type)
 {
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
 	return;

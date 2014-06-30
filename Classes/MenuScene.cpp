@@ -50,6 +50,10 @@ cocos2d::Scene* MenuScene::scene() {
 // a selector callback
 void MenuScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type) {
 	
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
 		"press.wav");
 	Scene *s = LevelScene::scene();
@@ -59,6 +63,11 @@ void MenuScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type) 
 
 void MenuScene::menuCloseCallback(Ref* sender, Widget::TouchEventType type)
 {
+
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
 	return;
