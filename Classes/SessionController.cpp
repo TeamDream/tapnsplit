@@ -17,10 +17,20 @@ void SessionController::addScore() {
 void SessionController::damage() {
 	--current_lifes;
 	if (isDead()){
-
 		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_END, NULL);
 		Scene *s = RetryScene::scene();
 		Director::getInstance()->pushScene(CCTransitionFade::create(0.5, s));
+	}
+}
+
+void SessionController::updateScores() {
+	 
+	CCUserDefault *def = CCUserDefault::sharedUserDefault();
+	int highest_scrore = getHighScore();// def->getIntegerForKey(HIGHEST_SCORE);
+	int curr_score = getScore();
+
+	if (highest_scrore < curr_score) {
+		SessionController::setHighScore(curr_score);
 	}
 }
 

@@ -124,6 +124,8 @@ void GameScene::onGameEnd(CCObject* obj)
 	this->unschedule(schedule_selector(GameScene::updateTimer));
 
 	is_playing = false;
+
+	SessionController::updateScores();
 }
 
 void GameScene::startSchedule()
@@ -178,6 +180,7 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
 	if (is_playing) {
 		rects.processClick(touch->getLocation());
+		updateLabels();
 	}
 
 	return true;

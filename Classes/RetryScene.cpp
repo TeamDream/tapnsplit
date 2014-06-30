@@ -57,14 +57,7 @@ bool RetryScene::init() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 	
-	//2DO: not a good place for score logic, replace it later
-	CCUserDefault *def = CCUserDefault::sharedUserDefault();
-	int highest_scrore = SessionController::getHighScore();// def->getIntegerForKey(HIGHEST_SCORE);
-	int curr_score = SessionController::getScore();
 
-	if (highest_scrore < curr_score) {
-		SessionController::setHighScore(curr_score);
-	}
 
 	return true;
 }
