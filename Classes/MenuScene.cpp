@@ -10,13 +10,13 @@ using namespace ui;
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool MenuScene::init() {
 
-	if (!Layer::init()) //RGBA
+	if (!Layer::init()) 
 	{
 		return false;
 	}
 
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-		"background_m.mp3", true);
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
+//		"background_m.mp3", true);
 
 	setUpUI();
 

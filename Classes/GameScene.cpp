@@ -84,12 +84,6 @@ void GameScene::setUpBackground() {
 	background->setPosition(Vec2(origin + visibleSize / 2));
 	background->setZOrder(BackgroundOrder);
 	this->addChild(background);
-	// create and initialize a label "Score Label"
-	time_label = LabelTTF::create("TimeLabel", "Arial", TITLE_FONT_SIZE);
-	time_label->setPosition(Vec2(origin.x + 0.85* visibleSize.width ,
-		origin.y + 0.1*visibleSize.height));
-	time_label->setZOrder(UIElementsOrder);
-	this->addChild(time_label);
 }
 
 //Handling event
@@ -179,6 +173,8 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event)
 	if (is_playing) {
 		rects.processClick(touch->getLocation());
 		updateLabels();
+
+		checkScoreProgress();
 	}
 
 	return true;
@@ -208,25 +204,26 @@ void GameScene::updateTimer(float dt) {
 			this->schedule(schedule_selector(GameScene::createRandomRect), create_rect_speed);
 		}
 	}
-
-	if (time_sec == 60) {
-		SessionController::setLevelUnlocked();
-	}
-
-	if (time_sec > 60) {
-		char s[50];
-		sprintf(s, "time: %d\n Completed!", time_sec);
-		time_label->setString(s);
-	}
  
 }
 
+void GameScene::checkScoreProgress() {
+	if (SessionController::getScore() >= 100 * SessionController::curr_level) {
+		//finish screen
+		SessionController::setLevelUnlocked();
+
+		auto visibleSize = Director::getInstance()->getVisibleSize();
+		auto origin = Director::getInstance()->getVisibleOrigin();
+		// create and initialize a label "Score Label"
+		auto completed_label = LabelTTF::create("Completed!", "Arial", TITLE_FONT_SIZE);
+		completed_label->setPosition(Vec2(origin.x + 0.85* visibleSize.width,
+			origin.y + 0.1*visibleSize.height));
+		completed_label->setZOrder(UIElementsOrder);
+		this->addChild(completed_label);
+	}
+}
+
 void GameScene::updateLabels() {
-	char s[50];
-	sprintf(s, "time: %d", time_sec);
-
-	time_label->setString(s);
-
 	score_label->setString(SessionController::getScoreStatus());
 	life_label->setString(SessionController::getLifeStatus());
 }

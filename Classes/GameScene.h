@@ -34,23 +34,19 @@ private:
 	void createRandomRect(float  dt);
 	void updateTimer(float dt);
 	void checkRectPositions(float  dt);
+	void checkScoreProgress();
 	void updateLabels();
+
 	//game notofications
 	void onGameStart(CCObject* obj);
 	void onGameEnd(CCObject* obj);
-
-	//LabelTTF* score_label;
-	LabelTTF* time_label;
 
 	ui::Text* score_label;
 	ui::Text* life_label;
 
 	void setUpBackground();
 	void setUpUI();
-	//time from the onGameStart()
-	int time_sec;
 
-	float current_speed;
 
 	RectPool rects;
 	SimpleRectFarik rectFabrik;
@@ -60,6 +56,9 @@ private:
 	static int count;
 
 	bool is_playing;
+	//time from the onGameStart()
+	int time_sec;
+	float current_speed;
 	
 };
 
