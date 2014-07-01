@@ -6,7 +6,7 @@
 
 using namespace cocos2d;
 
-class MenuScene : public cocos2d::LayerColor{
+class MenuScene : public cocos2d::Layer{
 public:
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();

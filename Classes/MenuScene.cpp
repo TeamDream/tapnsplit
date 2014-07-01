@@ -10,7 +10,7 @@ using namespace ui;
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool MenuScene::init() {
 
-	if (!LayerColor::initWithColor(ccc4(50, 50, 50, 200))) //RGBA
+	if (!Layer::init()) //RGBA
 	{
 		return false;
 	}
@@ -28,11 +28,14 @@ void MenuScene::setUpUI() {
 	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("StartScene/StartScene.json"));
 	this->addChild(m_pLayout);
 
+	float scale_fact = Director::getInstance()->getContentScaleFactor();
+
 	auto start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Start"));
 	start_game->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuStartGameCallback, this));
-
+	
 	auto exit_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Exit"));
 	exit_game->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuCloseCallback, this));
+ 
 }
 
 // there's no 'id' in cpp, so we recommend returning the class instance pointer

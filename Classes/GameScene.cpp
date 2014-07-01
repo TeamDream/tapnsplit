@@ -46,8 +46,6 @@ bool GameScene::init()
 	rects.setBoundary(0);
 	is_playing = false;
 
-	
-
 	auto touchListener = EventListenerTouchOneByOne::create();
 
 	touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);

@@ -25,7 +25,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
         glview = GLView::create("Cpp Empty Test");
-	//	glview->setFrameSize(480, 320);
         director->setOpenGLView(glview);
     }
 
@@ -41,26 +40,26 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // this can make sure that the resource's height could fit for the height of design resolution.
 
     // if the frame's height is larger than the height of medium resource size, select large resource.
-	if (frameSize.height > mediumResource.size.height)
-	{
-        searchPath.push_back(largeResource.directory);
-		glview->setDesignResolutionSize(largeResource.size.width, largeResource.size.height, ResolutionPolicy::NO_BORDER);
-       // director->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
-	}
-    // if the frame's height is larger than the height of small resource size, select medium resource.
-    else if (frameSize.height > smallResource.size.height)
-    {
-        searchPath.push_back(mediumResource.directory);
-		glview->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height, ResolutionPolicy::NO_BORDER);
-      //  director->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
-    }
-    // if the frame's height is smaller than the height of medium resource size, select small resource.
-	else
-    {
-        searchPath.push_back(smallResource.directory);
-		glview->setDesignResolutionSize(smallResource.size.width, smallResource.size.height, ResolutionPolicy::NO_BORDER);
-     //   director->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
-    }
+	//if (frameSize.height > mediumResource.size.height)
+	//{
+ //       searchPath.push_back(largeResource.directory);
+	//	glview->setDesignResolutionSize(largeResource.size.width, largeResource.size.height, ResolutionPolicy::NO_BORDER);
+ //      // director->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
+	//}
+ //   // if the frame's height is larger than the height of small resource size, select medium resource.
+ //   else if (frameSize.height > smallResource.size.height)
+ //   {
+        searchPath.push_back(mediumResource.directory);//as temp solution
+		glview->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height, ResolutionPolicy::EXACT_FIT);
+		director->setContentScaleFactor(MIN(mediumResource.size.height / designResolutionSize.height, mediumResource.size.width / designResolutionSize.width));
+ //   }
+ //   // if the frame's height is smaller than the height of medium resource size, select small resource.
+	//else
+ //   {
+ //       searchPath.push_back(smallResource.directory);
+	//	glview->setDesignResolutionSize(smallResource.size.width, smallResource.size.height, ResolutionPolicy::NO_BORDER);
+	//	director->setContentScaleFactor(MIN(smallResource.size.height / frameSize.height, smallResource.size.width / frameSize.width));
+ //   }
     
     // set searching path
     FileUtils::getInstance()->setSearchPaths(searchPath);

@@ -24,7 +24,7 @@ void LevelScene::loadLevelInfo() {
 	curr.label->setZOrder(UIElementsOrder);
 	curr.label->retain();
 
-	curr.background = Sprite::create("NewSprites/tapIt_levelsScreen_1_background.png");
+	curr.background = Sprite::create("LevelScene/tapIt_levelsScreen_1_background.png");
 	curr.background->setPosition(Vec2(origin + visibleSize / 2));
 	curr.background->setZOrder(BackgroundOrder);
 	curr.background->retain();
@@ -39,7 +39,7 @@ void LevelScene::loadLevelInfo() {
 	curr.label->setString("Level 2");
 	curr.label->setZOrder(UIElementsOrder);
 
-	curr.background = Sprite::create("NewSprites/tapIt_levelsScreen_1_background.png");
+	curr.background = Sprite::create("LevelScene/tapIt_levelsScreen_1_background.png");
 	curr.background->setPosition(Vec2(origin + visibleSize / 2));
 	curr.background->setZOrder(BackgroundOrder);
 	curr.background->retain();
@@ -54,7 +54,7 @@ void LevelScene::loadLevelInfo() {
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setZOrder(UIElementsOrder);
 	curr.label->setString("Level 3");
-	curr.background = Sprite::create("NewSprites/tapIt_levelsScreen_1_background.png");
+	curr.background = Sprite::create("LevelScene/tapIt_levelsScreen_1_background.png");
 	curr.background->setPosition(Vec2(origin + visibleSize / 2));
 	curr.background->setZOrder(BackgroundOrder);
 	curr.background->retain();
@@ -68,7 +68,7 @@ void LevelScene::loadLevelInfo() {
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setZOrder(UIElementsOrder);
 	curr.label->setString("Level 4");
-	curr.background = Sprite::create("NewSprites/tapIt_levelsScreen_1_background.png");
+	curr.background = Sprite::create("LevelScene/tapIt_levelsScreen_1_background.png");
 	curr.background->setPosition(Vec2(origin + visibleSize / 2));
 	curr.background->setZOrder(BackgroundOrder);
 	curr.background->retain();
@@ -86,9 +86,12 @@ bool LevelScene::init() {
 	}
 
 	loadLevelInfo();
+	SessionController::init();
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
+
+	float scale_fact = Director::getInstance()->getContentScaleFactor();
 
 	this->addChild(level_info[SessionController::curr_level].background);
 	this->addChild(level_info[SessionController::curr_level].label);
@@ -105,6 +108,9 @@ bool LevelScene::init() {
 	Button* to_main_menu = dynamic_cast<Button*>(m_pLayout->getChildByName("Menu"));
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuReturnToMainCallback, this));
 
+	//to_main_menu->setPositionPercent(Vec2());
+
+	//to_main_menu->setPositionY(to_main_menu->getPositionY() /scale_fact);
 	best_level_score = dynamic_cast<Text*>(m_pLayout->getChildByName("Score"));
 	
 	updateScoreLabel();

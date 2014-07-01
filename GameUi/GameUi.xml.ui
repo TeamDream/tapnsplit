@@ -25,11 +25,17 @@
   <ResRelativePath />
   <imageFileList />
   <imagePngList>
-    <string>MenuUnpressed.png</string>
-    <string>MenuPressed.png</string>
-    <string>ScoreCurrent_logo.png</string>
-    <string>Lifes_logo.png</string>
+    <string>tapIt_mainScreen_background.png</string>
+    <string>StartUnpressed.png</string>
+    <string>StartPressed.png</string>
+    <string>ExitUnpressed.png</string>
+    <string>ExitPressed.png</string>
+    <string>infoUnpressed.png</string>
+    <string>infoPressed.png</string>
+    <string>AudioEnabled.png</string>
+    <string>AudioPressed.png</string>
+    <string>AudioDisabled.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>LevelScene_0.json</CurrentUIJson>
+  <CurrentUIJson>GameplayScene.json</CurrentUIJson>
 </UIProject>
