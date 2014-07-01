@@ -144,6 +144,7 @@
     <ClInclude Include="..\Classes\MenuScene.h" />
     <ClInclude Include="..\Classes\RectTrajectory.h" />
     <ClInclude Include="..\Classes\RetryScene.h" />
+    <ClInclude Include="..\Classes\SimpleRect.h" />
     <ClInclude Include="..\Classes\SimpleRectFabrik.h" />
     <ClInclude Include="..\Classes\TouchableRect.h" />
     <ClInclude Include="..\Classes\RectPool.h" />

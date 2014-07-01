@@ -16,7 +16,7 @@ bool MenuScene::init() {
 	}
 
 	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-//		"background_m.mp3", true);
+	//	"background_m.mp3", true);
 
 	setUpUI();
 

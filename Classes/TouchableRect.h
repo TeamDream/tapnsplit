@@ -1,5 +1,6 @@
 #pragma once
 #include "cocos2d.h"
+#include "SessionController.h"
 
 using namespace cocos2d;
 
@@ -16,33 +17,22 @@ public:
 		curr_sprite->release();
 	}
 
+	virtual void animate() = 0;
+	virtual void doAction() = 0;
 	inline bool isTapped() { return tapped; }
 	Sprite *getSprite() { return curr_sprite; }
 	
 	void tapIt() { //just switch 2 sprites
 
 		if (!tapped) {
-
-			Animation * anim = Animation::create();
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation1.png");
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation2.png");
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation3.png");
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation4.png");
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation5.png");//little hack
-
-			anim->setDelayPerUnit(0.03);
-
-			Animate *anim_action = Animate::create(anim);
-
-			curr_sprite->runAction(anim_action);
-			//curr_sprite->setTexture(CCTextureCache::sharedTextureCache()->addImage(NON_ACTIVE_RECT));
-			tapped = true;
+			animate();
+			doAction();
 		}
 	}; 
 
 	bool containsPoint(Vec2 point){ return curr_sprite->getBoundingBox().containsPoint(point); }
 
-private:
+protected:
 	TouchableRect();
 
 	Sprite * curr_sprite;

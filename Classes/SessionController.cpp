@@ -23,6 +23,14 @@ void SessionController::damage() {
 	}
 }
 
+void SessionController::damageScore() {
+	current_score -= 20;
+	if (current_score < 0) {
+		current_score = 0;
+	}
+}
+
+
 void SessionController::updateScores() {
 	 
 	CCUserDefault *def = CCUserDefault::sharedUserDefault();

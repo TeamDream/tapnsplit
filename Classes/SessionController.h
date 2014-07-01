@@ -16,6 +16,7 @@ public:
 
 	static void addScore();
 	static void damage();
+	static void damageScore();
 	static void updateScores();
 	static bool isDead();
 	static std::string getScoreStatus();

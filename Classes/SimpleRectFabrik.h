@@ -2,7 +2,7 @@
 #include "cocos2d.h"
 #include "TouchableRect.h"
 #include "RectTrajectory.h"
-
+#include "SimpleRect.h"
 using namespace cocos2d;
 
 #define RECT_SPRITE_FILE "RectAnimation/RectAnimation1.png"
@@ -23,7 +23,7 @@ public:
 		rect_n = 4;
 
 		auto visibleSize = Director::getInstance()->getVisibleSize();
-		auto new_rect = new TouchableRect(RECT_SPRITE_FILE);
+		TouchableRect* new_rect = new SimpleRect(RECT_SPRITE_FILE);
 		
 		sprite_w = new_rect->getSprite()->boundingBox().size.width;
 		scale_w = visibleSize.width / sprite_w / rect_n;
@@ -47,7 +47,7 @@ public:
 	TouchableRect *createRect() {
 
 		auto visibleSize = Director::getInstance()->getVisibleSize();
-		auto new_rect = new TouchableRect(RECT_SPRITE_FILE);
+		TouchableRect* new_rect = new SimpleRect(RECT_SPRITE_FILE);
 
 		//rect scale:		
 		new_rect->getSprite()->setScale(scale_w);

@@ -9,15 +9,14 @@ void RectPool::processClick(Vec2 point)
 	for (; it != rectPool.end(); it++)
 	{
 		if ((*it)->containsPoint(point) && !(*it)->isTapped()) { //make it public 
-			(*it)->tapIt();//
-			SessionController::addScore();
+			(*it)->tapIt();
 			tapped = true;
 			break;
 		}
 	}
 
 	if (!tapped) {
-		SessionController::damage();
+		SessionController::damageScore();
 	}
 }
 
