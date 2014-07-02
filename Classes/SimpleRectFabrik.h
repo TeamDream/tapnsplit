@@ -25,7 +25,7 @@ public:
 		rect_n = 4;
 
 		auto visibleSize = Director::getInstance()->getVisibleSize();
-		TouchableRect* new_rect = new LifeRect(LIFE_RECT_SPRITE_FILE);
+		TouchableRect* new_rect = new LifeRect(NORMAL_RECT_SPRITE_FILE);
 		
 		sprite_w = new_rect->getSprite()->boundingBox().size.width;
 		scale_w = visibleSize.width / sprite_w / rect_n;
@@ -54,7 +54,7 @@ public:
 	TouchableRect *createRect() {
 
 		auto visibleSize = Director::getInstance()->getVisibleSize();
-		TouchableRect* new_rect = rects.at(rand()%3)->clone();
+		TouchableRect* new_rect = createRandomRectType();
 
 		new_rect->getSprite()->setScale(scale_w);
 		
@@ -80,6 +80,23 @@ private:
 
 	int calcXPosWithMode() {
 		return trajectory.at(mode)->calcPosition();
+	}
+
+	TouchableRect* createRandomRectType() {
+		int rand_i = rand() % 10;
+
+		//first, simple hardcode it:
+
+		if (rand_i < 6) {
+			return rects.at(0)->clone();
+		}
+		else if (rand_i < 7) {
+			return rects.at(1)->clone();
+		}
+		else  {
+			return rects.at(2)->clone();
+		}
+
 	}
 	//Usefull prototypes:
 	std::vector<RectTrajectory *>  trajectory; 
