@@ -26,6 +26,7 @@ private:
 	}
 
 	virtual void doAction() {
+		SessionController::addScore();
 		SessionController::addLife();
 	}
 	virtual void dieAction() {

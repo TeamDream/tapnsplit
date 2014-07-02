@@ -30,9 +30,9 @@ public:
 
 	bool containsPoint(Vec2 point){ return curr_sprite->getBoundingBox().containsPoint(point); }
 
-	virtual void animate() = 0;
-	virtual void doAction() = 0;
-	virtual void dieAction() = 0;
+	virtual void animate() = 0; //call animation, set it as tapped
+	virtual void doAction() = 0; //concrete rect action
+	virtual void dieAction() = 0; //action for missed rect -  rect gets to the border screen alive
 	virtual TouchableRect* clone() = 0;
 
 protected:

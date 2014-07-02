@@ -5,9 +5,9 @@
 #include "SimpleRect.h"
 #include "LifeRect.h"
 #include "DeathRect.h"
+#include "ArmoredRect.h"
+
 using namespace cocos2d;
-
-
 
 enum FabrikMode {
 	RANDOM = 0,
@@ -43,11 +43,12 @@ public:
 		trajectory.at(CROSS) = new CrossTrajectory(rect_n);
 		trajectory.at(CHESS) = new ChessTrajectory(rect_n);
 
-		rects.resize(3);
+		rects.resize(4);
 
 		rects.at(0) = new SimpleRect();
 		rects.at(1) = new LifeRect();
 		rects.at(2) = new DeathRect();
+		rects.at(3) = new ArmoredRect();
 	}
 
 
@@ -86,9 +87,12 @@ private:
 		int rand_i = rand() % 10;
 
 		//first, simple hardcode it:
-
-		if (rand_i < 6) {
+	
+		if (rand_i < 5) {
 			return rects.at(0)->clone();
+		}
+		else if (rand_i < 6) {
+			rects.at(3)->clone();
 		}
 		else if (rand_i < 7) {
 			return rects.at(1)->clone();
