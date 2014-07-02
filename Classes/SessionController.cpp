@@ -14,6 +14,10 @@ void SessionController::addScore() {
 	++current_score;
 }
 
+void SessionController::addLife() {
+	++current_lifes;
+}
+
 void SessionController::damage() {
 	--current_lifes;
 	if (isDead()){

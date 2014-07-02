@@ -1,14 +1,17 @@
 #pragma once
 
 #include "TouchableRect.h"
-#define NORMAL_RECT_SPRITE_FILE "RectAnimation/RectAnimation1.png"
-class SimpleRect : public TouchableRect {
+
+#define LIFE_RECT_SPRITE_FILE "RectAnimation/LifeRectAnimation1.png"
+
+class LifeRect : public TouchableRect {
 public:
-	SimpleRect(const char *file1 = NORMAL_RECT_SPRITE_FILE) : TouchableRect(file1) {};
+	LifeRect(const char *file1 = LIFE_RECT_SPRITE_FILE) : TouchableRect(file1) {};
+	
 private:
-	virtual void animate() {
+	virtual void animate() {//2DO set right sprites and animation
 		Animation * anim = Animation::create();
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation1.png");
+		anim->addSpriteFrameWithFile("RectAnimation/LifeRectAnimation1.png");
 		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation2.png");
 		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation3.png");
 		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation4.png");
@@ -22,12 +25,12 @@ private:
 		tapped = true;
 	}
 
-	virtual void doAction() { 
-		SessionController::addScore();
+	virtual void doAction() {
+		SessionController::addLife();
 	}
 
 	virtual TouchableRect* clone() {
-		return new SimpleRect();
+		return new LifeRect();
 	}
 
 };

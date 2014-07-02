@@ -3,9 +3,11 @@
 #include "TouchableRect.h"
 #include "RectTrajectory.h"
 #include "SimpleRect.h"
+#include "LifeRect.h"
+
 using namespace cocos2d;
 
-#define RECT_SPRITE_FILE "RectAnimation/RectAnimation1.png"
+
 
 enum FabrikMode {
 	RANDOM = 0,
@@ -23,7 +25,7 @@ public:
 		rect_n = 4;
 
 		auto visibleSize = Director::getInstance()->getVisibleSize();
-		TouchableRect* new_rect = new SimpleRect(RECT_SPRITE_FILE);
+		TouchableRect* new_rect = new LifeRect(LIFE_RECT_SPRITE_FILE);
 		
 		sprite_w = new_rect->getSprite()->boundingBox().size.width;
 		scale_w = visibleSize.width / sprite_w / rect_n;
@@ -41,15 +43,18 @@ public:
 		trajectory.at(CROSS) = new CrossTrajectory(rect_n);
 		trajectory.at(CHESS) = new ChessTrajectory(rect_n);
 
+		rects.resize(2);
+
+		rects.at(0) = new SimpleRect(NORMAL_RECT_SPRITE_FILE);
+		rects.at(1) = new LifeRect(LIFE_RECT_SPRITE_FILE);
 	}
 
 
 	TouchableRect *createRect() {
 
 		auto visibleSize = Director::getInstance()->getVisibleSize();
-		TouchableRect* new_rect = new SimpleRect(RECT_SPRITE_FILE);
+		TouchableRect* new_rect = rects.at(rand()%2)->clone();
 
-		//rect scale:		
 		new_rect->getSprite()->setScale(scale_w);
 		
 		int random = calcXPosWithMode();
@@ -75,8 +80,9 @@ private:
 	int calcXPosWithMode() {
 		return trajectory.at(mode)->calcPosition();
 	}
-
-	std::vector<RectTrajectory *>  trajectory;
+	//Usefull prototypes:
+	std::vector<RectTrajectory *>  trajectory; 
+	std::vector<TouchableRect *>  rects;
 
 	FabrikMode mode;
 	int curr_cross_position;

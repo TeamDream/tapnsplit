@@ -15,6 +15,7 @@ public:
 	static void init();
 
 	static void addScore();
+	static void addLife();
 	static void damage();
 	static void damageScore();
 	static void updateScores();

@@ -17,8 +17,6 @@ public:
 		curr_sprite->release();
 	}
 
-	virtual void animate() = 0;
-	virtual void doAction() = 0;
 	inline bool isTapped() { return tapped; }
 	Sprite *getSprite() { return curr_sprite; }
 	
@@ -31,6 +29,10 @@ public:
 	}; 
 
 	bool containsPoint(Vec2 point){ return curr_sprite->getBoundingBox().containsPoint(point); }
+
+	virtual void animate() = 0;
+	virtual void doAction() = 0;
+	virtual TouchableRect* clone() = 0;
 
 protected:
 	TouchableRect();
