@@ -18,7 +18,7 @@ public:
 	int getBoundary() { return boundary; }
 	void clearAll();
 	int getRectCount();
-private:
+ 
 	int boundary;
 	std::vector<TouchableRect*> rectPool;
 };

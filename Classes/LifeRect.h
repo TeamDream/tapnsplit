@@ -28,7 +28,9 @@ private:
 	virtual void doAction() {
 		SessionController::addLife();
 	}
-
+	virtual void dieAction() {
+		//SessionController::damage(); //do nothing. Missed life - your probkem
+	}
 	virtual TouchableRect* clone() {
 		return new LifeRect();
 	}

@@ -85,5 +85,8 @@
     <ClInclude Include="..\Classes\LifeRect.h">
       <Filter>Classes\Rectangle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\DeathRect.h">
+      <Filter>Classes\Rectangle</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

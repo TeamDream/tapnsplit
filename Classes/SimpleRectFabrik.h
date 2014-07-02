@@ -4,7 +4,7 @@
 #include "RectTrajectory.h"
 #include "SimpleRect.h"
 #include "LifeRect.h"
-
+#include "DeathRect.h"
 using namespace cocos2d;
 
 
@@ -43,17 +43,18 @@ public:
 		trajectory.at(CROSS) = new CrossTrajectory(rect_n);
 		trajectory.at(CHESS) = new ChessTrajectory(rect_n);
 
-		rects.resize(2);
+		rects.resize(3);
 
-		rects.at(0) = new SimpleRect(NORMAL_RECT_SPRITE_FILE);
-		rects.at(1) = new LifeRect(LIFE_RECT_SPRITE_FILE);
+		rects.at(0) = new SimpleRect();
+		rects.at(1) = new LifeRect();
+		rects.at(2) = new DeathRect();
 	}
 
 
 	TouchableRect *createRect() {
 
 		auto visibleSize = Director::getInstance()->getVisibleSize();
-		TouchableRect* new_rect = rects.at(rand()%2)->clone();
+		TouchableRect* new_rect = rects.at(rand()%3)->clone();
 
 		new_rect->getSprite()->setScale(scale_w);
 		

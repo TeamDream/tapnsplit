@@ -32,6 +32,7 @@ public:
 
 	virtual void animate() = 0;
 	virtual void doAction() = 0;
+	virtual void dieAction() = 0;
 	virtual TouchableRect* clone() = 0;
 
 protected:

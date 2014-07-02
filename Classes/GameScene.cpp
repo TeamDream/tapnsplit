@@ -135,7 +135,7 @@ void GameScene::checkRectPositions(float  dt) {
 
 	if (lost_rect >= 0) {
 		if (!rects.isRectTapped(lost_rect)) {
-			SessionController::damage();
+			rects.rectPool.at(lost_rect)->dieAction();
 		}
 
 		CCSprite *sprite = (CCSprite *)rects.getRectSprite(lost_rect);
