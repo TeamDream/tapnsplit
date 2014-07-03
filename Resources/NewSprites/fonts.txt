@@ -1,0 +1,11 @@
+- level select
+Score(Myriad Pro, 7pt) : 4 556(Impact, 7pt) - color #e6a019, #d9e5ef
+Level #(Impact, 23pt) - color #d9e5ef, #e6a019
+
+- gameplay
+Score(Myriad Pro, 9pt) : 4 556(Impact, 9pt)
+Lifes(Myriad Pro, 9pt)  : 3(Impact, 9pt)
+
+- aftergame
+Highest Score(Myriad Pro, 11pt, Regular) : 3243(Myriad Pro, 11pt, bold) - color #e6a019
+Current Score(Myriad Pro, 11pt, Regular) : 32(Myriad Pro, 11pt, bold) - color #d9e5ef

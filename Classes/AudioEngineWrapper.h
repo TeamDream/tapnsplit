@@ -78,37 +78,25 @@ private:
 
 	AudioEngineWrapper() {
 		sound_enabled = true;
+
+		songs.push_back("tiger.mp3");
+		songs.push_back("1.mp3");
+		songs.push_back("background_m.mp3");
+		songs.push_back("stronger.mp3");
+		songs.push_back("lucky.mp3");
+		songs.push_back("throne.mp3");
+
 	};
 
 	char* getRandomTrack() {
-		int sounds_n = 6;
-		int random = rand() % sounds_n;
-		char* music;
-
-		switch (random) {
-		case 0:
-			music = "tiger.mp3";
-			break;
-		case 1:
-			music = "1.mp3";
-			break;
-		case 2:
-			music = "background_m.mp3";
-			break;
-		case 3:
-			music = "stronger.mp3";
-			break;
-		case 4:
-			music = "lucky.mp3";
-			break;
-		case 5:
-			music = "throne.mp3";
-			break;
-		}
+	
+		int random = rand() % songs.size();
+		char* music = songs.at(random);
 
 		return music;
 	}
 
 	bool sound_enabled;
+	std::vector <char *> songs;
 
 };
