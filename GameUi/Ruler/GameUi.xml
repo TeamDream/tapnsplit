@@ -32,4 +32,20 @@
     <Project>RetryScene_0</Project>
     <GuidesList />
   </GuidesProject>
+  <GuidesProject>
+    <Project>LevelScene_1</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>LevelScene_2</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>LevelScene_3</Project>
+    <GuidesList />
+  </GuidesProject>
+  <GuidesProject>
+    <Project>LevelScene_4</Project>
+    <GuidesList />
+  </GuidesProject>
 </ArrayOfGuidesProject>

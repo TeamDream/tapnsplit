@@ -24,12 +24,6 @@ void LevelScene::loadLevelInfo() {
 	curr.label->setZOrder(UIElementsOrder);
 	curr.label->retain();
 
-	curr.background = Sprite::create("LevelScene/tapIt_levelsScreen_1_background.png");
-	curr.background->setPosition(Vec2(origin + visibleSize / 2));
-	curr.background->setZOrder(BackgroundOrder);
-	curr.background->retain();
-	
-
 	level_info[1] = curr;
 
 	// create and initialize a label "Score Label"
@@ -38,11 +32,6 @@ void LevelScene::loadLevelInfo() {
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setString("Level 2");
 	curr.label->setZOrder(UIElementsOrder);
-
-	curr.background = Sprite::create("LevelScene/tapIt_levelsScreen_1_background.png");
-	curr.background->setPosition(Vec2(origin + visibleSize / 2));
-	curr.background->setZOrder(BackgroundOrder);
-	curr.background->retain();
 	curr.label->retain();
 
 	level_info[2] = curr;
@@ -54,10 +43,6 @@ void LevelScene::loadLevelInfo() {
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setZOrder(UIElementsOrder);
 	curr.label->setString("Level 3");
-	curr.background = Sprite::create("LevelScene/tapIt_levelsScreen_1_background.png");
-	curr.background->setPosition(Vec2(origin + visibleSize / 2));
-	curr.background->setZOrder(BackgroundOrder);
-	curr.background->retain();
 	curr.label->retain();
 
 	level_info[3] = curr;
@@ -68,13 +53,56 @@ void LevelScene::loadLevelInfo() {
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setZOrder(UIElementsOrder);
 	curr.label->setString("Level 4");
-	curr.background = Sprite::create("LevelScene/tapIt_levelsScreen_1_background.png");
-	curr.background->setPosition(Vec2(origin + visibleSize / 2));
-	curr.background->setZOrder(BackgroundOrder);
-	curr.background->retain();
 	curr.label->retain();
 
 	level_info[4] = curr;
+}
+
+void LevelScene::changeLevelUI(int level_i ) {
+	char level_name[50];
+	sprintf(level_name, "LevelScene/LevelScene_%d.json", level_i);
+
+	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile(level_name));
+	ImageView* new_background = dynamic_cast<ImageView*>(m_pLayout->getChildByName("Background"));
+
+	auto curr_background = dynamic_cast<Layout *> (this->getChildByTag(0))->getChildByName("Background");
+	dynamic_cast<Layout *> (this->getChildByTag(0))->removeChild(curr_background);
+	dynamic_cast<Layout *> (this->getChildByTag(0))->addChild(new_background->clone());
+
+	auto new_foreground = dynamic_cast<ImageView*>(m_pLayout->getChildByName("CentralImage"));
+
+	auto curr_foreground = dynamic_cast<Layout *> (this->getChildByTag(0))->getChildByName("CentralImage");
+	dynamic_cast<Layout *> (this->getChildByTag(0))->removeChild(curr_foreground);
+	dynamic_cast<Layout *> (this->getChildByTag(0))->addChild(new_foreground->clone());
+	 
+}
+void LevelScene::initUI(int level_i) {
+	char level_name[50];
+	sprintf(level_name, "LevelScene/LevelScene_%d.json", level_i);
+
+	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile(level_name));
+	m_pLayout->setTag(0);
+	this->addChild(m_pLayout);
+
+	Button* start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Play"));
+	start_game->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuStartGameCallback, this));
+	Button* move_left = dynamic_cast<Button*>(m_pLayout->getChildByName("MoveLeft"));
+	move_left->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelLeft, this));
+	Button* move_right = dynamic_cast<Button*>(m_pLayout->getChildByName("MoveRight"));
+	move_right->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelRight, this));
+	Button* to_main_menu = dynamic_cast<Button*>(m_pLayout->getChildByName("Menu"));
+	to_main_menu->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuReturnToMainCallback, this));
+
+	//set up audio stuff
+	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
+	audio_switcher->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuSwitchAudioCallback, this));
+
+	if (!AudioEngineWrapper::getInstance()->isSoundEnabled()) {
+		audio_switcher->setBright(false);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+	}
+
+	best_level_score = dynamic_cast<Text*>(m_pLayout->getChildByName("Score"));
 }
 
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -88,37 +116,9 @@ bool LevelScene::init() {
 	loadLevelInfo();
 	SessionController::init();
 
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	auto origin = Director::getInstance()->getVisibleOrigin();
-
-	float scale_fact = Director::getInstance()->getContentScaleFactor();
-
-	this->addChild(level_info[SessionController::curr_level].background);
 	this->addChild(level_info[SessionController::curr_level].label);
 
-	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("LevelScene/LevelScene.json"));
-	m_pLayout->setTag(0);
-	this->addChild(m_pLayout);
-
-	Button* start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Play"));
-	start_game->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuStartGameCallback, this));
-	Button* move_left = dynamic_cast<Button*>(m_pLayout->getChildByName("MoveLeft"));
-	move_left->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelLeft, this));
-	Button* move_right = dynamic_cast<Button*>(m_pLayout->getChildByName("MoveRight"));
-	move_right->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelRight, this));
-	Button* to_main_menu = dynamic_cast<Button*>(m_pLayout->getChildByName("Menu"));
-	to_main_menu->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuReturnToMainCallback, this));
-	
-	//set up audio stuff
-	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
-	audio_switcher->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuSwitchAudioCallback, this));
-	
-	if (!AudioEngineWrapper::getInstance()->isSoundEnabled()) {
-		audio_switcher->setBright(false);
-		AudioEngineWrapper::getInstance()->turnVolumeOff(true);
-	}
-
-	best_level_score = dynamic_cast<Text*>(m_pLayout->getChildByName("Score"));
+	initUI();
 	
 	updateScoreLabel();
 
@@ -185,8 +185,7 @@ void LevelScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType ty
 void LevelScene::menuChangeLevelLeft(Ref* sender, Widget::TouchEventType type) {
 
 	if (type == Widget::TouchEventType::ENDED) {
-
-		this->removeChild(level_info[SessionController::curr_level].background);
+	
 		this->removeChild(level_info[SessionController::curr_level].label);
 
 		SessionController::curr_level--;
@@ -195,7 +194,8 @@ void LevelScene::menuChangeLevelLeft(Ref* sender, Widget::TouchEventType type) {
 			SessionController::curr_level = LEVEL_COUNT;
 		}
 
-		this->addChild(level_info[SessionController::curr_level].background);
+		changeLevelUI(SessionController::curr_level);
+		
 		this->addChild(level_info[SessionController::curr_level].label);
 
 		updateScoreLabel();
@@ -204,16 +204,17 @@ void LevelScene::menuChangeLevelLeft(Ref* sender, Widget::TouchEventType type) {
 
 void LevelScene::menuChangeLevelRight(Ref* sender, Widget::TouchEventType type) {
 	if (type == Widget::TouchEventType::ENDED) {
-		this->removeChild(level_info[SessionController::curr_level].background);
+		
 		this->removeChild(level_info[SessionController::curr_level].label);
-
+		
 		SessionController::curr_level++;
 
 		if (SessionController::curr_level > LEVEL_COUNT) {
 			SessionController::curr_level = 1;
 		}
 
-		this->addChild(level_info[SessionController::curr_level].background);
+		changeLevelUI(SessionController::curr_level);
+
 		this->addChild(level_info[SessionController::curr_level].label);
 
 		updateScoreLabel();

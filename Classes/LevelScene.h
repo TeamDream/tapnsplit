@@ -10,19 +10,14 @@ using namespace ui;
 
 struct LevelInfo {
 	Sprite * background;
-	//2D0: replace it by sprite label later
+	Sprite * foreground;
 	LabelTTF *label;
 
 	LevelInfo() {
 		background = NULL;
-		//2D0: replace it by sprite label later
 		label = NULL;
 	}
 
-	~LevelInfo() {
-		//if (background) background->release();
-		//if (label) label->release();
-	};
 };
 
 
@@ -42,7 +37,8 @@ public:
 	void menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type);
 
 	void loadLevelInfo();
-
+	void initUI(int level_i = 1);
+	void changeLevelUI(int level_i = 1);
 	std::map<int, LevelInfo> level_info;
 	
 	Text* best_level_score;
