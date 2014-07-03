@@ -4,7 +4,7 @@
 #include "SessionController.h"
 #include "AppMacros.h"
 #include "cocostudio/WidgetReader/WidgetReader.h"
-
+#include "AudioEngineWrapper.h"
 
 using namespace ui;
 
@@ -97,6 +97,7 @@ bool LevelScene::init() {
 	this->addChild(level_info[SessionController::curr_level].label);
 
 	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("LevelScene/LevelScene.json"));
+	m_pLayout->setTag(0);
 	this->addChild(m_pLayout);
 
 	Button* start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Play"));
@@ -107,10 +108,16 @@ bool LevelScene::init() {
 	move_right->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelRight, this));
 	Button* to_main_menu = dynamic_cast<Button*>(m_pLayout->getChildByName("Menu"));
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuReturnToMainCallback, this));
+	
+	//set up audio stuff
+	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
+	audio_switcher->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuSwitchAudioCallback, this));
+	
+	if (!AudioEngineWrapper::getInstance()->isSoundEnabled()) {
+		audio_switcher->setBright(false);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+	}
 
-	//to_main_menu->setPositionPercent(Vec2());
-
-	//to_main_menu->setPositionY(to_main_menu->getPositionY() /scale_fact);
 	best_level_score = dynamic_cast<Text*>(m_pLayout->getChildByName("Score"));
 	
 	updateScoreLabel();
@@ -138,8 +145,7 @@ void LevelScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type)
 	if (type == Widget::TouchEventType::ENDED)
 	{
 
-		CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
-			"press.wav");
+		AudioEngineWrapper::getInstance()->playPressEffect();
 
 		if (!SessionController::isLevelUnlocked(SessionController::curr_level)) {
 			return;
@@ -154,7 +160,7 @@ void LevelScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type)
 			SessionController::setSpeed(0.9f);
 			break;
 		case 2:
-			SessionController::setSpeed(1.0f);
+			SessionController::setSpeed(1.5f);
 			break;
 		default:
 			SessionController::setSpeed(2.0f);
@@ -167,6 +173,8 @@ void LevelScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type)
 void LevelScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type)
 {
 	if (type == Widget::TouchEventType::ENDED) {
+		AudioEngineWrapper::getInstance()->playPressEffect();
+
 		Director::getInstance()->popScene();
 
 		auto main_menu = MenuScene::scene();
@@ -216,4 +224,25 @@ void LevelScene::updateScoreLabel() {
 	char s[30];
 	sprintf(s, "SCORE: %d", SessionController::getHighScore());
 	best_level_score->setString(std::string(s));
+}
+
+void LevelScene::menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type) {
+
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
+	Layout *m_pLayout = dynamic_cast<Layout *> (this->getChildByTag(0));
+
+	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
+
+	if (audio_switcher->isBright()) {
+		audio_switcher->setBright(false);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+	}
+	else {
+		audio_switcher->setBright(true);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(false);
+	}
+
 }

@@ -3,7 +3,7 @@
 #include "LevelScene.h"
 #include "AppMacros.h"
 #include "cocostudio/WidgetReader/WidgetReader.h"
-
+#include "AudioEngineWrapper.h"
 
 using namespace ui;
 
@@ -15,8 +15,7 @@ bool MenuScene::init() {
 		return false;
 	}
 
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-		"background_m.mp3", true);
+	AudioEngineWrapper::getInstance()->playStartSong();
 
 	setUpUI();
 
@@ -26,6 +25,7 @@ bool MenuScene::init() {
 void MenuScene::setUpUI() {
 	
 	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("StartScene/StartScene.json"));
+	m_pLayout->setTag(0);
 	this->addChild(m_pLayout);
 
 	float scale_fact = Director::getInstance()->getContentScaleFactor();
@@ -35,7 +35,13 @@ void MenuScene::setUpUI() {
 	
 	auto exit_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Exit"));
 	exit_game->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuCloseCallback, this));
- 
+
+	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
+	audio_switcher->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuSwitchAudioCallback, this));
+	if (!AudioEngineWrapper::getInstance()->isSoundEnabled()) {
+		audio_switcher->setBright(false);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+	}
 }
 
 // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -56,9 +62,9 @@ void MenuScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type) 
 	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
 		return;
 	}
-
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
-		"press.wav");
+	
+	AudioEngineWrapper::getInstance()->playPressEffect();
+	
 	Scene *s = LevelScene::scene();
 	Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
 	
@@ -81,4 +87,25 @@ void MenuScene::menuCloseCallback(Ref* sender, Widget::TouchEventType type)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
 #endif
+}
+
+void MenuScene::menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type) {
+	
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
+	Layout *m_pLayout = dynamic_cast<Layout *> (this->getChildByTag(0));
+
+	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
+
+	if (audio_switcher->isBright()) {
+		audio_switcher->setBright(false);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+	}
+	else {
+		audio_switcher->setBright(true);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(false);
+	}
+
 }

@@ -4,48 +4,16 @@
 #include "AppMacros.h"
 #include "LevelScene.h"
 #include "MenuScene.h"
-
+#include "AudioEngineWrapper.h"
 #include "cocostudio/WidgetReader/WidgetReader.h"
 
 using namespace ui;
 
-char* RetryScene::getTrack() {
-	int sounds_n = 6;
-	int random = rand() % sounds_n;
-	char* music;
-
-	switch (random) {
-	case 0:
-		music = "tiger.mp3";
-		break;
-	case 1:
-		music = "1.mp3";
-		break;
-	case 2:
-		music = "background_m.mp3";
-		break;
-	case 3:
-		music = "stronger.mp3";
-		break;
-	case 4:
-		music = "lucky.mp3";
-		break;
-	case 5:
-		music = "throne.mp3";
-		break;
-	}
-
-	return music;
-}
-
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool RetryScene::init() {
 
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
-		"gameover.mp3");
-	char * music = getTrack();
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-		music, true);
+	AudioEngineWrapper::getInstance()->playGameOver();
+	AudioEngineWrapper::getInstance()->playRandomTrack();
 
 	if (!Layer::init()) //RGBA
 	{
@@ -57,8 +25,6 @@ bool RetryScene::init() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 	
-
-
 	return true;
 }
 
@@ -77,6 +43,7 @@ cocos2d::Scene* RetryScene::scene() {
 void RetryScene::setUpUI() {
 
 	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("RetryScene/RetryScene.json"));
+	m_pLayout->setTag(0);
 	this->addChild(m_pLayout);
 
 	auto start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Retry"));
@@ -100,6 +67,14 @@ void RetryScene::setUpUI() {
 	std::stringstream ss2;
 	ss2 << "Current Score: " << SessionController::getScore();
 	current_score->setText(ss2.str());
+
+	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
+	audio_switcher->addTouchEventListener(CC_CALLBACK_2(RetryScene::menuSwitchAudioCallback, this));
+	
+	if (!AudioEngineWrapper::getInstance()->isSoundEnabled()) {
+		audio_switcher->setBright(false);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+	}
 }
 
 // a selector callback
@@ -110,10 +85,10 @@ void RetryScene::menuRetryCallback(Ref* sender, Widget::TouchEventType type) {
 	}
 
 	Director::getInstance()->popScene();
-
+	
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
-		"press.wav");
+	AudioEngineWrapper::getInstance()->playPressEffect();
+
 	SessionController::init();
 }
  
@@ -159,4 +134,25 @@ void RetryScene::menuCloseCallback(Ref* sender, Widget::TouchEventType type)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
 #endif
+}
+
+void RetryScene::menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type) {
+
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
+	Layout *m_pLayout = dynamic_cast<Layout *> (this->getChildByTag(0));
+
+	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
+
+	if (audio_switcher->isBright()) {
+		audio_switcher->setBright(false);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+	}
+	else {
+		audio_switcher->setBright(true);
+		AudioEngineWrapper::getInstance()->turnVolumeOff(false);
+	}
+
 }

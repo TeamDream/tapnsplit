@@ -24,18 +24,7 @@
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath />
   <imageFileList />
-  <imagePngList>
-    <string>tapIt_mainScreen_background.png</string>
-    <string>StartUnpressed.png</string>
-    <string>StartPressed.png</string>
-    <string>ExitUnpressed.png</string>
-    <string>ExitPressed.png</string>
-    <string>infoUnpressed.png</string>
-    <string>infoPressed.png</string>
-    <string>AudioEnabled.png</string>
-    <string>AudioPressed.png</string>
-    <string>AudioDisabled.png</string>
-  </imagePngList>
+  <imagePngList />
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>GameplayScene.json</CurrentUIJson>
+  <CurrentUIJson />
 </UIProject>

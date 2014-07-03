@@ -20,6 +20,7 @@ public:
 	void menuOtherLevelCallback(Ref* sender, ui::Widget::TouchEventType type);
 	void menuCloseCallback(Ref* sender, ui::Widget::TouchEventType type);
 	void menuReturnToMainCallback(Ref* sender, ui::Widget::TouchEventType type);
+	void menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type);
 
 	LabelTTF *max_score_label;
 	// implement the "static node()" method manually

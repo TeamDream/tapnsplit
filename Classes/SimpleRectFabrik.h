@@ -15,6 +15,13 @@ enum FabrikMode {
 	CHESS
 };
 
+enum RectTyped {
+	SIMPLE = 0,
+	LIFE,
+	DEATH,
+	ARMORED
+};
+
 
 class SimpleRectFarik {
 
@@ -45,10 +52,10 @@ public:
 
 		rects.resize(4);
 
-		rects.at(0) = new SimpleRect();
-		rects.at(1) = new LifeRect();
-		rects.at(2) = new DeathRect();
-		rects.at(3) = new ArmoredRect();
+		rects.at(SIMPLE) = new SimpleRect();
+		rects.at(LIFE) = new LifeRect();
+		rects.at(DEATH) = new DeathRect();
+		rects.at(ARMORED) = new ArmoredRect();
 	}
 
 
@@ -84,21 +91,21 @@ private:
 	}
 
 	TouchableRect* createRandomRectType() {
-		int rand_i = rand() % 10;
+		int rand_i = rand() % 100;
 
 		//first, simple hardcode it:
 	
-		if (rand_i < 5) {
-			return rects.at(0)->clone();
+		if (rand_i < 70) {
+			return rects.at(SIMPLE)->clone();
 		}
-		else if (rand_i < 6) {
+		else if (rand_i < 90) {
 			rects.at(3)->clone();
 		}
-		else if (rand_i < 7) {
-			return rects.at(1)->clone();
+		else if (rand_i < 95) {
+			return rects.at(DEATH)->clone();
 		}
 		else  {
-			return rects.at(2)->clone();
+			return rects.at(LIFE)->clone();
 		}
 
 	}

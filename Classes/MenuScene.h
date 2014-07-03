@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
+
 #include "CocosGUI.h"
 
 using namespace cocos2d;
@@ -17,7 +17,12 @@ public:
 	// a selector callback
 	void menuStartGameCallback(Ref* sender,  ui::Widget::TouchEventType type);
 	void menuCloseCallback(Ref* sender, ui::Widget::TouchEventType type);
+	void menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type);
+
 	void setUpUI();
+	//Button* audio_switcher;
 	// implement the "static node()" method manually
 	CREATE_FUNC(MenuScene);
+
+	
 };

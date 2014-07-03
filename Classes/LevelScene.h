@@ -1,7 +1,6 @@
 #pragma once
 
 #include "cocos2d.h"
-#include "SimpleAudioEngine.h"
 #include "CocosGUI.h"
 
 using namespace cocos2d;
@@ -40,6 +39,7 @@ public:
 	void menuChangeLevelRight(Ref* sender, Widget::TouchEventType type);
 	void menuStartGameCallback(Ref* sender, Widget::TouchEventType type);
 	void menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type);
+	void menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type);
 
 	void loadLevelInfo();
 

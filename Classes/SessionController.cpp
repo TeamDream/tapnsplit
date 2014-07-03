@@ -16,6 +16,11 @@ void SessionController::addScore() {
 
 void SessionController::addLife() {
 	++current_lifes;
+
+	if (current_lifes > 3) {
+		current_lifes = 3;
+	}
+
 }
 
 void SessionController::damage() {
@@ -28,7 +33,7 @@ void SessionController::damage() {
 }
 
 void SessionController::damageScore() {
-	current_score -= 20;
+	current_score -= 10;
 	if (current_score < 0) {
 		current_score = 0;
 	}
