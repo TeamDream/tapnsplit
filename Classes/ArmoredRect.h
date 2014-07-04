@@ -1,30 +1,44 @@
 #pragma once
 
 #include "TouchableRect.h"
-
-#define ARMORED_RECT_SPRITE_FILE "RectAnimation/ArmoredRectAnimation1.png"
-
 class ArmoredRect : public TouchableRect {
-public:
-	ArmoredRect(const char *file1 = ARMORED_RECT_SPRITE_FILE) : TouchableRect(file1), tapped_count(0) {};
+public :
+	ArmoredRect() {
+		tapped_count = 0;
+		setUpSprite();
+	}
 
 private:
+
+	virtual void setUpSprite() {
+		level_i = SessionController::curr_level;
+
+		if (level_i == 4) {
+			level_i = rand() % 3 + 1;
+		}
+
+		char level_s[50];
+		sprintf(level_s, "GAMEPLAY/level%d/gameplay%d_armorBlock_sprite%d.png", level_i, level_i, 1);
+		curr_sprite = Sprite::create(level_s);
+	}
+
 	virtual void animate() {//2DO set right sprites and animation
 
 		++tapped_count;
 
 		Animation * anim = Animation::create();
 
+		char level_s[50];
+		sprintf(level_s, "GAMEPLAY/level%d/gameplay%d_armorBlock_sprite%d.png", level_i, level_i, 2);
 		if (tapped_count == 1) { //2 touches
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation1.png");
+			anim->addSpriteFrameWithFile(level_s);
 		}
 		else {
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation1.png");
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation2.png");
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation3.png");
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation4.png");
-			anim->addSpriteFrameWithFile("RectAnimation/RectAnimation5.png");//little hack
-
+			for (int i = 2; i < 6; i++) {
+				sprintf(level_s, "GAMEPLAY/level%d/gameplay%d_armorBlock_sprite%d.png", level_i, level_i, i);
+				anim->addSpriteFrameWithFile(level_s);
+			}
+			anim->addSpriteFrameWithFile("GAMEPLAY/empty_sprite.png");
 			tapped = true;
 		}
 

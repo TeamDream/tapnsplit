@@ -1,19 +1,35 @@
 #include "TouchableRect.h"
 
-#define DEATH_RECT_SPRITE_FILE "RectAnimation/DeathRectAnimation1.png"
-
 class DeathRect : public TouchableRect {
 public:
-	DeathRect(const char *file1 = DEATH_RECT_SPRITE_FILE) : TouchableRect(file1) {};
+	DeathRect() {
+		setUpSprite();
+	}
+
 private:
+	virtual void setUpSprite() {
+		level_i = SessionController::curr_level;
+
+		if (level_i == 4) {
+			level_i = rand() % 3 + 1;
+		}
+
+		char level_s[50];  
+		sprintf(level_s, "GAMEPLAY/level%d/gameplay%d_deathBlock_sprite%d.png", level_i, level_i, 1);
+		curr_sprite = Sprite::create(level_s);
+	}
+
 	virtual void animate() {
 		Animation * anim = Animation::create();
-		anim->addSpriteFrameWithFile("RectAnimation/DeathRectAnimation1.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation2.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation3.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation4.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation5.png");//little hack
 
+
+		char level_s[50];
+
+		for (int i = 1; i < 5; i++) {
+			sprintf(level_s, "GAMEPLAY/level%d/gameplay%d_deathBlock_sprite%d.png", level_i, level_i, i);
+			anim->addSpriteFrameWithFile(level_s);
+		}
+		anim->addSpriteFrameWithFile("GAMEPLAY/empty_sprite.png");
 		anim->setDelayPerUnit(0.03);
 
 		Animate *anim_action = Animate::create(anim);

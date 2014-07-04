@@ -11,8 +11,8 @@
   "designWidth": 1024,
   "textures": [],
   "texturesPng": [
-    "lvl2_background.png",
-    "lvl2_icon.png",
+    "lvl3_background.png",
+    "lvl3_icon.png",
     "lvl_playIcon_unpressed.png",
     "lvl_playIcon_pressed.png",
     "lvl_playIcon_locked.png",

@@ -6,17 +6,25 @@
 
 class LifeRect : public TouchableRect {
 public:
-	LifeRect(const char *file1 = LIFE_RECT_SPRITE_FILE) : TouchableRect(file1) {};
-	
+	LifeRect() {
+		setUpSprite();
+	}
+
 private:
+	virtual void setUpSprite() {
+		curr_sprite = Sprite::create("GAMEPLAY/gameplay_lifeBlock_sprite1.png");
+	}
+
 	virtual void animate() {//2DO set right sprites and animation
 		Animation * anim = Animation::create();
-		anim->addSpriteFrameWithFile("RectAnimation/LifeRectAnimation1.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation2.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation3.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation4.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation5.png");//little hack
 
+		char level_s[50];
+
+		for (int i = 1; i < 5; i++) {
+			sprintf(level_s, "GAMEPLAY/gameplay_lifeBlock_sprite%d.png", i);
+			anim->addSpriteFrameWithFile(level_s);
+		}
+		anim->addSpriteFrameWithFile("GAMEPLAY/empty_sprite.png");
 		anim->setDelayPerUnit(0.03);
 
 		Animate *anim_action = Animate::create(anim);

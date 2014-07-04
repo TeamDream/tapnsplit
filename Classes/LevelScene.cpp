@@ -119,7 +119,8 @@ bool LevelScene::init() {
 	this->addChild(level_info[SessionController::curr_level].label);
 
 	initUI();
-	
+	changeLevelUI(SessionController::curr_level);
+
 	updateScoreLabel();
 
 	return true;

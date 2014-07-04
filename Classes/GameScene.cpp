@@ -77,12 +77,18 @@ void GameScene::setUpUI() {
 
 void GameScene::setUpBackground() {
 
+	this->removeChildByTag(666);
+
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 
-	auto background = Sprite::create("GameplayScene/tapIt_gameplayScreen_1_background.png");
+	char level_s[50];
+	sprintf(level_s, "GAMEPLAY/level%d/gameplay%d_background.png", SessionController::curr_level, SessionController::curr_level);
+
+	auto background = Sprite::create(level_s);
 	background->setPosition(Vec2(origin + visibleSize / 2));
 	background->setZOrder(BackgroundOrder);
+	background->setTag(666);
 	this->addChild(background);
 }
 
@@ -96,6 +102,8 @@ void GameScene::onGameStart(CCObject* obj)
 		CCSprite *sprite = (CCSprite *)rects.getRectSprite(i);
 		this->removeChild(sprite, true);
 	}
+
+	setUpBackground();
 
 	rects.clearAll();
 	current_speed = SessionController::getSpeed();
@@ -158,7 +166,7 @@ void GameScene::createRandomRect(float  dt) {
 	new_rect->getSprite()->setZOrder(GameElementsOrder);
 	// Create the action
 	FiniteTimeAction* actionMove =
-		MoveTo::create(current_speed, Vec2(new_rect->getSprite()->getPositionX(), -rectFabrik.hide_h / 2));
+		MoveTo::create(current_speed, Vec2(new_rect->getSprite()->getPositionX(), -rectFabrik.hide_h));
 	//Wrap it to speed action
 	auto speed_act = Speed::create(dynamic_cast<ActionInterval *>(actionMove), 1.0f);
 	speed_act->setTag(0);
@@ -190,12 +198,12 @@ void GameScene::updateTimer(float dt) {
 
 		if (time_sec % 5 == 0 && current_speed > 0.9f) {
 
-			current_speed /= 1.5f;
+			current_speed /= 1.3f;
 
 			for (int i = 0; i < rects.getRectCount(); i++) {
 				auto p = rects.getRectSprite(i);
 				auto act = dynamic_cast<Speed *>(p->getActionByTag(0));
-				act->setSpeed(1.5);
+				act->setSpeed(1.3);
 			}
 
 			auto visibleSize = Director::getInstance()->getVisibleSize();

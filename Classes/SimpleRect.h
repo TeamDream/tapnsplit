@@ -1,19 +1,37 @@
 #pragma once
 
 #include "TouchableRect.h"
-#define NORMAL_RECT_SPRITE_FILE "RectAnimation/RectAnimation1.png"
+
 class SimpleRect : public TouchableRect {
 public:
-	SimpleRect(const char *file1 = NORMAL_RECT_SPRITE_FILE) : TouchableRect(file1) {};
+	SimpleRect() {
+		setUpSprite();
+	}
+
 private:
+	virtual void setUpSprite() {
+	
+		level_i = SessionController::curr_level;
+
+		if (level_i == 4) {
+			level_i = rand() % 3 + 1;
+		}
+
+		char level_s[50];
+		sprintf(level_s, "GAMEPLAY/level%d/gameplay%d_normalBlock_sprite%d.png", level_i, level_i, 1);
+		curr_sprite = Sprite::create(level_s);
+	}
+
 	virtual void animate() {
 		Animation * anim = Animation::create();
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation1.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation2.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation3.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation4.png");
-		anim->addSpriteFrameWithFile("RectAnimation/RectAnimation5.png");//little hack
 
+		char level_s[50];
+
+		for (int i = 1; i < 5; i++) {
+			sprintf(level_s, "GAMEPLAY/level%d/gameplay%d_normalBlock_sprite%d.png", level_i, level_i, i);
+			anim->addSpriteFrameWithFile(level_s);
+		}
+		anim->addSpriteFrameWithFile("GAMEPLAY/empty_sprite.png");
 		anim->setDelayPerUnit(0.03);
 
 		Animate *anim_action = Animate::create(anim);
@@ -33,5 +51,6 @@ private:
 	virtual TouchableRect* clone() {
 		return new SimpleRect();
 	}
+
 
 };

@@ -8,8 +8,7 @@ using namespace cocos2d;
 
 class TouchableRect {
 public:
-	TouchableRect(const char *file1) {
-		curr_sprite = Sprite::create(file1);
+	TouchableRect() {
 		tapped = false;
 	}
 
@@ -33,12 +32,12 @@ public:
 	virtual void animate() = 0; //call animation, set it as tapped
 	virtual void doAction() = 0; //concrete rect action
 	virtual void dieAction() = 0; //action for missed rect -  rect gets to the border screen alive
+	virtual void setUpSprite() = 0; //load special sprite for each subclass
 	virtual TouchableRect* clone() = 0;
 
 protected:
-	TouchableRect();
 
 	Sprite * curr_sprite;
- 
+	int level_i;
 	bool tapped;
 };

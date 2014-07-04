@@ -32,7 +32,7 @@ public:
 		rect_n = 4;
 
 		auto visibleSize = Director::getInstance()->getVisibleSize();
-		TouchableRect* new_rect = new LifeRect(NORMAL_RECT_SPRITE_FILE);
+		TouchableRect* new_rect = new SimpleRect();
 		
 		sprite_w = new_rect->getSprite()->boundingBox().size.width;
 		scale_w = visibleSize.width / sprite_w / rect_n;
