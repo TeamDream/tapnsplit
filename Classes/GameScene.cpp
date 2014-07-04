@@ -196,14 +196,14 @@ void GameScene::updateTimer(float dt) {
 
 	if (SessionController::getSpeedChallenge()) {
 
-		if (time_sec % 5 == 0 && current_speed > 0.9f) {
+		if (time_sec % 5 == 0 && current_speed > 1.1f) {
 
-			current_speed /= 1.3f;
+			current_speed /= 1.2f;
 
 			for (int i = 0; i < rects.getRectCount(); i++) {
 				auto p = rects.getRectSprite(i);
 				auto act = dynamic_cast<Speed *>(p->getActionByTag(0));
-				act->setSpeed(1.3);
+				act->setSpeed(1.2);
 			}
 
 			auto visibleSize = Director::getInstance()->getVisibleSize();

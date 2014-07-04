@@ -158,7 +158,7 @@ void LevelScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type)
 			SessionController::setSpeed(2.0f, true);
 			break;
 		case 3:
-			SessionController::setSpeed(0.9f);
+			SessionController::setSpeed(1.3f);
 			break;
 		case 2:
 			SessionController::setSpeed(1.5f);
