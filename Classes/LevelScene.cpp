@@ -71,9 +71,20 @@ void LevelScene::changeLevelUI(int level_i ) {
 
 	auto new_foreground = dynamic_cast<ImageView*>(m_pLayout->getChildByName("CentralImage"));
 
-	auto curr_foreground = dynamic_cast<Layout *> (this->getChildByTag(0))->getChildByName("CentralImage");
-	dynamic_cast<Layout *> (this->getChildByTag(0))->removeChild(curr_foreground);
-	dynamic_cast<Layout *> (this->getChildByTag(0))->addChild(new_foreground->clone());
+	Layout *curr_Layout = dynamic_cast<Layout *> (this->getChildByTag(0));
+	auto curr_foreground = curr_Layout->getChildByName("CentralImage");
+	
+	curr_Layout->removeChild(curr_foreground);
+	curr_Layout->addChild(new_foreground->clone());
+	
+	auto play_btn = dynamic_cast<Button*>(curr_Layout->getChildByName("Play"));
+
+	if (!SessionController::isLevelUnlocked(level_i)) {
+		play_btn->setBright(false);
+	}
+	else {
+		play_btn->setBright(true);
+	}
 	 
 }
 void LevelScene::initUI(int level_i) {
