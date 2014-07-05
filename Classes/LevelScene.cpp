@@ -10,7 +10,6 @@ using namespace ui;
 
 void LevelScene::loadLevelInfo() {
 
-
 	LevelInfo curr;
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -52,7 +51,7 @@ void LevelScene::loadLevelInfo() {
 	curr.label->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setZOrder(UIElementsOrder);
-	curr.label->setString("Level 4");
+	curr.label->setString("SURVIVAL MODE");
 	curr.label->retain();
 
 	level_info[4] = curr;
@@ -130,7 +129,7 @@ bool LevelScene::init() {
 
 	this->addChild(level_info[SessionController::curr_level].label);
 
-	initUI();
+	initUI(SessionController::curr_level);
 	changeLevelUI(SessionController::curr_level);
 
 	updateScoreLabel();
@@ -198,8 +197,6 @@ void LevelScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType ty
 void LevelScene::menuChangeLevelLeft(Ref* sender, Widget::TouchEventType type) {
 
 	if (type == Widget::TouchEventType::ENDED) {
-	
-		this->removeChild(level_info[SessionController::curr_level].label);
 
 		SessionController::curr_level--;
 
@@ -207,18 +204,13 @@ void LevelScene::menuChangeLevelLeft(Ref* sender, Widget::TouchEventType type) {
 			SessionController::curr_level = LEVEL_COUNT;
 		}
 
-		changeLevelUI(SessionController::curr_level);
-		
-		this->addChild(level_info[SessionController::curr_level].label);
-
-		updateScoreLabel();
+		auto *left_scene = LevelScene::scene();
+		Director::getInstance()->replaceScene(CCTransitionFadeTR::create(0.4, left_scene));
 	}
 }
 
 void LevelScene::menuChangeLevelRight(Ref* sender, Widget::TouchEventType type) {
 	if (type == Widget::TouchEventType::ENDED) {
-		
-		this->removeChild(level_info[SessionController::curr_level].label);
 		
 		SessionController::curr_level++;
 
@@ -226,11 +218,10 @@ void LevelScene::menuChangeLevelRight(Ref* sender, Widget::TouchEventType type) 
 			SessionController::curr_level = 1;
 		}
 
-		changeLevelUI(SessionController::curr_level);
+		auto *right_scene = LevelScene::scene();
 
-		this->addChild(level_info[SessionController::curr_level].label);
+		Director::getInstance()->replaceScene(CCTransitionFadeBL::create(0.4, right_scene));
 
-		updateScoreLabel();
 	}
 }
 
