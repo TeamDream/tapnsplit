@@ -4,6 +4,9 @@
 
 #define GAME_START "Game Start"
 #define GAME_END "Game End"
+#define GAME_PAUSE "Game Pause"
+#define GAME_RESUME "Game Resume"
+
 
 #define HIGHEST_SCORE "score_key"
 
@@ -22,7 +25,7 @@ public:
 	static bool isDead();
 	static std::string getScoreStatus();
 	static std::string getLifeStatus();
-
+	
 	static int getScore();
 	
 	//level progress info

@@ -48,4 +48,8 @@
     <Project>LevelScene_4</Project>
     <GuidesList />
   </GuidesProject>
+  <GuidesProject>
+    <Project>CompleteWindow</Project>
+    <GuidesList />
+  </GuidesProject>
 </ArrayOfGuidesProject>

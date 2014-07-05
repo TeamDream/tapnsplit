@@ -10,7 +10,10 @@
   "designHeight": 768,
   "designWidth": 1024,
   "textures": [],
-  "texturesPng": [],
+  "texturesPng": [
+    "CompletedPanel.png",
+    "GUI/button.png"
+  ],
   "version": "1.4.0.1",
   "widgetTree": {
     "classname": "Panel",

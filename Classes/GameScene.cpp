@@ -2,7 +2,7 @@
 #include "AppMacros.h"
 #include "SessionController.h"
 #include "cocostudio/WidgetReader/WidgetReader.h"
-
+#include "CompletedWindow.h"
 #include "MenuScene.h"
 
 using namespace ui;
@@ -39,6 +39,8 @@ bool GameScene::init()
 	CCLog("GameScene::init()");
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameStart), GAME_START, NULL);
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameEnd), GAME_END, NULL);
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGamePause), GAME_PAUSE, NULL);
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameResume), GAME_RESUME, NULL);
 
 	setUpBackground();
 	setUpUI();
@@ -69,10 +71,18 @@ void GameScene::setUpUI() {
 	this->addChild(score_logo);
 	
 	life_label = dynamic_cast<Text*>((m_pLayout->getChildByName("LifesLabel"))->clone());
+	life_label->setFontName("Myriad Pro");
 	this->addChild(life_label);
 	
 	score_label = dynamic_cast<Text*>((m_pLayout->getChildByName("ScoreLabel"))->clone());
+	score_label->setFontName("Myriad Pro");
 	this->addChild(score_label);
+
+	completed_gui = CompletedWindow::create();
+	completed_gui->setTag(1);
+	completed_gui->setZOrder(10);
+	completed_gui->setVisible(false);
+	this->addChild(completed_gui);
 }
 
 void GameScene::setUpBackground() {
@@ -128,6 +138,29 @@ void GameScene::onGameEnd(CCObject* obj)
 	SessionController::updateScores();
 }
 
+void GameScene::onGamePause(CCObject* obj) {
+	
+	this->pauseSchedulerAndActions();
+	this->setTouchEnabled(false);
+
+	for (int i = 0; i < rects.getRectCount(); i++) {
+		rects.getRectSprite(i)->pauseSchedulerAndActions();
+	}
+
+	completed_gui->setVisible(true);
+}
+
+void GameScene::onGameResume(CCObject* obj) {
+	this->resumeSchedulerAndActions();
+	this->setTouchEnabled(true);
+
+	for (int i = 0; i < rects.getRectCount(); i++) {
+		rects.getRectSprite(i)->resumeSchedulerAndActions();
+	}
+
+	 completed_gui->setVisible(false);
+}
+
 void GameScene::startSchedule()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -139,6 +172,7 @@ void GameScene::startSchedule()
 }
 
 void GameScene::checkRectPositions(float  dt) {
+
 	int lost_rect = rects.findBoundaryRect();
 
 	if (lost_rect >= 0) {
@@ -216,18 +250,10 @@ void GameScene::updateTimer(float dt) {
 }
 
 void GameScene::checkScoreProgress() {
-	if (SessionController::getScore() >= 100 * SessionController::curr_level) {
+	if (SessionController::getScore() >= 100) {
 		//finish screen
 		SessionController::setLevelUnlocked();
-
-		auto visibleSize = Director::getInstance()->getVisibleSize();
-		auto origin = Director::getInstance()->getVisibleOrigin();
-		// create and initialize a label "Score Label"
-		auto completed_label = LabelTTF::create("Completed!", "Arial", TITLE_FONT_SIZE);
-		completed_label->setPosition(Vec2(origin.x + 0.85* visibleSize.width,
-			origin.y + 0.1*visibleSize.height));
-		completed_label->setZOrder(UIElementsOrder);
-		this->addChild(completed_label);
+		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_PAUSE, NULL);
 	}
 }
 

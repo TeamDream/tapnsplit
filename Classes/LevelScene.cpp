@@ -17,7 +17,7 @@ void LevelScene::loadLevelInfo() {
 	auto origin = Director::getInstance()->getVisibleOrigin();
 
 	// create and initialize a label "Score Label"
-	curr.label = LabelTTF::create("Level Label", "Arial", TITLE_FONT_SIZE);
+	curr.label = LabelTTF::create("Level Label", "Impact", TITLE_FONT_SIZE);
 	curr.label->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setString("Level 1");
@@ -27,7 +27,7 @@ void LevelScene::loadLevelInfo() {
 	level_info[1] = curr;
 
 	// create and initialize a label "Score Label"
-	curr.label = LabelTTF::create("Level Label", "Arial", TITLE_FONT_SIZE);
+	curr.label = LabelTTF::create("Level Label", "Impact", TITLE_FONT_SIZE);
 	curr.label->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setString("Level 2");
@@ -38,7 +38,7 @@ void LevelScene::loadLevelInfo() {
 
 
 	// create and initialize a label "Score Label"
-	curr.label = LabelTTF::create("Level Label", "Arial", TITLE_FONT_SIZE);
+	curr.label = LabelTTF::create("Level Label", "Impact", TITLE_FONT_SIZE);
 	curr.label->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setZOrder(UIElementsOrder);
@@ -48,7 +48,7 @@ void LevelScene::loadLevelInfo() {
 	level_info[3] = curr;
 
 	// create and initialize a label "Score Label"
-	curr.label = LabelTTF::create("Level Label", "Arial", TITLE_FONT_SIZE);
+	curr.label = LabelTTF::create("Level Label", "Impact", TITLE_FONT_SIZE);
 	curr.label->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height - curr.label->getContentSize().height));
 	curr.label->setZOrder(UIElementsOrder);
@@ -114,6 +114,7 @@ void LevelScene::initUI(int level_i) {
 	}
 
 	best_level_score = dynamic_cast<Text*>(m_pLayout->getChildByName("Score"));
+	best_level_score->setFontName("Myriad Pro");
 }
 
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone

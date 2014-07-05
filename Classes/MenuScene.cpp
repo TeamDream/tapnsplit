@@ -15,7 +15,7 @@ bool MenuScene::init() {
 		return false;
 	}
 
-	AudioEngineWrapper::getInstance()->playStartSong();
+	//AudioEngineWrapper::getInstance()->playStartSong();
 
 	setUpUI();
 
@@ -66,8 +66,8 @@ void MenuScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type) 
 	AudioEngineWrapper::getInstance()->playPressEffect();
 	
 	Scene *s = LevelScene::scene();
-	Director::getInstance()->replaceScene(CCTransitionFade::create(0.5,s));
-	
+	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5,s));
+
 }
 
 void MenuScene::menuCloseCallback(Ref* sender, Widget::TouchEventType type)

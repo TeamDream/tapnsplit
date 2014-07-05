@@ -11,20 +11,8 @@
   "designWidth": 1024,
   "textures": [],
   "texturesPng": [
-    "lvl3_background.png",
-    "lvl3_icon.png",
-    "lvl_playIcon_unpressed.png",
-    "lvl_playIcon_pressed.png",
-    "lvl_playIcon_locked.png",
-    "MoveLeftUnpressed.png",
-    "MoveLeftPressed.png",
-    "MenuUnpressed.png",
-    "MenuPressed.png",
-    "infoUnpressed.png",
-    "infoPressed.png",
-    "AudioEnabled.png",
-    "AudioPressed.png",
-    "AudioDisabled.png"
+    "CompletedPanel.png",
+    "GUI/button.png"
   ],
   "version": "1.4.0.1",
   "widgetTree": {

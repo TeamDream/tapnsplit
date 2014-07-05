@@ -15,7 +15,7 @@ enum DrawOrder
 	UIElementsOrder
 };
 
-class GameScene : public cocos2d::Layer
+class GameScene : public Layer
 {
 public:
 	virtual bool init();
@@ -40,13 +40,16 @@ private:
 	//game notofications
 	void onGameStart(CCObject* obj);
 	void onGameEnd(CCObject* obj);
+	void onGamePause(CCObject* obj);
+	void onGameResume(CCObject* obj);
 
 	ui::Text* score_label;
 	ui::Text* life_label;
 
+	Layer* completed_gui;
+
 	void setUpBackground();
 	void setUpUI();
-
 
 	RectPool rects;
 	SimpleRectFarik rectFabrik;

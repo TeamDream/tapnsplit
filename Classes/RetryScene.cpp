@@ -62,11 +62,13 @@ void RetryScene::setUpUI() {
 	std::stringstream ss;
 	ss << "Highest Score: " << SessionController::getHighScore();
 	highest_score->setText(ss.str());
+	highest_score->setFontName("Myriad Pro");
 
 	auto current_score = dynamic_cast<Text*>(m_pLayout->getChildByName("ScoreLabel"));
 	std::stringstream ss2;
 	ss2 << "Current Score: " << SessionController::getScore();
 	current_score->setText(ss2.str());
+	current_score->setFontName("Myriad Pro");
 
 	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
 	audio_switcher->addTouchEventListener(CC_CALLBACK_2(RetryScene::menuSwitchAudioCallback, this));
@@ -137,6 +139,7 @@ void RetryScene::menuCloseCallback(Ref* sender, Widget::TouchEventType type)
 }
 
 void RetryScene::menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type) {
+
 
 	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
 		return;
