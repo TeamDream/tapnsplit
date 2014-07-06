@@ -71,11 +71,11 @@ void GameScene::setUpUI() {
 	this->addChild(score_logo);
 	
 	life_label = dynamic_cast<Text*>((m_pLayout->getChildByName("LifesLabel"))->clone());
-	life_label->setFontName("Myriad Pro");
+	life_label->setFontName("fonts/Myriad Pro.ttf");
 	this->addChild(life_label);
 	
 	score_label = dynamic_cast<Text*>((m_pLayout->getChildByName("ScoreLabel"))->clone());
-	score_label->setFontName("Myriad Pro");
+	score_label->setFontName("fonts/Myriad Pro.ttf");
 	this->addChild(score_label);
 
 	completed_gui = CompletedWindow::create();

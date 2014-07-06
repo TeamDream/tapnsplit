@@ -10,51 +10,34 @@ using namespace ui;
 
 void LevelScene::loadLevelInfo() {
 
-	LevelInfo curr;
-
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
 
 	// create and initialize a label "Score Label"
-	curr.label = LabelTTF::create("Level Label", "Impact", TITLE_FONT_SIZE);
-	curr.label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height - curr.label->getContentSize().height));
-	curr.label->setString("Level 1");
-	curr.label->setZOrder(UIElementsOrder);
-	curr.label->retain();
+	level_name = LabelTTF::create("Level Label", "fonts/Impact.ttf", LARGE_TITLE_FONT_SIZE);
+	level_name->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height - level_name->getContentSize().height/1.5));
+	
+	if (SessionController::curr_level == 4) {
+		level_name->setString("SURVIVAL        ");
+		level_name->setPositionX(origin.x + visibleSize.width / 2.25);//little alignment fix
+		auto level_number = LabelTTF::create("MODE", "fonts/Impact.ttf", LARGE_TITLE_FONT_SIZE);
+		level_number->setColor(Color3B(230, 160, 25));
+		level_number->setPosition(level_name->getContentSize().width, level_name->getContentSize().height / 2);
+		level_name->addChild(level_number);
+	}
+	else {
+		char s[30];
+		sprintf(s, "  %d", SessionController::curr_level);
+		level_name->setString("LEVEL ");
+		auto level_number = LabelTTF::create(s, "fonts/Impact.ttf", LARGE_TITLE_FONT_SIZE);
+		level_number->setColor(Color3B(230,160,25));
+		level_number->setPosition(level_name->getContentSize().width, level_name->getContentSize().height / 2);
+		level_name->addChild(level_number);
+	}
+	
+	level_name->setZOrder(UIElementsOrder);
 
-	level_info[1] = curr;
-
-	// create and initialize a label "Score Label"
-	curr.label = LabelTTF::create("Level Label", "Impact", TITLE_FONT_SIZE);
-	curr.label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height - curr.label->getContentSize().height));
-	curr.label->setString("Level 2");
-	curr.label->setZOrder(UIElementsOrder);
-	curr.label->retain();
-
-	level_info[2] = curr;
-
-
-	// create and initialize a label "Score Label"
-	curr.label = LabelTTF::create("Level Label", "Impact", TITLE_FONT_SIZE);
-	curr.label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height - curr.label->getContentSize().height));
-	curr.label->setZOrder(UIElementsOrder);
-	curr.label->setString("Level 3");
-	curr.label->retain();
-
-	level_info[3] = curr;
-
-	// create and initialize a label "Score Label"
-	curr.label = LabelTTF::create("Level Label", "Impact", TITLE_FONT_SIZE);
-	curr.label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height - curr.label->getContentSize().height));
-	curr.label->setZOrder(UIElementsOrder);
-	curr.label->setString("SURVIVAL MODE");
-	curr.label->retain();
-
-	level_info[4] = curr;
 }
 
 void LevelScene::changeLevelUI(int level_i ) {
@@ -113,7 +96,15 @@ void LevelScene::initUI(int level_i) {
 	}
 
 	best_level_score = dynamic_cast<Text*>(m_pLayout->getChildByName("Score"));
-	best_level_score->setFontName("Myriad Pro");
+	best_level_score->setFontName("fonts/Myriad Pro.ttf");
+	best_level_score->setColor(Color3B(230, 160, 25));
+	best_level_score->setTag(0);
+
+	Text * score_value = Text::create("       0", "fonts/Impact.ttf", TITLE_FONT_SIZE);
+	score_value->setTag(0);
+	score_value->setFontSize(best_level_score->getFontSize());
+	score_value->setPosition(Vec2(best_level_score->getContentSize().width, best_level_score->getContentSize().height/2 + 2));
+	best_level_score->addChild(score_value);
 }
 
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -127,7 +118,7 @@ bool LevelScene::init() {
 	loadLevelInfo();
 	SessionController::init();
 
-	this->addChild(level_info[SessionController::curr_level].label);
+	this->addChild(level_name);
 
 	initUI(SessionController::curr_level);
 	changeLevelUI(SessionController::curr_level);
@@ -227,8 +218,9 @@ void LevelScene::menuChangeLevelRight(Ref* sender, Widget::TouchEventType type) 
 
 void LevelScene::updateScoreLabel() {
 	char s[30];
-	sprintf(s, "SCORE: %d", SessionController::getHighScore());
-	best_level_score->setString(std::string(s));
+	sprintf(s, "          %d", SessionController::getHighScore());
+	Text * score_val = dynamic_cast<Text*> (best_level_score->getChildByTag(0));
+	score_val->setText(s);
 }
 
 void LevelScene::menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type) {

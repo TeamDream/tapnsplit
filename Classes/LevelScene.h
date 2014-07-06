@@ -8,19 +8,6 @@ using namespace ui;
 
 #define LEVEL_COUNT 4
 
-struct LevelInfo {
-	Sprite * background;
-	Sprite * foreground;
-	LabelTTF *label;
-
-	LevelInfo() {
-		background = NULL;
-		label = NULL;
-	}
-
-};
-
-
 class LevelScene : public cocos2d::Layer{
 public:
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -39,9 +26,10 @@ public:
 	void loadLevelInfo();
 	void initUI(int level_i = 1);
 	void changeLevelUI(int level_i = 1);
-	std::map<int, LevelInfo> level_info;
 	
+	LabelTTF *level_name;
 	Text* best_level_score;
+	
 	inline void updateScoreLabel();
 	// implement the "static node()" method manually
 	CREATE_FUNC(LevelScene);

@@ -62,13 +62,13 @@ void RetryScene::setUpUI() {
 	std::stringstream ss;
 	ss << "Highest Score: " << SessionController::getHighScore();
 	highest_score->setText(ss.str());
-	highest_score->setFontName("Myriad Pro");
+	highest_score->setFontName("fonts/Myriad Pro.ttf");
 
 	auto current_score = dynamic_cast<Text*>(m_pLayout->getChildByName("ScoreLabel"));
 	std::stringstream ss2;
 	ss2 << "Current Score: " << SessionController::getScore();
 	current_score->setText(ss2.str());
-	current_score->setFontName("Myriad Pro");
+	current_score->setFontName("fonts/Myriad Pro.ttf");
 
 	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
 	audio_switcher->addTouchEventListener(CC_CALLBACK_2(RetryScene::menuSwitchAudioCallback, this));
