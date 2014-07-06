@@ -15,7 +15,7 @@ bool MenuScene::init() {
 		return false;
 	}
 
-	//AudioEngineWrapper::getInstance()->playStartSong();
+	AudioEngineWrapper::getInstance()->playStartSong();
 
 	setUpUI();
 

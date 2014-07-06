@@ -30,21 +30,23 @@
   <ResRelativePath />
   <imageFileList />
   <imagePngList>
-    <string>lvl4_background.png</string>
-    <string>lvl4_icon.png</string>
-    <string>lvl_playIcon_unpressed.png</string>
-    <string>lvl_playIcon_pressed.png</string>
-    <string>lvl_playIcon_locked.png</string>
-    <string>MoveLeftUnpressed.png</string>
-    <string>MoveLeftPressed.png</string>
-    <string>MenuUnpressed.png</string>
-    <string>MenuPressed.png</string>
+    <string>tapIt_afterGameScreen_background.png</string>
+    <string>RetryUnpressed.png</string>
+    <string>RetryPressed.png</string>
+    <string>ChangeLevelUnpressed.png</string>
+    <string>ChangeLevelPressed.png</string>
+    <string>ExitUnpressed.png</string>
+    <string>ExitPressed.png</string>
     <string>infoUnpressed.png</string>
     <string>infoPressed.png</string>
     <string>AudioEnabled.png</string>
     <string>AudioPressed.png</string>
     <string>AudioDisabled.png</string>
+    <string>MenuUnpressed.png</string>
+    <string>MenuPressed.png</string>
+    <string>ScoreCurrent_logo.png</string>
+    <string>ScoreHighest_logo.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>LevelScene_4.json</CurrentUIJson>
+  <CurrentUIJson>LevelScene_1.json</CurrentUIJson>
 </UIProject>
