@@ -37,7 +37,6 @@ void LevelScene::loadLevelInfo() {
 	}
 	
 	level_name->setZOrder(UIElementsOrder);
-
 }
 
 void LevelScene::changeLevelUI(int level_i ) {
