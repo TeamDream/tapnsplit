@@ -24,8 +24,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::create("Cpp Empty Test");
-        director->setOpenGLView(glview);
+        glview = GLView::create("Tap and Split");
+        director->setOpenGLView(glview);//854õ480
+		//glview->setFrameSize(854, 480);
     }
 
     director->setOpenGLView(glview);
@@ -51,7 +52,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
  //   {
         searchPath.push_back(mediumResource.directory);//as temp solution
 		glview->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height, ResolutionPolicy::EXACT_FIT);
-		director->setContentScaleFactor(MIN(mediumResource.size.height / designResolutionSize.height, mediumResource.size.width / designResolutionSize.width));
+	//	director->setContentScaleFactor(MIN(mediumResource.size.height / frameSize.height, mediumResource.size.width / frameSize.width));
+	director->setContentScaleFactor(MIN(mediumResource.size.height / designResolutionSize.height, mediumResource.size.width / designResolutionSize.width));
  //   }
  //   // if the frame's height is smaller than the height of medium resource size, select small resource.
 	//else

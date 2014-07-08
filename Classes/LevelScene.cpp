@@ -50,7 +50,7 @@ void LevelScene::changeLevelUI(int level_i ) {
 	dynamic_cast<Layout *> (this->getChildByTag(0))->removeChild(curr_background);
 	dynamic_cast<Layout *> (this->getChildByTag(0))->addChild(new_background->clone());
 
-	auto new_foreground = dynamic_cast<ImageView*>(m_pLayout->getChildByName("CentralImage"));
+	auto new_foreground = dynamic_cast<Button*>(m_pLayout->getChildByName("CentralImage"));
 
 	Layout *curr_Layout = dynamic_cast<Layout *> (this->getChildByTag(0));
 	auto curr_foreground = curr_Layout->getChildByName("CentralImage");
@@ -76,7 +76,7 @@ void LevelScene::initUI(int level_i) {
 	m_pLayout->setTag(0);
 	this->addChild(m_pLayout);
 
-	Button* start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Play"));
+	Button* start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("CentralImage"));
 	start_game->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuStartGameCallback, this));
 	Button* move_left = dynamic_cast<Button*>(m_pLayout->getChildByName("MoveLeft"));
 	move_left->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelLeft, this));
@@ -120,7 +120,7 @@ bool LevelScene::init() {
 	this->addChild(level_name);
 
 	initUI(SessionController::curr_level);
-	changeLevelUI(SessionController::curr_level);
+	//changeLevelUI(SessionController::curr_level);
 
 	updateScoreLabel();
 
@@ -144,8 +144,8 @@ cocos2d::Scene* LevelScene::scene() {
 void LevelScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type)
 {
 
-	if (type == Widget::TouchEventType::ENDED)
-	{
+	//if (type == Widget::TouchEventType::ENDED)
+	//{
 
 		AudioEngineWrapper::getInstance()->playPressEffect();
 
@@ -168,8 +168,9 @@ void LevelScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type)
 			SessionController::setSpeed(2.0f);
 			break;
 		}
+
 		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
-	}
+	//}
 }
 
 void LevelScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type)

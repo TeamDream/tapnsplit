@@ -15,8 +15,8 @@ bool MenuScene::init() {
 		return false;
 	}
 
-	AudioEngineWrapper::getInstance()->playStartSong();
-
+	AudioEngineWrapper::getInstance()->playStartSong(); 
+    //AudioEngineWrapper::getInstance()->turnVolumeOff(true);
 	setUpUI();
 
 	return true;
@@ -33,6 +33,9 @@ void MenuScene::setUpUI() {
 	auto start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Start"));
 	start_game->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuStartGameCallback, this));
 	
+	auto info = dynamic_cast<Button*>(m_pLayout->getChildByName("info"));
+	info->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuInfoCallback, this));
+
 	auto exit_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Exit"));
 	exit_game->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuCloseCallback, this));
 
@@ -68,6 +71,14 @@ void MenuScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type) 
 	Scene *s = LevelScene::scene();
 	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5,s));
 
+}
+
+void MenuScene::menuInfoCallback(Ref* sender, ui::Widget::TouchEventType type) {
+
+	//float scale_fact = Director::getInstance()->getContentScaleFactor();
+	//scale_fact -= 0.1;
+	//Director::getInstance()->setContentScaleFactor(scale_fact);
+ 
 }
 
 void MenuScene::menuCloseCallback(Ref* sender, Widget::TouchEventType type)

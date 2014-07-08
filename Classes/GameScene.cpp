@@ -42,7 +42,7 @@ bool GameScene::init()
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGamePause), GAME_PAUSE, NULL);
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameResume), GAME_RESUME, NULL);
 
-	setUpBackground();
+	//setUpBackground();
 	setUpUI();
 
 	rects.setBoundary(0);

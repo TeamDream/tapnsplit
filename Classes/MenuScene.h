@@ -16,6 +16,7 @@ public:
 
 	// a selector callback
 	void menuStartGameCallback(Ref* sender,  ui::Widget::TouchEventType type);
+	void menuInfoCallback(Ref* sender, ui::Widget::TouchEventType type);
 	void menuCloseCallback(Ref* sender, ui::Widget::TouchEventType type);
 	void menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type);
 
