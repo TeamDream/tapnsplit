@@ -59,6 +59,7 @@ private:
 	static int count;
 
 	bool is_playing;
+	bool background_setted;
 	//time from the onGameStart()
 	int time_sec;
 	float current_speed;

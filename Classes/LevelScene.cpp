@@ -144,8 +144,8 @@ cocos2d::Scene* LevelScene::scene() {
 void LevelScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type)
 {
 
-	//if (type == Widget::TouchEventType::ENDED)
-	//{
+	if (type == Widget::TouchEventType::ENDED)
+	{
 
 		AudioEngineWrapper::getInstance()->playPressEffect();
 
@@ -170,7 +170,7 @@ void LevelScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type)
 		}
 
 		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
-	//}
+	}
 }
 
 void LevelScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type)

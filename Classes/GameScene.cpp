@@ -43,6 +43,7 @@ bool GameScene::init()
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameResume), GAME_RESUME, NULL);
 
 	//setUpBackground();
+	background_setted = false;
 	setUpUI();
 
 	rects.setBoundary(0);
@@ -87,7 +88,9 @@ void GameScene::setUpUI() {
 
 void GameScene::setUpBackground() {
 
-	this->removeChildByTag(666);
+	if (background_setted) {
+		this->removeChildByTag(666);
+	}
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
@@ -100,6 +103,7 @@ void GameScene::setUpBackground() {
 	background->setZOrder(BackgroundOrder);
 	background->setTag(666);
 	this->addChild(background);
+	background_setted = true;
 }
 
 //Handling event

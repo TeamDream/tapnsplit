@@ -30,7 +30,7 @@ public:
 		}
 
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-			"background_m.mp3", true);
+			"MenuScene.mp3", true);
 	}
 
 	void playPressEffect() {
@@ -79,12 +79,11 @@ private:
 	AudioEngineWrapper() {
 		sound_enabled = true;
 
-		songs.push_back("tiger.mp3");
-		songs.push_back("1.mp3");
-		songs.push_back("background_m.mp3");
-		songs.push_back("stronger.mp3");
-		songs.push_back("lucky.mp3");
-		songs.push_back("throne.mp3");
+		songs.push_back("GameScene1.mp3");
+		songs.push_back("GameScene2.mp3");
+		songs.push_back("GameScene3.mp3");
+		songs.push_back("MenuScene.mp3");
+
 
 	};
 
