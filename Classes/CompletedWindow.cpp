@@ -1,3 +1,4 @@
+#include "AppMacros.h"
 #include "CompletedWindow.h"
 #include "cocostudio/WidgetReader/WidgetReader.h"
 #include "LevelScene.h"
@@ -38,4 +39,15 @@ void CompletedWindow::setUpUI() {
 	continue_btn->addTouchEventListener(CC_CALLBACK_2(CompletedWindow::menuContinueGameCallback, this));
 
 	this->addChild(m_pLayout);
+
+	// create and initialize a label "Score Label"
+	auto level_name = dynamic_cast<Text*>(m_pLayout->getChildByName("Completed_label"));
+	level_name->setFontName("fonts/Impact.ttf");
+	level_name->setString("LEVEL ");
+	level_name->setFontSize(MIDLE_TITLE_FONT_SIZE);
+
+	auto level_number = LabelTTF::create("COMPLETED!", "fonts/Impact.ttf", MIDLE_TITLE_FONT_SIZE);
+	level_number->setColor(Color3B(230, 160, 25));
+	level_number->setPosition(level_name->getContentSize().width*2, level_name->getContentSize().height / 2);
+	level_name->addChild(level_number);
 }

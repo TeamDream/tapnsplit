@@ -149,7 +149,11 @@ void GameScene::onGamePause(CCObject* obj) {
 
 	for (int i = 0; i < rects.getRectCount(); i++) {
 		rects.getRectSprite(i)->pauseSchedulerAndActions();
+		rects.getRectSprite(i)->setColor(Color3B(100, 100, 100));
 	}
+	
+	auto backgr = this->getChildByTag(666);
+	backgr->setColor(Color3B(100, 100, 100));
 
 	completed_gui->setVisible(true);
 }
@@ -160,9 +164,12 @@ void GameScene::onGameResume(CCObject* obj) {
 
 	for (int i = 0; i < rects.getRectCount(); i++) {
 		rects.getRectSprite(i)->resumeSchedulerAndActions();
+		rects.getRectSprite(i)->setColor(Color3B(255, 255, 255));
 	}
+	auto backgr = this->getChildByTag(666);
+	backgr->setColor(Color3B(255, 255, 255));
 
-	 completed_gui->setVisible(false);
+	completed_gui->setVisible(false);
 }
 
 void GameScene::startSchedule()

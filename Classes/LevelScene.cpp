@@ -60,12 +60,12 @@ void LevelScene::changeLevelUI(int level_i ) {
 	
 	auto play_btn = dynamic_cast<Button*>(curr_Layout->getChildByName("Play"));
 
-	if (!SessionController::isLevelUnlocked(level_i)) {
+	//if (!SessionController::isLevelUnlocked(level_i)) {
 		play_btn->setBright(false);
-	}
-	else {
-		play_btn->setBright(true);
-	}
+	//}
+	//else {
+	//	play_btn->setBright(true);
+	//}
 	 
 }
 void LevelScene::initUI(int level_i) {
