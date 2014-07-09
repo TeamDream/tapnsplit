@@ -4,6 +4,7 @@
 #include "AppMacros.h"
 #include "cocostudio/WidgetReader/WidgetReader.h"
 #include "AudioEngineWrapper.h"
+#include "InfoScene.h"
 
 using namespace ui;
 
@@ -16,7 +17,7 @@ bool MenuScene::init() {
 	}
 
 	AudioEngineWrapper::getInstance()->playStartSong(); 
- //   AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+    AudioEngineWrapper::getInstance()->turnVolumeOff(true);
 	setUpUI();
 
 	return true;
@@ -75,10 +76,14 @@ void MenuScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type) 
 
 void MenuScene::menuInfoCallback(Ref* sender, ui::Widget::TouchEventType type) {
 
-	//float scale_fact = Director::getInstance()->getContentScaleFactor();
-	//scale_fact -= 0.1;
-	//Director::getInstance()->setContentScaleFactor(scale_fact);
- 
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
+	AudioEngineWrapper::getInstance()->playPressEffect();
+
+	Scene *s = InfoScene::scene();
+	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5, s));
 }
 
 void MenuScene::menuCloseCallback(Ref* sender, Widget::TouchEventType type)

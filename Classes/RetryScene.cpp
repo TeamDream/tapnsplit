@@ -1,9 +1,10 @@
 #include "RetryScene.h"
 #include "GameScene.h"
-#include "SessionController.h"
-#include "AppMacros.h"
 #include "LevelScene.h"
 #include "MenuScene.h"
+#include "InfoScene.h"
+#include "SessionController.h"
+#include "AppMacros.h"
 #include "AudioEngineWrapper.h"
 #include "cocostudio/WidgetReader/WidgetReader.h"
 
@@ -57,6 +58,9 @@ void RetryScene::setUpUI() {
 
 	auto exit_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Exit"));
 	exit_game->addTouchEventListener(CC_CALLBACK_2(RetryScene::menuCloseCallback, this));
+
+	auto info = dynamic_cast<Button*>(m_pLayout->getChildByName("info"));
+	info->addTouchEventListener(CC_CALLBACK_2(RetryScene::menuInfoCallback, this));
 
 	auto highest_score = dynamic_cast<Text*>(m_pLayout->getChildByName("HighestScoreLabel"));
 	std::stringstream ss;
@@ -158,4 +162,17 @@ void RetryScene::menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType
 		AudioEngineWrapper::getInstance()->turnVolumeOff(false);
 	}
 
+}
+
+
+void RetryScene::menuInfoCallback(Ref* sender, ui::Widget::TouchEventType type) {
+
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
+	AudioEngineWrapper::getInstance()->playPressEffect();
+
+	Scene *s = InfoScene::scene();
+	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5, s));
 }

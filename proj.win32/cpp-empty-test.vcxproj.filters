@@ -47,6 +47,9 @@
     <ClCompile Include="..\Classes\CompletedWindow.cpp">
       <Filter>Classes\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\InfoScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -101,6 +104,9 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\CompletedWindow.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\InfoScene.h">
       <Filter>Classes\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

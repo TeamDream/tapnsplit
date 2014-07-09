@@ -20,6 +20,7 @@
     <string>LevelScene_3.json</string>
     <string>LevelScene_4.json</string>
     <string>CompleteWindow.json</string>
+    <string>InfoScene.json</string>
   </JsonList>
   <CanvasSize>
     <Width>1024</Width>
@@ -30,12 +31,14 @@
   <ResRelativePath />
   <imageFileList />
   <imagePngList>
-    <string>lvlCompleted_background.png</string>
-    <string>lvlCompleted_resume_unpressed.png</string>
-    <string>lvlCompleted_resume_pressed.png</string>
-    <string>lvlCompleted_tol_lvl_menu_unpressed.png</string>
-    <string>lvlCompleted_tol_lvl_menu_pressed.png</string>
+    <string>tapIt_afterGameScreen_background.png</string>
+    <string>gameplay/gameplay1_normalBlock_sprite1.png</string>
+    <string>gameplay/gameplay_lifeBlock_sprite1.png</string>
+    <string>gameplay/gameplay1_armorBlock_sprite1.png</string>
+    <string>gameplay/gameplay1_deathBlock_sprite1.png</string>
+    <string>MenuUnpressed.png</string>
+    <string>MenuPressed.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>CompleteWindow.json</CurrentUIJson>
+  <CurrentUIJson>InfoScene.json</CurrentUIJson>
 </UIProject>

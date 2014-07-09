@@ -52,4 +52,8 @@
     <Project>CompleteWindow</Project>
     <GuidesList />
   </GuidesProject>
+  <GuidesProject>
+    <Project>InfoScene</Project>
+    <GuidesList />
+  </GuidesProject>
 </ArrayOfGuidesProject>

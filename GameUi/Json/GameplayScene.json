@@ -11,10 +11,11 @@
   "designWidth": 1024,
   "textures": [],
   "texturesPng": [
-    "MenuUnpressed.png",
-    "MenuPressed.png",
-    "ScoreCurrent_logo.png",
-    "Lifes_logo.png"
+    "tapIt_afterGameScreen_background.png",
+    "gameplay/gameplay1_normalBlock_sprite1.png",
+    "gameplay/gameplay_lifeBlock_sprite1.png",
+    "gameplay/gameplay1_armorBlock_sprite1.png",
+    "gameplay/gameplay1_deathBlock_sprite1.png"
   ],
   "version": "1.4.0.1",
   "widgetTree": {
@@ -44,7 +45,7 @@
           "ignoreSize": true,
           "layoutParameter": null,
           "opacity": 255,
-          "positionPercentX": 0.907226563,
+          "positionPercentX": 0.905599,
           "positionPercentY": 0.884114563,
           "positionType": 1,
           "rotation": 0,
@@ -58,7 +59,7 @@
           "useMergedTexture": false,
           "visible": true,
           "width": 60,
-          "x": 929,
+          "x": 927,
           "y": 679,
           "capInsetsHeight": 1,
           "capInsetsWidth": 1,
@@ -308,7 +309,7 @@
       "classname": "Panel",
       "name": "Panel_2",
       "ZOrder": 0,
-      "actiontag": 1,
+      "actiontag": -1,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",

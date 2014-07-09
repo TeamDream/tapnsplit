@@ -1,6 +1,7 @@
 #include "LevelScene.h"
 #include "GameScene.h"
 #include "MenuScene.h"
+#include "InfoScene.h"
 #include "SessionController.h"
 #include "AppMacros.h"
 #include "cocostudio/WidgetReader/WidgetReader.h"
@@ -60,12 +61,12 @@ void LevelScene::changeLevelUI(int level_i ) {
 	
 	auto play_btn = dynamic_cast<Button*>(curr_Layout->getChildByName("Play"));
 
-	//if (!SessionController::isLevelUnlocked(level_i)) {
+	if (!SessionController::isLevelUnlocked(level_i)) {
 		play_btn->setBright(false);
-	//}
-	//else {
-	//	play_btn->setBright(true);
-	//}
+	}
+	else {
+		play_btn->setBright(true);
+	}
 	 
 }
 void LevelScene::initUI(int level_i) {
@@ -84,6 +85,8 @@ void LevelScene::initUI(int level_i) {
 	move_right->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelRight, this));
 	Button* to_main_menu = dynamic_cast<Button*>(m_pLayout->getChildByName("Menu"));
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuReturnToMainCallback, this));
+	Button* info = dynamic_cast<Button*>(m_pLayout->getChildByName("info"));
+	info->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuInfoCallback, this));
 
 	//set up audio stuff
 	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
@@ -242,4 +245,16 @@ void LevelScene::menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType
 		AudioEngineWrapper::getInstance()->turnVolumeOff(false);
 	}
 
+}
+
+void LevelScene::menuInfoCallback(Ref* sender, ui::Widget::TouchEventType type) {
+
+	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
+		return;
+	}
+
+	AudioEngineWrapper::getInstance()->playPressEffect();
+
+	Scene *s = InfoScene::scene();
+	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5, s));
 }

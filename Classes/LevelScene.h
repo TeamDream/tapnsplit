@@ -22,6 +22,7 @@ public:
 	void menuStartGameCallback(Ref* sender, Widget::TouchEventType type);
 	void menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type);
 	void menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type);
+	void menuInfoCallback(Ref* sender, ui::Widget::TouchEventType type);
 
 	void loadLevelInfo();
 	void initUI(int level_i = 1);
