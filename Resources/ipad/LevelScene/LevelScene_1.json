@@ -652,7 +652,7 @@
       "classname": "Panel",
       "name": "Panel_2",
       "ZOrder": 0,
-      "actiontag": -1,
+      "actiontag": 2,
       "anchorPointX": 0,
       "anchorPointY": 0,
       "classType": "CocoStudio.EngineAdapterWrap.CSPanel",

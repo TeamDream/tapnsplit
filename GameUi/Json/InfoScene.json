@@ -480,7 +480,7 @@
           "touchAble": false,
           "useMergedTexture": false,
           "visible": true,
-          "width": 267,
+          "width": 255,
           "x": 737,
           "y": 56,
           "areaHeight": 0,
@@ -489,7 +489,7 @@
           "fontName": "微软雅黑",
           "fontSize": 20,
           "hAlignment": 0,
-          "text": "DONT'T TOUCH THIS THING!",
+          "text": "DON'T TOUCH THIS THING!",
           "touchScaleEnable": false,
           "vAlignment": 0
         }

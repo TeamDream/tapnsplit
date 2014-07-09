@@ -14,7 +14,8 @@ LOCAL_SRC_FILES := main.cpp \
 				   ../../Classes/RetryScene.cpp \
 				   ../../Classes/SessionController.cpp \
 				   ../../Classes/LevelScene.cpp \
-				   ../../Classes/CompletedWindow.cpp 
+				   ../../Classes/CompletedWindow.cpp \
+				   ../../Classes/InfoScene.cpp 
 					
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
 					$(LOCAL_PATH)../../../../. \

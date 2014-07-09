@@ -58,15 +58,6 @@ void LevelScene::changeLevelUI(int level_i ) {
 	
 	curr_Layout->removeChild(curr_foreground);
 	curr_Layout->addChild(new_foreground->clone());
-	
-	auto play_btn = dynamic_cast<Button*>(curr_Layout->getChildByName("Play"));
-
-	if (!SessionController::isLevelUnlocked(level_i)) {
-		play_btn->setBright(false);
-	}
-	else {
-		play_btn->setBright(true);
-	}
 	 
 }
 void LevelScene::initUI(int level_i) {
@@ -87,6 +78,15 @@ void LevelScene::initUI(int level_i) {
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuReturnToMainCallback, this));
 	Button* info = dynamic_cast<Button*>(m_pLayout->getChildByName("info"));
 	info->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuInfoCallback, this));
+
+	auto play_btn = dynamic_cast<Button*>(m_pLayout->getChildByName("Play"));
+
+	if (!SessionController::isLevelUnlocked(level_i)) {
+		play_btn->setBright(false);
+	}
+	else {
+		play_btn->setBright(true);
+	}
 
 	//set up audio stuff
 	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
