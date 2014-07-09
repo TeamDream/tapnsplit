@@ -55,7 +55,7 @@ private:
 		}
 	}
 	virtual void dieAction() {
-		SessionController::damage(); //do nothing. Missed life - your probkem
+		SessionController::damageLife(); //do nothing. Missed life - your probkem
 	}
 	virtual TouchableRect* clone() {
 		return new ArmoredRect();

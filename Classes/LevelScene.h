@@ -27,12 +27,12 @@ public:
 	void loadLevelInfo();
 	void initUI(int level_i = 1);
 	void changeLevelUI(int level_i = 1);
-	
+
 	LabelTTF *level_name;
 	Text* best_level_score;
-	
+
 	inline void updateScoreLabel();
 	// implement the "static node()" method manually
 	CREATE_FUNC(LevelScene);
-	 
+
 };

@@ -25,7 +25,7 @@ bool RetryScene::init() {
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
-	
+
 	return true;
 }
 
@@ -76,7 +76,7 @@ void RetryScene::setUpUI() {
 
 	auto audio_switcher = dynamic_cast<Button*>(m_pLayout->getChildByName("Audio"));
 	audio_switcher->addTouchEventListener(CC_CALLBACK_2(RetryScene::menuSwitchAudioCallback, this));
-	
+
 	if (!AudioEngineWrapper::getInstance()->isSoundEnabled()) {
 		audio_switcher->setBright(false);
 		AudioEngineWrapper::getInstance()->turnVolumeOff(true);
@@ -85,22 +85,22 @@ void RetryScene::setUpUI() {
 
 // a selector callback
 void RetryScene::menuRetryCallback(Ref* sender, Widget::TouchEventType type) {
-	
+
 	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
 		return;
 	}
 
 	Director::getInstance()->popScene();
-	
+
 	CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_START, NULL);
 	AudioEngineWrapper::getInstance()->playPressEffect();
 
 	SessionController::init();
 }
- 
+
 // a selector callback
 void RetryScene::menuOtherLevelCallback(Ref* sender, Widget::TouchEventType type) {
-	
+
 	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
 		return;
 	}
@@ -109,7 +109,7 @@ void RetryScene::menuOtherLevelCallback(Ref* sender, Widget::TouchEventType type
 
 	auto level_choose = LevelScene::scene();
 	Director::getInstance()->pushScene(level_choose);
- 
+
 }
 
 void RetryScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType type)
@@ -117,10 +117,10 @@ void RetryScene::menuReturnToMainCallback(Ref* sender, Widget::TouchEventType ty
 	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
 		return;
 	}
-		Director::getInstance()->popScene();
+	Director::getInstance()->popScene();
 
-		auto main_menu = MenuScene::scene();
-		Director::getInstance()->pushScene(main_menu);
+	auto main_menu = MenuScene::scene();
+	Director::getInstance()->pushScene(main_menu);
 
 }
 

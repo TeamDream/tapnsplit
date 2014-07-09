@@ -11,20 +11,20 @@ using namespace ui;
 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 bool MenuScene::init() {
 
-	if (!Layer::init()) 
+	if (!Layer::init())
 	{
 		return false;
 	}
 
-	AudioEngineWrapper::getInstance()->playStartSong(); 
-  //  AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+	AudioEngineWrapper::getInstance()->playStartSong();
+	//  AudioEngineWrapper::getInstance()->turnVolumeOff(true);
 	setUpUI();
 
 	return true;
 }
 
 void MenuScene::setUpUI() {
-	
+
 	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("StartScene/StartScene.json"));
 	m_pLayout->setTag(0);
 	this->addChild(m_pLayout);
@@ -33,7 +33,7 @@ void MenuScene::setUpUI() {
 
 	auto start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Start"));
 	start_game->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuStartGameCallback, this));
-	
+
 	auto info = dynamic_cast<Button*>(m_pLayout->getChildByName("info"));
 	info->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuInfoCallback, this));
 
@@ -62,15 +62,15 @@ cocos2d::Scene* MenuScene::scene() {
 
 // a selector callback
 void MenuScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type) {
-	
+
 	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
 		return;
 	}
-	
+
 	AudioEngineWrapper::getInstance()->playPressEffect();
-	
+
 	Scene *s = LevelScene::scene();
-	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5,s));
+	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5, s));
 
 }
 
@@ -106,7 +106,7 @@ void MenuScene::menuCloseCallback(Ref* sender, Widget::TouchEventType type)
 }
 
 void MenuScene::menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type) {
-	
+
 	if (type != Widget::TouchEventType::ENDED) { //process only finished touches
 		return;
 	}

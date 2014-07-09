@@ -15,7 +15,7 @@ public:
 	static cocos2d::Scene* scene();
 
 	// a selector callback
-	void menuStartGameCallback(Ref* sender,  ui::Widget::TouchEventType type);
+	void menuStartGameCallback(Ref* sender, ui::Widget::TouchEventType type);
 	void menuInfoCallback(Ref* sender, ui::Widget::TouchEventType type);
 	void menuCloseCallback(Ref* sender, ui::Widget::TouchEventType type);
 	void menuSwitchAudioCallback(Ref* sender, ui::Widget::TouchEventType type);
@@ -25,5 +25,5 @@ public:
 	// implement the "static node()" method manually
 	CREATE_FUNC(MenuScene);
 
-	
+
 };

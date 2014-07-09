@@ -22,7 +22,6 @@ enum RectTyped {
 	ARMORED
 };
 
-
 class SimpleRectFarik {
 
 public:
@@ -93,7 +92,7 @@ private:
 	TouchableRect* createRandomRectType() {
 		int rand_i = rand() % 100;
 
-		//first, simple hardcode it:
+		//simple hardcode probability values:
 	
 		if (rand_i < 70) {
 			return rects.at(SIMPLE)->clone();

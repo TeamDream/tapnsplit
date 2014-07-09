@@ -23,7 +23,7 @@ void SessionController::addLife() {
 
 }
 
-void SessionController::damage() {
+void SessionController::damageLife() {
 	--current_lifes;
 	if (isDead()){
 		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_END, NULL);

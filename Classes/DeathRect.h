@@ -39,7 +39,7 @@ private:
 	}
 
 	virtual void doAction() {
-		SessionController::damage();
+		SessionController::damageLife();
 	}
 
 	virtual void dieAction() {

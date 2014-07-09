@@ -17,8 +17,8 @@ void LevelScene::loadLevelInfo() {
 	// create and initialize a label "Score Label"
 	level_name = LabelTTF::create("Level Label", "fonts/Impact.ttf", LARGE_TITLE_FONT_SIZE);
 	level_name->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height - level_name->getContentSize().height/1.5));
-	
+		origin.y + visibleSize.height - level_name->getContentSize().height / 1.5));
+
 	if (SessionController::curr_level == 4) {
 		level_name->setString("SURVIVAL        ");
 		level_name->setPositionX(origin.x + visibleSize.width / 2.25);//little alignment fix
@@ -32,15 +32,15 @@ void LevelScene::loadLevelInfo() {
 		sprintf(s, "  %d", SessionController::curr_level);
 		level_name->setString("LEVEL ");
 		auto level_number = LabelTTF::create(s, "fonts/Impact.ttf", LARGE_TITLE_FONT_SIZE);
-		level_number->setColor(Color3B(230,160,25));
+		level_number->setColor(Color3B(230, 160, 25));
 		level_number->setPosition(level_name->getContentSize().width, level_name->getContentSize().height / 2);
 		level_name->addChild(level_number);
 	}
-	
+
 	level_name->setZOrder(UIElementsOrder);
 }
 
-void LevelScene::changeLevelUI(int level_i ) {
+void LevelScene::changeLevelUI(int level_i) {
 	char level_name[50];
 	sprintf(level_name, "LevelScene/LevelScene_%d.json", level_i);
 
@@ -55,10 +55,10 @@ void LevelScene::changeLevelUI(int level_i ) {
 
 	Layout *curr_Layout = dynamic_cast<Layout *> (this->getChildByTag(0));
 	auto curr_foreground = curr_Layout->getChildByName("CentralImage");
-	
+
 	curr_Layout->removeChild(curr_foreground);
 	curr_Layout->addChild(new_foreground->clone());
-	 
+
 }
 void LevelScene::initUI(int level_i) {
 	char level_name[50];
@@ -105,7 +105,7 @@ void LevelScene::initUI(int level_i) {
 	Text * score_value = Text::create("       0", "fonts/Impact.ttf", TITLE_FONT_SIZE);
 	score_value->setTag(0);
 	score_value->setFontSize(best_level_score->getFontSize());
-	score_value->setPosition(Vec2(best_level_score->getContentSize().width, best_level_score->getContentSize().height/2 + 2));
+	score_value->setPosition(Vec2(best_level_score->getContentSize().width, best_level_score->getContentSize().height / 2 + 2));
 	best_level_score->addChild(score_value);
 }
 
@@ -205,7 +205,7 @@ void LevelScene::menuChangeLevelLeft(Ref* sender, Widget::TouchEventType type) {
 
 void LevelScene::menuChangeLevelRight(Ref* sender, Widget::TouchEventType type) {
 	if (type == Widget::TouchEventType::ENDED) {
-		
+
 		SessionController::curr_level++;
 
 		if (SessionController::curr_level > LEVEL_COUNT) {

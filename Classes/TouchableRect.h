@@ -4,8 +4,6 @@
 
 using namespace cocos2d;
 
-#define NON_ACTIVE_RECT "RectAnimation/RectAnimation4.png"
-
 class TouchableRect {
 public:
 	TouchableRect() {
@@ -19,7 +17,7 @@ public:
 	inline bool isTapped() { return tapped; }
 	Sprite *getSprite() { return curr_sprite; }
 	
-	void tapIt() { //just switch 2 sprites
+	void tapIt() { //animate and do something
 
 		if (!tapped) {
 			animate();

@@ -30,7 +30,7 @@ cocos2d::Scene* InfoScene::scene() {
 
 // a selector callback
 void InfoScene::menuToMainCallback(Ref* sender, ui::Widget::TouchEventType type) {
-	if (type == Widget::TouchEventType::ENDED) {
+	if (type == Widget::TouchEventType::ENDED) {	
 		AudioEngineWrapper::getInstance()->playPressEffect();
 
 		Director::getInstance()->popScene();
@@ -48,7 +48,7 @@ void InfoScene::setUpUI() {
 
 	auto to_main_menu = dynamic_cast<Button*>(m_pLayout->getChildByName("Menu"));
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(InfoScene::menuToMainCallback, this));
-	
+
 	dynamic_cast<Text *>(m_pLayout->getChildByName("Normal_label"))->setFontName("fonts/Impact.ttf");
 	dynamic_cast<Text *>(m_pLayout->getChildByName("Normal_label"))->setFontSize(TITLE_FONT_SIZE);
 	dynamic_cast<Text *>(m_pLayout->getChildByName("Life_label"))->setFontName("fonts/Impact.ttf");

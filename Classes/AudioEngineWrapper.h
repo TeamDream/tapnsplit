@@ -1,7 +1,7 @@
 #include "SimpleAudioEngine.h"
 
 
-//maybe there it can be rewrited by "Observer" pattern
+//2D0: maybe there it should by rewrited as some Observer...  Or use notification center
 
 class AudioEngineWrapper {
 
@@ -28,7 +28,6 @@ public:
 		if (!isSoundEnabled()) {
 			return;
 		}
-
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
 			"MenuScene.mp3", true);
 	}
@@ -38,7 +37,6 @@ public:
 		if (!isSoundEnabled()) {
 			return;
 		}
-
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
 			"press.wav");
 	}
@@ -48,7 +46,6 @@ public:
 		if (!isSoundEnabled()) {
 			return;
 		}
-
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(
 			"gameover.mp3");
 	}
@@ -78,17 +75,14 @@ private:
 
 	AudioEngineWrapper() {
 		sound_enabled = true;
-
 		songs.push_back("GameScene1.mp3");
 		songs.push_back("GameScene2.mp3");
 		songs.push_back("GameScene3.mp3");
 		songs.push_back("MenuScene.mp3");
-
-
 	};
 
 	char* getRandomTrack() {
-	
+
 		int random = rand() % songs.size();
 		char* music = songs.at(random);
 

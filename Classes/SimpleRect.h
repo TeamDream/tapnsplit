@@ -45,7 +45,7 @@ private:
 	}
 
 	virtual void dieAction() {
-		SessionController::damage();
+		SessionController::damageLife();
 	}
 
 	virtual TouchableRect* clone() {

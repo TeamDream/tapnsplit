@@ -10,7 +10,7 @@ using namespace cocos2d;
 
 enum DrawOrder
 {
-	BackgroundOrder = -1,
+	BackgroundOrder = 0,
 	GameElementsOrder,
 	UIElementsOrder
 };
@@ -30,7 +30,6 @@ private:
 
 	//sñhedulers:
 	void startSchedule();
-
 	void createRandomRect(float  dt);
 	void updateTimer(float dt);
 	void checkRectPositions(float  dt);
@@ -43,26 +42,26 @@ private:
 	void onGamePause(CCObject* obj);
 	void onGameResume(CCObject* obj);
 
+	//UI stuff:
 	ui::Text* score_label;
 	ui::Text* life_label;
-
+	//completed level window
 	Layer* completed_gui;
 
 	void setUpBackground();
 	void setUpUI();
-
+	
+	//Rect objects stuff
 	RectPool rects;
 	SimpleRectFarik rectFabrik;
 
 	// implement the "static node()" method manually
 	CREATE_FUNC(GameScene);
-	static int count;
 
-	bool is_playing;
-	bool background_setted;
-	//time from the onGameStart()
+	//time from the game start
 	int time_sec;
-	float current_speed;
+	float current_speed; // rect moving speed
+	bool is_playing; 
 	
 };
 

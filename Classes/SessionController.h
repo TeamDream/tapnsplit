@@ -19,7 +19,7 @@ public:
 
 	static void addScore();
 	static void addLife();
-	static void damage();
+	static void damageLife();
 	static void damageScore();
 	static void updateScores();
 	static bool isDead();

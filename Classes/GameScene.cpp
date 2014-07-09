@@ -7,8 +7,6 @@
 
 using namespace ui;
 
-int GameScene::count = 0;
-
 int SessionController::current_score = 0;
 int SessionController::current_lifes = 3;
 float SessionController::level_speed = 4.0f;
@@ -43,10 +41,9 @@ bool GameScene::init()
 	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(GameScene::onGameResume), GAME_RESUME, NULL);
 
 	//setUpBackground();
-	background_setted = false;
 	setUpUI();
 
-	rects.setBoundary(0);
+	rects.boundary = 0;
 	is_playing = false;
 
 	auto touchListener = EventListenerTouchOneByOne::create();
@@ -57,10 +54,10 @@ bool GameScene::init()
 }
 
 void GameScene::setUpUI() {
-	//WTF??? can't add it as child to 'this' because of event overlapping 
+	//Can't add it as child to 'this' because of event overlapping 
 	auto m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("GameplayScene/GameplayScene.json"));
 
-	//cant find best solution:
+	//Just get if from saved resources:
 	auto to_main_menu = dynamic_cast<Button*>((m_pLayout->getChildByName("Menu"))->clone());
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(GameScene::menuReturnToMainCallback, this));
 	this->addChild(to_main_menu);
@@ -79,8 +76,9 @@ void GameScene::setUpUI() {
 	score_label->setFontName("fonts/Myriad Pro.ttf");
 	this->addChild(score_label);
 
+	//set complete level window
 	completed_gui = CompletedWindow::create();
-	completed_gui->setTag(1);
+	completed_gui->setTag(UIElementsOrder);
 	completed_gui->setZOrder(10);
 	completed_gui->setVisible(false);
 	this->addChild(completed_gui);
@@ -88,9 +86,7 @@ void GameScene::setUpUI() {
 
 void GameScene::setUpBackground() {
 
-	if (background_setted) {
-		this->removeChildByTag(666);
-	}
+	this->removeChildByTag(666);
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto origin = Director::getInstance()->getVisibleOrigin();
@@ -103,14 +99,12 @@ void GameScene::setUpBackground() {
 	background->setZOrder(BackgroundOrder);
 	background->setTag(666);
 	this->addChild(background);
-	background_setted = true;
 }
 
 //Handling event
 void GameScene::onGameStart(CCObject* obj)
 {
 	SessionController::init();
-	count = 0;
 
 	for (int i = 0; i < rects.getRectCount(); ++i) {
 		CCSprite *sprite = (CCSprite *)rects.getRectSprite(i);
@@ -172,6 +166,19 @@ void GameScene::onGameResume(CCObject* obj) {
 	completed_gui->setVisible(false);
 }
 
+bool GameScene::onTouchBegan(Touch* touch, Event* event)
+{
+	if (is_playing) {
+		rects.processClick(touch->getLocation());
+		updateLabels();
+
+		checkScoreProgress();
+	}
+
+	return true;
+}
+
+
 void GameScene::startSchedule()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -200,8 +207,6 @@ void GameScene::checkRectPositions(float  dt) {
 
 void GameScene::createRandomRect(float  dt) {
 
-	count++;
-
 	if (time_sec % 3 == 0) { //chage rectangle trajectory each 3 sec
 		FabrikMode new_mode = static_cast<FabrikMode> (rand() % 3);
 		rectFabrik.setMode(new_mode);
@@ -219,18 +224,6 @@ void GameScene::createRandomRect(float  dt) {
 	
 	rects.addRect(new_rect);
 	this->addChild(new_rect->getSprite());
-}
-
-bool GameScene::onTouchBegan(Touch* touch, Event* event)
-{
-	if (is_playing) {
-		rects.processClick(touch->getLocation());
-		updateLabels();
-
-		checkScoreProgress();
-	}
-
-	return true;
 }
 
 void GameScene::updateTimer(float dt) {
