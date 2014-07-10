@@ -61,7 +61,7 @@ public:
 	TouchableRect *createRect() {
 
 		auto visibleSize = Director::getInstance()->getVisibleSize();
-		TouchableRect* new_rect = createRandomRectType();
+		TouchableRect* new_rect = SessionController::curr_level == 4 ? rects.at(SIMPLE)->clone(): createRandomRectType();
 
 		new_rect->getSprite()->setScale(scale_w);
 		
@@ -93,7 +93,8 @@ private:
 		int rand_i = rand() % 100;
 
 		//simple hardcode probability values:
-	
+		
+
 		if (rand_i < 70) {
 			return rects.at(SIMPLE)->clone();
 		}

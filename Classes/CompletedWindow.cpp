@@ -22,7 +22,7 @@ void CompletedWindow::menuContinueGameCallback(Ref* sender, Widget::TouchEventTy
 void CompletedWindow::menuToLevelMenu(Ref* sender, Widget::TouchEventType type) {
 	if (type == Widget::TouchEventType::ENDED) {
 
-		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_PAUSE, NULL);//remove gui window frome game scene
+		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_RESUME, NULL);//remove gui window frome game scene
 		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_END, NULL);
 		auto main_menu = LevelScene::scene();
 		Director::getInstance()->pushScene(CCTransitionFade::create(0.5, main_menu));

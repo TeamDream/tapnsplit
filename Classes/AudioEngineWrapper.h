@@ -75,7 +75,7 @@ private:
 
 	AudioEngineWrapper() {
 		sound_enabled = true;
-		prev_song = 0;
+		curr_song = 0;
 		songs.push_back("GameScene1.mp3");
 		songs.push_back("GameScene2.mp3");
 		songs.push_back("GameScene3.mp3");
@@ -84,18 +84,14 @@ private:
 
 	char* getRandomTrack() {
 
-		int random = rand() % songs.size();
-		if (prev_song == random) { //the most primitive solution. 2Rewrite
-			random = rand() % songs.size();
-		}
-
-		char* music = songs.at(random);
+		char* music = songs.at(curr_song% songs.size());
+		curr_song++;
 
 		return music;
 	}
 
 	bool sound_enabled;
-	int prev_song;
+	int curr_song;
 	std::vector <char *> songs;
 
 };

@@ -27,8 +27,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
         glview = GLView::create("Tap and Split");
         director->setOpenGLView(glview);//854õ480
-		//glview->setFrameSize(854, 480);static Resource mediumResource =  { cocos2d::Size(1024, 768),  "ipad"   };
-	//	glview->setFrameSize(768, 1024);
+
+		//glview->setFrameSize(1280, 800 );
     }
 
     director->setOpenGLView(glview);

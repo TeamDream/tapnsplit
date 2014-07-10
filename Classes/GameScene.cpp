@@ -60,25 +60,29 @@ void GameScene::setUpUI() {
 	//Just get if from saved resources:
 	auto to_main_menu = dynamic_cast<Button*>((m_pLayout->getChildByName("Menu"))->clone());
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(GameScene::menuReturnToMainCallback, this));
+	to_main_menu->setZOrder(UIElementsOrder);
 	this->addChild(to_main_menu);
 	
 	auto life_logo = dynamic_cast<ImageView*>((m_pLayout->getChildByName("LifesLogo"))->clone());
+	life_logo->setZOrder(UIElementsOrder);
 	this->addChild(life_logo);
 	
 	auto score_logo = dynamic_cast<ImageView*>((m_pLayout->getChildByName("ScoreLogo"))->clone());
+	score_logo->setZOrder(UIElementsOrder);
 	this->addChild(score_logo);
 	
 	life_label = dynamic_cast<Text*>((m_pLayout->getChildByName("LifesLabel"))->clone());
+	life_label->setZOrder(UIElementsOrder);
 	life_label->setFontName("fonts/Myriad Pro.ttf");
 	this->addChild(life_label);
 	
 	score_label = dynamic_cast<Text*>((m_pLayout->getChildByName("ScoreLabel"))->clone());
+	score_label->setZOrder(UIElementsOrder);
 	score_label->setFontName("fonts/Myriad Pro.ttf");
 	this->addChild(score_label);
 
 	//set complete level window
 	completed_gui = CompletedWindow::create();
-	completed_gui->setTag(UIElementsOrder);
 	completed_gui->setZOrder(10);
 	completed_gui->setVisible(false);
 	this->addChild(completed_gui);
@@ -260,7 +264,7 @@ void GameScene::checkScoreProgress() {
 		next_level_i = 1;
 	}
 
-	if (SessionController::getScore() == 100 && !SessionController::isLevelUnlocked(next_level_i)) {
+	if (SessionController::getScore() == 5 && !SessionController::isLevelUnlocked(next_level_i)) {
 		//finish screen
 		SessionController::setLevelUnlocked();
 		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_PAUSE, NULL);
