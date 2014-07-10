@@ -30,22 +30,7 @@
   <ProjectType>UIProject</ProjectType>
   <ResRelativePath />
   <imageFileList />
-  <imagePngList>
-    <string>lvl1_background.png</string>
-    <string>lvl_playIcon_unpressed.png</string>
-    <string>lvl_playIcon_pressed.png</string>
-    <string>lvl_playIcon_locked.png</string>
-    <string>MoveLeftUnpressed.png</string>
-    <string>MoveLeftPressed.png</string>
-    <string>MenuUnpressed.png</string>
-    <string>MenuPressed.png</string>
-    <string>infoUnpressed.png</string>
-    <string>infoPressed.png</string>
-    <string>AudioEnabled.png</string>
-    <string>AudioPressed.png</string>
-    <string>AudioDisabled.png</string>
-    <string>lvl1_icon.png</string>
-  </imagePngList>
+  <imagePngList />
   <JsonSuffix>.json</JsonSuffix>
-  <CurrentUIJson>LevelScene_1.json</CurrentUIJson>
+  <CurrentUIJson>InfoScene.json</CurrentUIJson>
 </UIProject>

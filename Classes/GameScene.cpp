@@ -264,7 +264,7 @@ void GameScene::checkScoreProgress() {
 		next_level_i = 1;
 	}
 
-	if (SessionController::getScore() == 5 && !SessionController::isLevelUnlocked(next_level_i)) {
+	if (SessionController::getScore() == 100 && !SessionController::isLevelUnlocked(next_level_i)) {
 		//finish screen
 		SessionController::setLevelUnlocked();
 		CCNotificationCenter::sharedNotificationCenter()->postNotification(GAME_PAUSE, NULL);
