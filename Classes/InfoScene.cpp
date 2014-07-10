@@ -3,6 +3,7 @@
 #include "AudioEngineWrapper.h"
 #include "MenuScene.h"
 #include "AppMacros.h"
+#include "LevelScene.h"
 
 using namespace ui;
 
@@ -14,8 +15,19 @@ bool InfoScene::init() {
 
 	setUpUI();
 
+
+	touchListener = EventListenerTouchOneByOne::create();
+
+	touchListener->onTouchBegan = CC_CALLBACK_2(InfoScene::onTouchBegan2, this);
+	this->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, -1);
+
 	return true;
 }
+
+InfoScene::~InfoScene() { 
+	this->getEventDispatcher()->removeEventListener(touchListener); 
+}
+
 // there's no 'id' in cpp, so we recommend returning the class instance pointer
 cocos2d::Scene* InfoScene::scene() {
 	// 'scene' is an autorelease object
@@ -59,3 +71,12 @@ void InfoScene::setUpUI() {
 	dynamic_cast<Text *>(m_pLayout->getChildByName("Death_label"))->setFontSize(TITLE_FONT_SIZE);
 }
 
+bool InfoScene::onTouchBegan2(Touch* touch, Event* event)
+{
+  
+	AudioEngineWrapper::getInstance()->playPressEffect();
+
+	Scene *s = LevelScene::scene();
+	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5, s));
+	return true;
+}

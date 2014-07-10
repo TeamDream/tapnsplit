@@ -69,9 +69,20 @@ void MenuScene::menuStartGameCallback(Ref* sender, Widget::TouchEventType type) 
 
 	AudioEngineWrapper::getInstance()->playPressEffect();
 
-	Scene *s = LevelScene::scene();
-	Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5, s));
 
+	CCUserDefault *def = CCUserDefault::sharedUserDefault();
+	bool f_launch = def->getBoolForKey("NOT_FIRST_LAUNCH");
+
+	if (!f_launch) {
+		Scene *s = InfoScene::scene();
+		Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5, s));
+		def->setBoolForKey("NOT_FIRST_LAUNCH", true);
+		def->flush();
+	} else {
+		Scene *s = LevelScene::scene();
+		Director::getInstance()->replaceScene(CCTransitionCrossFade::create(0.5, s));
+	}
+ 
 }
 
 void MenuScene::menuInfoCallback(Ref* sender, ui::Widget::TouchEventType type) {

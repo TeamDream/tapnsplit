@@ -49,7 +49,7 @@ bool GameScene::init()
 	auto touchListener = EventListenerTouchOneByOne::create();
 
 	touchListener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
-	this->getEventDispatcher()->addEventListenerWithFixedPriority(touchListener, 5000);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 	return true;
 }
 
