@@ -56,12 +56,24 @@ bool GameScene::init()
 void GameScene::setUpUI() {
 	//Can't add it as child to 'this' because of event overlapping 
 	auto m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile("GameplayScene/GameplayScene.json"));
+	
+	//manual correction of UI positions. COCOS2dX bug????
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+	auto layout_childs = m_pLayout->getChildren();
+	for (auto curr_child = layout_childs.begin(); curr_child != layout_childs.end(); curr_child++) {
+		auto wrapped_child = dynamic_cast<Widget*> (*curr_child);
+		wrapped_child->setPositionType(Widget::PositionType::ABSOLUTE);
+		wrapped_child->setPositionY(origin.y + visibleSize.height*wrapped_child->getPositionPercent().y);
+		wrapped_child->setPositionX(origin.x + visibleSize.width*wrapped_child->getPositionPercent().x);
+	}
 
 	//Just get if from saved resources:
 	auto to_main_menu = dynamic_cast<Button*>((m_pLayout->getChildByName("Menu"))->clone());
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(GameScene::menuReturnToMainCallback, this));
 	to_main_menu->setZOrder(UIElementsOrder);
 	this->addChild(to_main_menu);
+
 	
 	auto life_logo = dynamic_cast<ImageView*>((m_pLayout->getChildByName("LifesLogo"))->clone());
 	life_logo->setZOrder(UIElementsOrder);
@@ -238,14 +250,14 @@ void GameScene::updateTimer(float dt) {
 
 	if (SessionController::getSpeedChallenge()) {
 
-		if (time_sec % 5 == 0 && current_speed > 1.1f) {
+		if (time_sec % 5 == 0 && current_speed > 1.05f) {
 
-			current_speed /= 1.2f;
+			current_speed /= 1.05f;
 
 			for (int i = 0; i < rects.getRectCount(); i++) {
 				auto p = rects.getRectSprite(i);
 				auto act = dynamic_cast<Speed *>(p->getActionByTag(0));
-				act->setSpeed(1.2);
+				act->setSpeed(1.05);
 			}
 
 			auto visibleSize = Director::getInstance()->getVisibleSize();

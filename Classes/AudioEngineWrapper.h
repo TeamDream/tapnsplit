@@ -29,7 +29,7 @@ public:
 			return;
 		}
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(
-			"MenuScene.mp3", true);
+			"GameScene1.mp3", true);
 	}
 
 	void playPressEffect() {
@@ -79,7 +79,6 @@ private:
 		songs.push_back("GameScene1.mp3");
 		songs.push_back("GameScene2.mp3");
 		songs.push_back("GameScene3.mp3");
-		songs.push_back("MenuScene.mp3");
 	};
 
 	char* getRandomTrack() {

@@ -58,6 +58,17 @@ void InfoScene::setUpUI() {
 	m_pLayout->setTag(0);
 	this->addChild(m_pLayout);
 
+	//manual correction of UI positions. COCOS2dX bug????
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+	auto layout_childs = m_pLayout->getChildren();
+	for (auto curr_child = layout_childs.begin(); curr_child != layout_childs.end(); curr_child++) {
+		auto wrapped_child = dynamic_cast<Widget*> (*curr_child);
+		wrapped_child->setPositionType(Widget::PositionType::ABSOLUTE);
+		wrapped_child->setPositionY(origin.y + visibleSize.height*wrapped_child->getPositionPercent().y);
+		wrapped_child->setPositionX(origin.x + visibleSize.width*wrapped_child->getPositionPercent().x);
+	}
+
 	auto to_main_menu = dynamic_cast<Button*>(m_pLayout->getChildByName("Menu"));
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(InfoScene::menuToMainCallback, this));
 

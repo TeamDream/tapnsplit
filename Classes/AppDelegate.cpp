@@ -7,7 +7,7 @@
 #include "GameScene.h"
 
 #include "AppMacros.h"
-#include "SimpleAudioEngine.h"
+#include "AudioEngineWrapper.h"
 
 USING_NS_CC;
 using namespace std;
@@ -28,18 +28,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
         glview = GLView::create("Tap and Split");
         director->setOpenGLView(glview);//854õ480
 
-		//glview->setFrameSize(1280, 800 );
+		//glview->setFrameSize(480, 320);
     }
 
     director->setOpenGLView(glview);
-
+	director->setDisplayStats(true);
 	Size frameSize = glview->getFrameSize();
     
     vector<string> searchPath;
 
 	//Simpliest solution. Still need to add other multiresolution option and change policy to NO_BORDER
     searchPath.push_back(mediumResource.directory);
-	glview->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height, ResolutionPolicy::EXACT_FIT);
+	glview->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height, ResolutionPolicy::NO_BORDER);
 	director->setContentScaleFactor(MIN(mediumResource.size.height / designResolutionSize.height, mediumResource.size.width / designResolutionSize.width));
     
     // set searching path
@@ -73,5 +73,7 @@ void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
 
     // if you use SimpleAudioEngine, it must resume here
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+	if (AudioEngineWrapper::getInstance()->isSoundEnabled()) {
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+	}
 }

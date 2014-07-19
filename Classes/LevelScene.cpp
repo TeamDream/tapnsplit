@@ -45,6 +45,7 @@ void LevelScene::changeLevelUI(int level_i) {
 	sprintf(level_name, "LevelScene/LevelScene_%d.json", level_i);
 
 	Layout *m_pLayout = dynamic_cast<Layout *> (cocostudio::GUIReader::shareReader()->widgetFromJsonFile(level_name));
+
 	ImageView* new_background = dynamic_cast<ImageView*>(m_pLayout->getChildByName("Background"));
 
 	auto curr_background = dynamic_cast<Layout *> (this->getChildByTag(0))->getChildByName("Background");
@@ -68,6 +69,18 @@ void LevelScene::initUI(int level_i) {
 	m_pLayout->setTag(0);
 	this->addChild(m_pLayout);
 
+
+	//manual correction of UI positions. COCOS2dX bug????
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+	auto layout_childs = m_pLayout->getChildren();
+	for (auto curr_child = layout_childs.begin(); curr_child != layout_childs.end(); curr_child++) {
+		auto wrapped_child = dynamic_cast<Widget*> (*curr_child);
+		wrapped_child->setPositionType(Widget::PositionType::ABSOLUTE);
+		wrapped_child->setPositionY(origin.y + visibleSize.height*wrapped_child->getPositionPercent().y);
+		wrapped_child->setPositionX(origin.x + visibleSize.width*wrapped_child->getPositionPercent().x);
+	}
+
 	Button* start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("CentralImage"));
 	start_game->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuStartGameCallback, this));
 	Button* move_left = dynamic_cast<Button*>(m_pLayout->getChildByName("MoveLeft"));
@@ -76,6 +89,7 @@ void LevelScene::initUI(int level_i) {
 	move_right->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuChangeLevelRight, this));
 	Button* to_main_menu = dynamic_cast<Button*>(m_pLayout->getChildByName("Menu"));
 	to_main_menu->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuReturnToMainCallback, this));
+
 	Button* info = dynamic_cast<Button*>(m_pLayout->getChildByName("info"));
 	info->addTouchEventListener(CC_CALLBACK_2(LevelScene::menuInfoCallback, this));
 

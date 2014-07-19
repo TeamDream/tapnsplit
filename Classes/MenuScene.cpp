@@ -17,7 +17,7 @@ bool MenuScene::init() {
 	}
 
 	AudioEngineWrapper::getInstance()->playStartSong();
-	//  AudioEngineWrapper::getInstance()->turnVolumeOff(true);
+	AudioEngineWrapper::getInstance()->turnVolumeOff(true);
 	setUpUI();
 
 	return true;
@@ -29,7 +29,17 @@ void MenuScene::setUpUI() {
 	m_pLayout->setTag(0);
 	this->addChild(m_pLayout);
 
-	float scale_fact = Director::getInstance()->getContentScaleFactor();
+
+	//manual correction of UI positions. COCOS2dX bug????
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto origin = Director::getInstance()->getVisibleOrigin();
+	auto layout_childs = m_pLayout->getChildren();
+	for (auto curr_child = layout_childs.begin(); curr_child != layout_childs.end(); curr_child++) {
+		auto wrapped_child = dynamic_cast<Widget*> (*curr_child);
+		wrapped_child->setPositionType(Widget::PositionType::ABSOLUTE);
+		wrapped_child->setPositionY(origin.y + visibleSize.height*wrapped_child->getPositionPercent().y);
+		wrapped_child->setPositionX(origin.x + visibleSize.width*wrapped_child->getPositionPercent().x);
+	}
 
 	auto start_game = dynamic_cast<Button*>(m_pLayout->getChildByName("Start"));
 	start_game->addTouchEventListener(CC_CALLBACK_2(MenuScene::menuStartGameCallback, this));
