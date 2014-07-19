@@ -11,7 +11,7 @@
   "designWidth": 1024,
   "textures": [],
   "texturesPng": [
-    "gameplay3_background.png",
+    "gameplay4_background.png",
     "lvl_playIcon_unpressed.png",
     "lvl_playIcon_pressed.png",
     "lvl_playIcon_locked.png",
@@ -24,7 +24,7 @@
     "AudioEnabled.png",
     "AudioPressed.png",
     "AudioDisabled.png",
-    "lvl3_icon.png",
+    "lvl4_icon.png",
     "black_label.png"
   ],
   "version": "1.4.0.1",
@@ -654,7 +654,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "black_label_2",
+          "name": "black_label",
           "ZOrder": 0,
           "actiontag": 18,
           "anchorPointX": 0.5,

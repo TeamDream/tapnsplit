@@ -654,7 +654,7 @@
         "options": {
           "__type": "ImageViewSurrogate:#EditorCommon.JsonModel.Component.GUI",
           "classname": "ImageView",
-          "name": "black_label_2",
+          "name": "black_label",
           "ZOrder": 0,
           "actiontag": 18,
           "anchorPointX": 0.5,

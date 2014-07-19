@@ -16,8 +16,13 @@ void LevelScene::loadLevelInfo() {
 
 	// create and initialize a label "Score Label"
 	level_name = LabelTTF::create("Level Label", "fonts/Impact.ttf", LARGE_TITLE_FONT_SIZE);
+	
+	auto bl_label = dynamic_cast<Layout *> (this->getChildByTag(0))->getChildByName("black_label");
+	//level_name->setPosition(Vec2(origin.x + visibleSize.width / 2,
+	//	origin.y + visibleSize.height - level_name->getContentSize().height / 1.5));
 	level_name->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height - level_name->getContentSize().height / 1.5));
+		bl_label->getPositionY()));
+
 
 	if (SessionController::curr_level == 4) {
 		level_name->setString("SURVIVAL        ");
@@ -36,7 +41,7 @@ void LevelScene::loadLevelInfo() {
 		level_number->setPosition(level_name->getContentSize().width, level_name->getContentSize().height / 2);
 		level_name->addChild(level_number);
 	}
-
+	 
 	level_name->setZOrder(UIElementsOrder);
 }
 
@@ -131,12 +136,13 @@ bool LevelScene::init() {
 		return false;
 	}
 
+	initUI(SessionController::curr_level);
 	loadLevelInfo();
 	SessionController::init();
 
 	this->addChild(level_name);
 
-	initUI(SessionController::curr_level);
+	
 	//changeLevelUI(SessionController::curr_level);
 
 	updateScoreLabel();

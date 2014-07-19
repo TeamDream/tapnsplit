@@ -28,11 +28,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
         glview = GLView::create("Tap and Split");
         director->setOpenGLView(glview);//854õ480
 
-		//glview->setFrameSize(480, 320);
+		//glview->setFrameSize(854, 480);
     }
 
     director->setOpenGLView(glview);
-	director->setDisplayStats(true);
+	//director->setDisplayStats(true);
 	Size frameSize = glview->getFrameSize();
     
     vector<string> searchPath;

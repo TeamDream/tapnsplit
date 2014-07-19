@@ -31,7 +31,7 @@
   <ResRelativePath />
   <imageFileList />
   <imagePngList>
-    <string>gameplay3_background.png</string>
+    <string>gameplay4_background.png</string>
     <string>lvl_playIcon_unpressed.png</string>
     <string>lvl_playIcon_pressed.png</string>
     <string>lvl_playIcon_locked.png</string>
@@ -44,7 +44,7 @@
     <string>AudioEnabled.png</string>
     <string>AudioPressed.png</string>
     <string>AudioDisabled.png</string>
-    <string>lvl3_icon.png</string>
+    <string>lvl4_icon.png</string>
     <string>black_label.png</string>
   </imagePngList>
   <JsonSuffix>.json</JsonSuffix>
